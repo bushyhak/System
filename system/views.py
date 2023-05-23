@@ -10,9 +10,11 @@ def appointment(request):
     return render(request,'system/appointment.html')
 
 def contact(request):
-    return HttpResponse(request, 'system/contact.html')
+    return render(request, 'system/contact.html')
 
 def schedule(request):
-    return HttpResponse(request, 'system/schedule.html')
+    return render(request, 'system/about.html')
+def login(request):
+    return render(request, 'system/login.html')
 
 

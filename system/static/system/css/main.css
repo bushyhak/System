@@ -3,7 +3,10 @@
     font-family: TT Wellingtons Trial Bold;
     src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf);
   }
-
+@font-face {
+    font-family: TT Wellingtons Trial Regular;
+    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+}
   
 *{
     padding: 0;
@@ -20,6 +23,7 @@
     color: black;
     height: 71px;
     width: 100%;
+    font-family:TT Wellingtons Trial Regular;
     
 }
 .brand-title{
@@ -115,6 +119,7 @@ main{
     background-color:#F0EFED;
     width: 100%;
     padding: 70px 30px 20px;
+    font-family: TT Wellingtons Trial Regular;
 }
 .socialIcons{
     display: flex;
