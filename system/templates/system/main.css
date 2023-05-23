@@ -1,0 +1,209 @@
+
+  @font-face {
+    font-family: TT Wellingtons Trial Bold;
+    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf);
+  }
+
+  
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F0EFED;
+    color: black;
+    height: 71px;
+    width: 100%;
+    
+}
+.brand-title{
+    font-family:TT Wellingtons Trial Bold ;
+    font-size: 35px;
+    line-height: 80px;
+    padding: 0 100px;
+    font-weight:bolder;
+    color: black;
+    
+}
+.navbar ul{
+    float: right;
+    margin-right: 20px
+    
+}
+.navbar ul li{
+    display: inline-block;
+    line-height: 50px;
+    margin: 0 5px;
+    opacity: 1;
+}
+.navbar ul li a{
+    color: black;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+.navbar-links li:hover a{
+    color: black;
+    opacity: 1;
+}
+
+.toggle-button{
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+    display:none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
+.toggle-button .bar{
+    height: 3px;
+    width: 100%;
+    background-color: black;
+    border-radius: 10px;
+}
+@media (max-width: 952px){
+    .toggle-button{
+        display: flex;
+    }
+    .navbar-links{
+        display: none;
+        width: 100%;
+    }
+    .navbar{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar-links ul{
+        flex-direction: column;
+        
+    }
+    .navbar-links li{
+        text-align: center;
+
+    }
+    .navbar-links li a{
+        padding: .5rem 1rem;
+    }
+    .navbar-links.active{
+        display: flex;
+    }
+}
+html,body{
+    height: 100%;}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+
+main{
+    display: flex;
+    flex: 1;
+}
+.footerContainer{
+    background-color:#F0EFED;
+    width: 100%;
+    padding: 70px 30px 20px;
+}
+.socialIcons{
+    display: flex;
+    justify-content: center;
+    
+}
+.socialIcons a{
+    text-decoration: none;
+    padding: 10px;
+    background-color:#F0EFED ;
+    margin: 10px;
+    border-radius: 50%;
+}
+.socialIcons a i{
+    font-size: 2em;
+    color:black;
+    opacity: 0.9;
+}
+.socialIcons a:hover{
+    background-color:white;
+    transition: .5s;
+}
+.socialIcons a:hover i{
+    color: black;
+    transition: 0.5s;
+}
+.footNav{
+    margin: 30px 0;
+    
+    
+    
+}
+.footNav ul{
+    display: flex;
+    justify-content:center;
+}
+.footNav ul li a{
+    color: black;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+.footNav ul li a:hover{
+    opacity: 1;
+}
+.footerBottom {
+    background-color:#F0EFED;
+    padding: 20px;
+    text-align: center;
+    color: black;
+    opacity:0.8;
+    width: 100%;
+}
+@media(max-width: 952px){
+    .footNav ul{
+        flex-direction:column;
+        align-items: center;
+        width: 100%;
+    }
+    .footNav ul li{
+
+        text-align: center;
+        margin: 10px;
+    }
+    .footerBottom {
+        background-color:#F0EFED;
+        padding: 20px;
+        text-align: center;
+        color: black;
+        opacity:0.8;
+        width: 100%;
+        
+        
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
