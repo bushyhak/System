@@ -1,0 +1,47 @@
+@font-face {
+    font-family: TT Wellingtons Trial ExtraBold;
+    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf);
+  }
+  @font-face {
+    font-family: TT Wellingtons Trial Regular;
+    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+}
+@font-face {
+    font-family: TT Wellingtons Trial DemiBold;
+    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
+}
+.hero-h1{
+    display: flex;
+    color:#0F0F14;
+    letter-spacing: -.5px;
+    margin-bottom: -80px;
+    margin-top: 110px;
+    font-weight: 900;
+    font-size: 40px;
+    justify-content: center;
+    margin-left:-750px;
+    font-family: TT Wellingtons Trial DemiBold;
+    line-height: 1.5;
+   /* font-family: TT Wellingtons Trial ExtraBold;*/
+}
+.purpose{
+    margin-left: 120px;
+    color: #151520;
+    margin-top: 2.4em;
+    line-height: 36px;
+    font-style: normal;
+    font-weight: 500;
+    font-family: TT Wellingtons Trial DemiBold;
+    font-size: 20px;
+
+}
+.short{
+    font-family: TT Wellingtons Trial Regular;
+    font-style: normal;
+    font-size:22px;
+    font-weight: 400;
+    color: #757575;
+    margin-left: 710px;
+    margin-top: -90px;
+    line-height: 33px;
+}

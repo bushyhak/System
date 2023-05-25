@@ -8,16 +8,20 @@ from .forms import LoginForm
 def home(request):
     return render(request,'system/home.html')
 
-def appointment(request):
-    return render(request,'system/appointment.html')
+def book(request):
+    return render(request,'system/book.html')
 
 def contact(request):
     return render(request, 'system/contact.html')
 
-def schedule(request):
+def about(request):
     return render(request, 'system/about.html')
+
 def login(request):
     return render(request, 'system/login.html')
+
+def register(request):
+    return render(request, 'system/register.html')
 
 def user_login(request):
     if request.method =='POST':
@@ -35,7 +39,11 @@ def user_login(request):
                 else:
                     return HttpResponse('Disabled account'
                                         )
-        
+            else:
+                return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+        return render(request, 'system/login.html', {'form':form})
 
 
 
