@@ -1,47 +1,134 @@
 @font-face {
     font-family: TT Wellingtons Trial ExtraBold;
-    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf);
+    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf');
   }
   @font-face {
     font-family: TT Wellingtons Trial Regular;
-    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf');
 }
 @font-face {
     font-family: TT Wellingtons Trial DemiBold;
-    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
+    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf');
 }
-.hero-h1{
+.intro{
     display: flex;
-    color:#0F0F14;
-    letter-spacing: -.5px;
-    margin-bottom: -80px;
-    margin-top: 110px;
-    font-weight: 900;
-    font-size: 40px;
-    justify-content: center;
-    margin-left:-750px;
+    flex-direction: row;
+    width: 100%;
+    min-height: 70vh;
+   
+
+}
+.statement, .pic{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:whitesmoke;
+    
+   
+
+}
+.statement{
+    line-height:1.5 ;
+    color: #0000CD;
+    
+}
+.sentiment{
+    font-size: 2.5em;
+    line-height:150%;
+    display: flex;
+    flex-direction:column;
+    margin-top:35%;
+    flex-wrap: nowrap;
+    white-space:nowrap;
+    width: 75%;
     font-family: TT Wellingtons Trial DemiBold;
-    line-height: 1.5;
-   /* font-family: TT Wellingtons Trial ExtraBold;*/
+    font-weight: bolder;
+
+}
+.pic{
+    background-image: url('../images/withparents2-transformed.jpeg');
+    background-size: cover;
+    outline: none;
+    object-fit: contain;
+    
+    
+    
+}
+.our-thing{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 300vh;
 }
 .purpose{
-    margin-left: 120px;
+    border-color: blue;
+    display: flex;
+    flex-direction: column;
+    width:50%;
+    padding-left: 55px;
     color: #151520;
-    margin-top: 2.4em;
-    line-height: 36px;
     font-style: normal;
     font-weight: 500;
     font-family: TT Wellingtons Trial DemiBold;
     font-size: 20px;
-
+    margin-top: 0;
 }
-.short{
+.capture{
+    margin-top: 6%;
+}
+
+
+.container-1{
+    width: 50%;
     font-family: TT Wellingtons Trial Regular;
     font-style: normal;
     font-size:22px;
     font-weight: 400;
     color: #757575;
-    margin-left: 710px;
-    margin-top: -90px;
+    padding-left: 0;
+    margin-top: 3%;
     line-height: 33px;
+    
 }
+.vaccine{
+    margin-top: 55%;
+    background-image: url('../images/hepatitis_a-transformed.jpeg');
+    background-size: cover;
+    width: 99%;
+    height:17%;
+    
+}
+.vaccine2{
+    margin-top: 39%;
+    background-image:url('../images/measles-transformed.jpeg') ;
+    background-size: cover;
+    width:99%;
+    height:21%;
+
+}
+.ourmission{
+    color: black;
+    font-family: TT Wellingtons Trial Regular;
+    font-weight: bolder;
+    font-size: 1.2em;
+
+}
+.happy{
+    margin-top: 100%;
+    background-image: url('../images/withparents-transformed.jpeg');
+    background-size: cover;
+    width: 99%;
+    height:20%;
+    
+}
+.happier{
+    width: 99%;
+    background-image: url('../images/child1-transformed.jpeg');
+    height:20.5%;
+    background-size: cover;
+    margin-top: 11%;
+}
+
+ 
+
