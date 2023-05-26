@@ -10,6 +10,7 @@
     font-family: TT Wellingtons Trial DemiBold;
     src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf');
 }
+
 .intro{
     display: flex;
     flex-direction: row;
@@ -23,35 +24,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:whitesmoke;
+
     
    
 
 }
 .statement{
-    line-height:1.5 ;
-    color: #0000CD;
+    color: #001855;
+
+   /* color: rgb(15, 15,20);*/
     
 }
 .sentiment{
     font-size: 2.5em;
-    line-height:150%;
+    line-height:145%;
     display: flex;
     flex-direction:column;
     margin-top:35%;
     flex-wrap: nowrap;
     white-space:nowrap;
-    width: 75%;
+    width: 80%;
     font-family: TT Wellingtons Trial DemiBold;
-    font-weight: bolder;
+    font-weight:900;
+    font-style: normal;
 
 }
+
 .pic{
-    background-image: url('../images/withparents2-transformed.jpeg');
+   background-image: url('../images/withparents2-transformed.jpeg');
     background-size: cover;
     outline: none;
     object-fit: contain;
-    
     
     
 }
@@ -92,7 +95,7 @@
     
 }
 .vaccine{
-    margin-top: 55%;
+    margin-top: 50%;
     background-image: url('../images/hepatitis_a-transformed.jpeg');
     background-size: cover;
     width: 99%;
@@ -100,11 +103,11 @@
     
 }
 .vaccine2{
-    margin-top: 39%;
+    margin-top: 38%;
     background-image:url('../images/measles-transformed.jpeg') ;
     background-size: cover;
     width:99%;
-    height:21%;
+    height:20%;
 
 }
 .ourmission{
@@ -112,22 +115,23 @@
     font-family: TT Wellingtons Trial Regular;
     font-weight: bolder;
     font-size: 1.2em;
+    line-height: 1.5;
 
 }
 .happy{
-    margin-top: 100%;
+    margin-top: 101.2%;
     background-image: url('../images/withparents-transformed.jpeg');
     background-size: cover;
     width: 99%;
-    height:20%;
+    height:19%;
     
 }
 .happier{
     width: 99%;
     background-image: url('../images/child1-transformed.jpeg');
-    height:20.5%;
+    height:19.37%;
     background-size: cover;
-    margin-top: 11%;
+    margin-top: 14.7%;
 }
 
  
