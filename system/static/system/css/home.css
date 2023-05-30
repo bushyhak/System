@@ -25,8 +25,6 @@
     flex-direction: column;
     align-items: center;
 
-    
-   
 
 }
 .statement{
@@ -40,14 +38,14 @@
     line-height:145%;
     display: flex;
     flex-direction:column;
-    margin-top:35%;
-    flex-wrap: nowrap;
+    margin-top:30%;
+    flex-wrap:wrap;
     white-space:nowrap;
-    width: 80%;
+    width:79%;
     font-family: TT Wellingtons Trial DemiBold;
     font-weight:900;
     font-style: normal;
-
+   padding-left: 0;
 }
 
 .pic{
@@ -103,11 +101,11 @@
     
 }
 .vaccine2{
-    margin-top: 38%;
+    margin-top: 35%;
     background-image:url('../images/measles-transformed.jpeg') ;
     background-size: cover;
     width:99%;
-    height:20%;
+    height: 20%;
 
 }
 .ourmission{
@@ -119,7 +117,7 @@
 
 }
 .happy{
-    margin-top: 101.2%;
+    margin-top: 117.7%;
     background-image: url('../images/withparents-transformed.jpeg');
     background-size: cover;
     width: 99%;

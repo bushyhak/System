@@ -14,16 +14,17 @@ body {
   .brand{
     color: white;
     font-family:TT Wellingtons Trial ExtraBold ;
-    font-size: 20px;
-    line-height: 10px;
+    font-size: 15px;
+    line-height: 8px;
     padding: 0 100px;
     font-weight:bolder;
+    margin-top: 2px;
     
 }
   
 .signup-box {
     width: 360px;
-    height: 600px;
+    height: 560px;
     border-radius: 14px;
     margin: auto;
     background-color: white;
@@ -71,14 +72,14 @@ h4 {
   }
   p {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 0;
     font-size: 15px;
   }
   .para-2 {
     text-align: center;
     color: white;
     font-size: 20px;
-    margin-top: -10px;
+    margin-top: 0px;
   }
   .para-2 a {
     color: #49c1a2;
