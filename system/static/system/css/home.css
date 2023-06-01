@@ -1,16 +1,17 @@
+
 @font-face {
-    font-family: TT Wellingtons Trial ExtraBold;
-    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf');
+    font-family: TT Wellingtons Trial Regular;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+  }
+  
+  @font-face {
+  font-family: TT Wellingtons Trial Bold;
+  src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
   }
   @font-face {
-    font-family: TT Wellingtons Trial Regular;
-    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf');
-}
-@font-face {
     font-family: TT Wellingtons Trial DemiBold;
-    src: url('/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf');
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
 }
-
 .intro{
     display: flex;
     flex-direction: row;
@@ -101,7 +102,7 @@
     
 }
 .vaccine2{
-    margin-top: 35%;
+    margin-top:47%;
     background-image:url('../images/measles-transformed.jpeg') ;
     background-size: cover;
     width:99%;
@@ -117,7 +118,7 @@
 
 }
 .happy{
-    margin-top: 117.7%;
+    margin-top: 101.5%;
     background-image: url('../images/withparents-transformed.jpeg');
     background-size: cover;
     width: 99%;

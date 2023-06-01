@@ -9,7 +9,7 @@
 }
 body {
     background-color: rgb(41, 51, 82);
-    font-family:TT Wellingtons Trial Regular ;
+    font-family:TT Wellingtons Trial Regular;
   }
    .logo{
     color: white;
@@ -18,8 +18,73 @@ body {
     line-height: 10px;
     padding: 0 100px;
     font-weight:bolder;
+   }
+
     
-}
+  .login-form{
+    width: 360px;
+    height: 460px;
+    margin: auto;
+    border-radius: 14px;
+    background-color: white;
+  }
+  h1 {
+    font-family: TT Wellingtons Trial Bold;
+    text-align: center;
+    padding-top: 15px;
+    font-weight: 900;
+  }
+  form {
+    width: 300px;
+    margin-left: 20px;
+  }
+  form label {
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  form input {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+  }
+  .button-style {
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+  }
+  .login-button {
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+    border-radius: 6px;
+    margin-top: 12px;
+  }
+  /* .button-style {
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+    border-radius: 6px;
+  } */
+  .para-2 {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  .para-2 a {
+    color: #49c1a2
+  }
+  
+/* }
   .login-box {
     width: 360px;
     height: 500px;
@@ -54,7 +119,7 @@ body {
     border-radius: 6px;
     outline: none;
   }
-  input[type="button"] {
+  .button-style {
     width: 320px;
     height: 35px;
     margin-top: 20px;
@@ -62,6 +127,7 @@ body {
     background-color: #49c1a2;
     color: white;
     font-size: 18px;
+    border-radius: 6px;
   }
   p {
     text-align: center;
@@ -76,5 +142,5 @@ body {
   }
   .para-2 a {
     color: #49c1a2;
-  }
+  }*/
   
