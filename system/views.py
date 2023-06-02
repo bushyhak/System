@@ -14,6 +14,8 @@ def dashboard(request):
 def home(request):
     return render(request,'system/home.html')
 
+def dashboard(request):
+    return render(request, 'system/dashboard.html')
 def book(request):
     return render(request,'system/book.html')
 

@@ -32,7 +32,7 @@ nav{
   position: relative;
   top: 0;
   bottom: 0;
-  height: 86.5vh;
+  height: 89vh;
   left: 0;
   background: #fff;
   width: 280px;
@@ -118,6 +118,7 @@ a:hover{
 .main-vaccine{
   display: flex;
   margin-top: 20px;
+  font-family:TT Wellingtons Trial Regular;
 }
 .main-vaccine .card{
   width: 25%;
@@ -127,14 +128,16 @@ a:hover{
   border-radius: 20px;
   padding: 10px;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  font-family:TT Wellingtons Trial Regular;
 }
 .main-vaccine .card h3{
+  font-size:1.2em;
   margin: 10px;
   text-transform: capitalize;
   font-family:TT Wellingtons Trial Regular;
 }
 .main-vaccine .card p{
-  font-size: 12px;
+  font-size: 17px;
  
 }
 .main-vaccine .card button{
@@ -163,14 +166,103 @@ a:hover{
   text-transform: capitalize;
 }
 .course-box{
-  width: 100%;
-  height: 300px;
+  width: 98%;
+  height: 42.6vh;
   padding: 10px 10px 30px 10px;
   margin-top: 10px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  font-family:TT Wellingtons Trial Regular;
 }
+/* .footerContainer{
+  background-color:#F0EFED;
+  width: 100%;
+  padding: 70px 30px 20px;
+  font-family: TT Wellingtons Trial Regular;
+}
+.socialIcons{
+  display: flex;
+  justify-content: center;
+  
+}
+.socialIcons a{
+  text-decoration: none;
+  padding: 10px;
+  background-color:#F0EFED ;
+  margin: 10px;
+  border-radius: 50%;
+}
+.socialIcons a i{
+  font-size: 2em;
+  color:black;
+  opacity: 0.9;
+}
+.socialIcons a:hover{
+  background-color:white;
+  transition: .5s;
+}
+.socialIcons a:hover i{
+  color: black;
+  transition: 0.5s;
+}
+.footNav{
+  margin: 3px 0;
+  
+  
+  
+}
+.footNav ul{
+  display: flex;
+  justify-content:center;
+}
+.footNav ul li a{
+  color: black;
+  margin: 20px;
+  text-decoration: none;
+  font-size: 1.3em;
+  opacity: 0.7;
+  transition: 0.5s;
+}
+.footNav ul li a:hover{
+  opacity: 1;
+}
+.footerBottom {
+  background-color:#F0EFED;
+  padding: 20px;
+  text-align: center;
+  color: black;
+  opacity:0.8;
+  width: 100%;
+}
+@media(max-width: 952px){
+  .footNav ul{
+      flex-direction:column;
+      align-items: center;
+      width: 100%;
+  }
+  .footNav ul li{
+
+      text-align: center;
+      margin: 10px;
+  }
+  .footerBottom {
+      background-color:#F0EFED;
+      padding: 20px;
+      text-align: center;
+      color: black;
+      opacity:0.8;
+      width: 100%;
+      
+      
+  }    
+} */
+
+
+
+
+
+
 
 
   
