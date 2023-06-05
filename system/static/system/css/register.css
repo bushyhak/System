@@ -10,6 +10,7 @@
 body {
     background-color: rgb(41, 51, 82);
     font-family:TT Wellingtons Trial Regular ;
+  
   }
   .brand{
     color: white;
@@ -23,8 +24,8 @@ body {
 }
   
 .signup-box {
-    width: 360px;
-    height: 532px;
+    width: 385px;
+    height: 630px;
     border-radius: 14px;
     margin: auto;
     background-color: white;
@@ -54,33 +55,38 @@ h4 {
   }
   
   form input {
-    width: 100%;
-    padding: 7px;
+    width: 110%;
+    padding: 6px;
     border: none;
     border: 1px solid gray;
     border-radius: 6px;
     outline: none;
   }
   .styled{
-    width: 320px;
+    width: 350px;
     height: 35px;
-    margin-top: 20px;
+    margin-top: 15px;
     border: none;
     background-color: #49c1a2;
     color: white;
     font-size: 18px;
     border-radius: 6px;
   }
-  p {
+  .terms{
+    color: black;
     text-align: center;
-    padding-top: 0;
     font-size: 15px;
+    margin-left: 2%;
+  }
+  .terms a{
+    color:blue;
   }
   .para-2 {
     text-align: center;
     color: white;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 4px;
+   
   }
   .para-2 a {
     color: #49c1a2;

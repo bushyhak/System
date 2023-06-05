@@ -1,0 +1,33 @@
+@font-face { 
+    font-family: TT Wellingtons Trial Regular;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+  }
+  
+@font-face {
+  font-family: TT Wellingtons Trial Bold;
+  src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
+  }
+@font-face {
+    font-family: TT Wellingtons Trial DemiBold;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
+    } 
+.welcome-message{
+    background-color: #fff;
+    height: 100vh;
+}
+.welcome-message h1{
+    font-family:TT Wellingtons Trial DemiBold ;
+    padding-top: 2%;
+}
+.welcome-message p{
+    text-align: left;
+    font-family:TT Wellingtons Trial Regular;
+    font-size: 1.3em;
+    padding-top: 2%;
+    color: blue;
+}
+.welcome-message a{
+    color: green;
+    text-decoration: underline;
+}
+    

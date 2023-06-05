@@ -11,9 +11,23 @@
       <h1>Sign Up</h1>
       <h4>It's free and only takes a minute</h4>
       <form  method="POST">
-        {{form}}
+        {{user_form.as_p}}
         {% csrf_token %}
-        <label>First Name</label>
+        <p><input type="submit" class="styled" value="Create Account"></p>
+        <p class="terms">
+          By clicking the Sign Up button,you agree to our <br />
+          <a href="#">Terms and Condition</a> and <a href="#">Policy Privacy</a>
+        </p>
+    </div>
+    
+    <p class="para-2">
+      Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </p> 
+
+
+  </body>
+</html>
+       <!-- <label>First Name</label>
         <input type="text" placeholder="" />
         <label>Last Name</label>
         <input type="text" placeholder="" />
@@ -22,7 +36,7 @@
         <label>Password</label>
         <input type="password" placeholder="" />
         <label>Confirm Password</label>
-        <input type="password" placeholder="" />
+        <input type="password" placeholder="" /> 
         <button type="submit" class="styled">Submit</button>
       <closeform></closeform></form>
       <p>
@@ -32,7 +46,6 @@
     </div>
     <p class="para-2">
       Already have an account? <a href="{% url 'login' %}">Login here</a>
-    </p>
-  </body>
-</html>
+    </p> -->
+
 
