@@ -7,26 +7,24 @@
     font-family: TT Wellingtons Trial Regular;
     src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
 }
-  
+
 *{
     padding: 0;
     margin: 0;
     text-decoration: none;
     list-style: none;   
     box-sizing: border-box;
+    
 }
 .navbar{
+    background-color: #F0EFED;
     display: flex;
     justify-content: space-between;
     align-items: center;
-     background-color: #F0EFED;
     color: black;
     height: 71px;
     width: 100%;
     font-family:TT Wellingtons Trial Regular;
-   
-
-   
     
 }
 .brand-title{
@@ -109,13 +107,13 @@ html,body{
     height: 100%;}
 
 body{
-    background-color: #fff;
     display: flex;
     flex-direction: column;
 }
 
 
 main{
+    background-color: #fff;
     display: flex;
     flex: 1;
 }
@@ -184,7 +182,6 @@ main{
     opacity: 1;
 }
 .footerBottom {
-    background-color:#F0EFED;
     padding: 20px;
     text-align: center;
     color: black;

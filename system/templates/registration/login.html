@@ -27,8 +27,16 @@
        <input type="hidden" name="next" value="{{ next }}" />
        <div class="button-style">
         <input type="submit" value="Log-in" class="login-button">
+        
       </div>
   </form>
+  <div class="reset-pass">
+    <p>
+      <a href="{% url "password-reset" %}">
+      Forgotten password?
+      </a>
+      </p>
+  </div>
 </div>
 <p class="para-2">
   Not have an account? <a href="{% url 'register' %}">Sign Up Here</a>
@@ -42,11 +50,14 @@
         {{ form }}
         {% csrf_token %}
         <button type="submit" class="button-style">Login</button>
-      <closeform></closeform></form>
+        
+      <closeform></closeform>
+    </form>
     </div>
     <p class="para-2">
       Not have an account? <a href="{% url 'register' %}">Sign Up Here</a>
     </p> {% endcomment %}
+   
   </body>
 </html>
 

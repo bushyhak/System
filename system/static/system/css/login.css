@@ -58,7 +58,7 @@ body {
   }
   .login-button {
     border: none;
-    background-color: #49c1a2;
+    background-color: blue;
     color: white;
     font-size: 18px;
     border-radius: 6px;
@@ -74,6 +74,12 @@ body {
     font-size: 18px;
     border-radius: 6px;
   } */
+  .reset-pass{
+    text-align: center;
+    padding-top: 8px;
+    font-size: 1.3em;
+
+  }
   .para-2 {
     text-align: center;
     color: white;
