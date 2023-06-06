@@ -8,6 +8,8 @@ User = get_user_model()
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE)
+    date_of_birth = models.DateField(blank=True)
+    phone_number = models.CharField(max_length=20,blank=False)
     photo = models.ImageField(upload_to='user/%Y/%m/%d/',
                               blank=True)
     
