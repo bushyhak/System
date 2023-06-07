@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="{%static 'system/css/register_done.css' %}">
 
 
-
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -26,32 +24,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
      crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="script.js"></script>
-
+    <script src="{% static 'system/javascript/script.js' %}" defer></script>
 </head>
 <body>
     <nav class="navbar">
-        <div class="brand-title"><h4>GEVAC</h4></div>
-        <a href="#" class="toggle-button">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </a>
+        <div class="my-logo">
+            <div class="brand-title"><h4>GEVAC</h4></div>
+            <a href="#" class="toggle-button" id="btnToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+        </div>
         <div class="navbar-links">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="#">Book</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a>|</li>
+                <li class="sep"><a href="#">Contact</a></li>
                 <li><a href="{% url 'register' %}">Join Now</a></li>
                 <li><a href="{% url 'login' %}">Sign In</a></li>
-                <!-- <li> <a href="{% url 'logout' %}">logout</a></li> -->
-                
+                <!-- <li> <a href="{% url 'logout' %}">logout</a></li> -->          
             </ul>
-           
         </div>
-        
-
         
     </nav>
     {% block content%}
@@ -87,6 +82,16 @@
             <p>Copyright &copy; 2023 | Member of MOH</p>
         </div>
     </footer>
+    <!-- <script>
+        const toggleButton = document.getElementsByClassName('toggle-button')[0]
+const navbarLinks = document.getElementsByClassName('navbar-links')[0]
+
+toggleButton.addEventListener('click', () => {
+    navbarLinks.classList.toggle('active')
+})
+    </script> -->
+
     
 </body>
+
 </html>

@@ -1,14 +1,14 @@
-
 @font-face {
     font-family: TT Wellingtons Trial Regular;
     src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
-  }
+}
   
-  @font-face {
-  font-family: TT Wellingtons Trial Bold;
-  src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
-  }
-  @font-face {
+@font-face {
+    font-family: TT Wellingtons Trial Bold;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
+}
+
+@font-face {
     font-family: TT Wellingtons Trial DemiBold;
     src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
 }
@@ -18,25 +18,23 @@
     flex-direction: row;
     width: 100%;
     min-height: 70vh;
-   
-
 }
+
 .statement, .pic{
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #fff;
-   
-
-
 }
+
 .statement{
     color: #001855;
 
-   /* color: rgb(15, 15,20);*/
-    
+   /* color: rgb(15, 15,20);*/    
+   padding-left: 68px;
 }
+
 .sentiment{
     font-size: 2.5em;
     line-height:145%;
@@ -45,12 +43,12 @@
     margin-top:30%;
     flex-wrap:wrap;
     white-space:nowrap;
-    width:79%;
+    width: 100%;
     font-family: TT Wellingtons Trial DemiBold;
     font-weight:900;
     font-style: normal;
-   padding-left: 0;
- 
+    padding-left: 0;
+   
 }
 
 .pic{
@@ -58,22 +56,52 @@
     background-size: cover;
     outline: none;
     object-fit: contain;
-    
-    
 }
+
+@media (max-width: 767px) {
+    .intro {
+        all: unset;
+        background-image: url('../images/withparents2-transformed.jpeg');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: block;
+        /* display: flex;
+        align-items: center; */
+    }
+    .statement, .pic {
+        all: unset;
+    }
+    .sentiment {
+        margin-top: 0;
+        padding-top: 20px;
+        
+    }
+    .sentiment p {
+        text-shadow: 2px 2px 6px red;
+        margin-left: 20px;
+    }
+    .pic {
+        display: none;
+    }
+}
+
+
 .our-thing{
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
     width: 100%;
-    min-height: 300vh;
+    /* min-height: 300vh; */
     background-color: #fff;
+    padding: 20px;
 }
 .purpose{
     border-color: blue;
     display: flex;
     flex-direction: column;
-    width:50%;
-    padding-left: 55px;
+    box-sizing: border-box;
+    /* width:50%; */
+    /* padding-left: 55px; */
     color: #151520;
     font-style: normal;
     font-weight: 500;
@@ -82,12 +110,77 @@
     margin-top: 0;
     background-color: #fff;
 }
-.capture{
-    margin-top: 6%;
-    background-color: #fff;
+.our-thing .purpose .wrapper {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 1fr;
+    grid-template: "one  txt1"
+                   "img1 .   "
+                   "img1 img2"
+                   ".    img2"
+                   ".    txt2"
+                   "img3 img4";
+    gap: 8px;
+}
+.our-thing .purpose .wrapper .one-thing {
+    grid-area: one;
+    padding: 0;
+    padding-left:24px ;
+    /* --pl: 128px;
+    padding-left: calc(var(--pl) - 20px); */
+}
+.our-thing .purpose .wrapper .img1 {
+    grid-area: img1;
+    display: block;
+    width: 100%;
+}
+.our-thing .purpose .wrapper .short {
+    grid-area: txt1;
+    margin-bottom: 100px;
+    line-height: 2;
+}
+.our-thing .purpose .wrapper .praise {
+    grid-area: txt2;
+    line-height: 2;
+    padding-bottom: 15px;
+}
+.our-thing .purpose .wrapper .img2 {
+    grid-area: img2;
+    width: 100%;
+}
+.our-thing .purpose .wrapper .img3 {
+    grid-area: img3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.our-thing .purpose .wrapper .img4 {
+    grid-area: img4;
+    width: 100%;
 }
 
-.container-1{
+@media (max-width: 767px) {    
+    .our-thing .purpose .wrapper {
+        grid-template: "one"   
+                       "txt1"
+                       "img1"
+                       "img2"
+                       "txt2"
+                       "img3"
+                       "img4";
+    }
+    .our-thing .purpose .wrapper .short {
+        margin-bottom: 0;
+    }
+    .our-thing .purpose .wrapper .one-thing {
+        padding-left: 0;
+    }
+        
+        
+}
+
+
+/* .container-1{
     width: 50%;
     font-family: TT Wellingtons Trial Regular;
     font-style: normal;
@@ -97,9 +190,9 @@
     padding-left: 0;
     margin-top: 3%;
     line-height: 33px;
-    background-color: #fff;
-    
+    background-color: #fff;   
 }
+
 .vaccine{
     margin-top: 50%;
     background-image: url('../images/hepatitis_a-transformed.jpeg');
@@ -112,7 +205,7 @@
     margin-top:47%;
     background-image:url('../images/measles-transformed.jpeg') ;
     background-size: cover;
-    width:99%;
+    width: 99%;
     height: 20%;
 
 }
@@ -131,7 +224,6 @@
     background-size: cover;
     width: 99%;
     height:19%;
-    
 }
 .happier{
     width: 99%;
@@ -141,9 +233,40 @@
     margin-top: 14.7%;
 }
 .divider{
-    background-color: #fff;
-    
-    
-}
- 
+    background-color: #fff;   
+} */
 
+/* @media (max-width: 767px) {
+    .our-thing{
+        all: unset;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        background: #fff;
+    }
+    .purpose {
+        width: 100%;
+        height: auto;
+        padding: 0;
+    }
+    .img1, .img2, .img3, .img4 {
+        width: 100%;
+    }
+    .capture {
+        margin-top: 0;
+        height: auto;
+    }
+    .container-1{
+        width: 100%;
+        font-family: TT Wellingtons Trial Regular;
+        font-style: normal;
+        font-size: 22px;
+        font-weight: 400;
+        color: #757575;
+        padding: 0;
+        margin: 0;
+        line-height: 33px;
+        background-color: #fff;
+    }
+} */
