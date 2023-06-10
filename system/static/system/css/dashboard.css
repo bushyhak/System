@@ -32,7 +32,7 @@ nav{
   position: relative;
   top: 0;
   bottom: 0;
-  height: 89vh;
+  height: 100vh;
   left: 0;
   background: #fff;
   width: 280px;
@@ -166,15 +166,32 @@ a:hover{
   text-transform: capitalize;
 }
 .course-box{
-  width: 98%;
-  height: 42.6vh;
-  padding: 10px 10px 30px 10px;
-  margin-top: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  font-family:TT Wellingtons Trial Regular;
-}
+  display: flex;
+  flex-direction: row;
+  height:53.5vh;
+  margin-top:10px ;
+  background-color: #fff;
+  border-radius: 8px;
+  /* @media (max-width: 952px){
+    .navbar {
+        height: auto;
+        padding: 0;
+    }
+    .logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+   
+    */
+
+
+
+
+
 /* .footerContainer{
   background-color:#F0EFED;
   width: 100%;

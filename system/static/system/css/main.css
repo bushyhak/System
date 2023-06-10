@@ -136,7 +136,7 @@ html, body {
 } */
 
 .main{
-    background-color: #fff;
+    /* background-color: #fff; */
     display: flex;
     flex: 1;
 }
