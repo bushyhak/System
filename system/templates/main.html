@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="{%static 'system/css/password_change_form.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/password_change_done.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/edit.css' %}">
+    <link rel="stylesheet" href="{%static 'system/css/password_reset_form.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/password_reset_done.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/password_reset_confirm.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/password_reset_complete.css' %}">
     <link rel="stylesheet" href="{%static 'system/css/register_done.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_reset_form.css' %}">
+
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +51,18 @@
         </div>
         
     </nav>
+    <!-- {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{message.tags}}">
+                    {{ message | safe}}
+                    <a href="#" class="close">x</a>
+
+                </li>
+            {% endfor%}
+        </ul>
+    {% endif%} -->
+
     {% block content%}
     <main class="main">
     
