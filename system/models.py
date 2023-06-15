@@ -8,7 +8,7 @@ class Profile(models.Model):
     date_of_birth = models.DateField(null=True, blank=True, default=None)
     username = models.CharField(max_length=50, default="")
     phone_number = models.CharField(max_length=20)
-    photo = models.ImageField(upload_to='user/%Y/%m/%d/', blank=True)
+    # photo = models.ImageField(upload_to='user/%Y/%m/%d/', blank=True)
     
     
     def __str__(self):
@@ -36,7 +36,7 @@ class Appointment(models.Model):
     date = models.DateField()
     time = models.TimeField()
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="Pending")
 
     def __str__(self):
          return f'Appointment for {self.child}'
@@ -52,7 +52,7 @@ class Vaccination(models.Model):
 class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    appointments = models.ManyToManyField(Appointment,related_name='doctors')
+    appointments = models.ManyToManyField(Appointment,related_name='doctors', blank=True)
     # vaccination = models.ForeignKey(Vaccination, on_delete=models.CASCADE)
 
     def __str__(self):

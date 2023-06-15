@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<div class="flex-container">
+    <form method="POST" class="appointment-form">
+        <h1>Book Appointment</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- <input type="hidden" name="doctor" value="{{ doctor_id }}"> -->
+        <button type="submit">Book Appointment</button>
+      </form>
+</div>
+
+
+{% endblock %}

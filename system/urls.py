@@ -46,6 +46,9 @@ urlpatterns = [
 
     path('add-child/', views.add_child, name='add_child'),
 
+# Booking url
+     path('booking/',views.booking_view, name='booking'),
+
 
 
 ]

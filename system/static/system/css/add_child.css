@@ -51,11 +51,12 @@
   }
   .add-child-form {
     box-shadow: 0 0 5px 0px #ccc;
-    height: 60vh;
-    padding-top: 10px;
+    height: 65vh;
+    /* width: 540px; */
+    /* padding-top: 10px; */
   }
-  /* .add-child:hover {
-    box-shadow: 0 0 5px 0px #ccc;
+  /* .add-child-form:hover {
+    color: gray;
   } */
 
 

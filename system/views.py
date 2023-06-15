@@ -5,9 +5,12 @@ from .forms import LoginForm, UserRegistrationForm, \
                      UserEditForm, ProfileEditForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Doctor, Profile
 from django.contrib import messages
 from .forms import ChildForm
+from .forms import BookingForm
+from random import choice
+
 
 # Create your views here.
 @login_required
@@ -68,10 +71,10 @@ def edit(request):
         if user_form.is_valid and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Profil updated '\
+            messages.success(request, 'Profile updated '\
                                         'successfully')
         else:
-            messages.error(request, 'Errow updating your profile')
+            messages.error(request,'Error updating your profile')
 
     else:
         user_form = UserEditForm(instance=request.user)   
@@ -96,6 +99,46 @@ def add_child(request):
             form = ChildForm
 
     return render(request, 'add_child.html', {'form': form})
+
+@login_required
+def booking_view(request):
+    if request.method == 'POST':
+        form = BookingForm(request.POST, user=request.user)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.parent = request.user
+
+            #Get all available doctors
+            doctors = Doctor.objects.all()
+
+
+            if doctors.exists():
+                
+                # Randomly select a doctor from the available doctors
+
+                random_doctor = choice(doctors)
+                appointment.doctor = random_doctor
+                appointment.status = 'Confirmed'
+                appointment.save()
+
+                # Update the doctor's appoitment
+
+                random_doctor.appointments.add(appointment)
+                appointment.save()
+
+                return redirect('dashboard')
+            
+            else: 
+                return HttpResponse('No Doctors availabe')
+            
+        
+    else:
+        form = BookingForm(user=request.user)
+
+    context = {'form': form}
+    return render(request, 'booking.html', context)
+
+
 
     
 
