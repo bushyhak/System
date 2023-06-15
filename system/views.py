@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from django.contrib import messages
+from .forms import ChildForm
 
 # Create your views here.
 @login_required
@@ -63,12 +64,7 @@ def edit(request):
                                     instance=request.user.profile,
                                     data=request.POST,
                                     files=request.FILES)
-        # user_form =UserEditForm(instance=request.user,
-        #                         data=request.POST)
-        # profile_form = ProfileEditForm(
-        #                             instance=request.user.profile,
-        #                             data=request.POST,
-        #                             files=request.FILES)
+
         if user_form.is_valid and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -84,6 +80,27 @@ def edit(request):
                   'system/edit.html',
                   {'user_form': user_form,
                    'profile_form': profile_form})
+
+# adding the child view function
+@login_required
+def add_child(request):
+    if request.method == 'POST':
+        form = ChildForm(request.POST)
+
+        if form.is_valid():
+            child = form.save(commit=False)
+            child.parent = request.user
+            child.save()
+            return redirect('dashboard')
+    else:
+            form = ChildForm
+
+    return render(request, 'add_child.html', {'form': form})
+
+    
+
+
+
 
 
 

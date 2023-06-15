@@ -40,11 +40,11 @@ urlpatterns = [
 
     path('dashboard/', views.dashboard, name='dashboard'),
     path('register/',views.register, name='register'),
-    path('edit/', views.edit, name='edit')
+    path('edit/', views.edit, name='edit'),
 
+#   add child url
 
-    
-
+    path('add-child/', views.add_child, name='add_child'),
 
 
 
