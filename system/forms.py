@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .models import Child
 from .models import Appointment
+from .models import  Vaccines
 from django.utils import timezone
 from django.forms.widgets import DateInput
 from datetime import date, time
+from django.forms.widgets import CheckboxSelectMultiple
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -82,12 +84,15 @@ class ChildForm(forms.ModelForm):
     
 
 class BookingForm(forms.ModelForm):
-     
+    
     child = forms.ModelChoiceField(queryset=Child.objects.none())
+    vaccines = forms.ModelChoiceField(queryset=Vaccines.objects.all(), widget=forms.Select)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super(BookingForm, self).__init__(*args, **kwargs)
+
+        # Querysets for child and vaccine fields
         self.fields['child'].queryset = Child.objects.filter(parent=user)
    
     # Verifies date is not in the future
@@ -125,7 +130,7 @@ class BookingForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['child', 'date', 'time']
+        fields = ['child','date', 'time']
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'}),
             'time': forms.DateTimeInput(attrs={'type': 'time'}),

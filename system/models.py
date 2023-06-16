@@ -24,7 +24,7 @@ class Child(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
-    vaccinations = models.ManyToManyField('Vaccination')
+    vaccines = models.ManyToManyField('Vaccines')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
     def __str__(self):
@@ -37,14 +37,18 @@ class Appointment(models.Model):
     time = models.TimeField()
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
     status = models.CharField(max_length=100, default="Pending")
+    vaccines = models.ManyToManyField('Vaccines', related_name='appointments', blank=True)
 
     def __str__(self):
          return f'Appointment for {self.child}'
 
-class Vaccination(models.Model):
-    name = models.CharField(max_length=100)
-    date = models.DateField()
-    status = models.CharField(max_length=100)
+class Vaccines(models.Model):
+    name = models.CharField(max_length=50)
+    # date = models.DateField()
+    minimum_age = models.IntegerField(default=0)
+    maximum_age = models.IntegerField(default=0)
+
+    # status = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

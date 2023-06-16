@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Child, Appointment, Vaccination, Doctor
+from .models import Profile, Child, Appointment, Vaccines, Doctor
 
 
 @admin.register(Profile)
@@ -18,9 +18,9 @@ class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('child', 'parent', 'date', 'time', 'doctor', 'status')
     raw_id_fields = ('child', 'parent', 'doctor')
 
-@admin.register(Vaccination)
-class VaccinationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date', 'status')
+@admin.register(Vaccines)
+class VaccinesAdmin(admin.ModelAdmin):
+    list_display = ('name','maximum_age','minimum_age')
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):

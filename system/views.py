@@ -126,6 +126,14 @@ def booking_view(request):
                 random_doctor.appointments.add(appointment)
                 appointment.save()
 
+                # Associate selected vaccines with the appointment
+                selected_vaccine = form.cleaned_data.get('vaccines')
+                if selected_vaccine:
+                    appointment.vaccines.set([selected_vaccine])
+
+                # Update the doctor's appointment
+                random_doctor.appointments.add(appointment)
+
                 return redirect('dashboard')
             
             else: 
