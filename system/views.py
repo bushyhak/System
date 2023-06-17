@@ -1,15 +1,22 @@
-from django.shortcuts import render, redirect
+from datetime import date, time
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
                      UserEditForm, ProfileEditForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Doctor, Profile
-from django.contrib import messages
+from .models import Doctor, Profile, Appointment, Vaccines
 from .forms import ChildForm
 from .forms import BookingForm
 from random import choice
+from .forms import RescheduleForm
+from .forms import CancelForm
+from django.contrib import messages
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.utils import quote
+
 
 
 # Create your views here.
@@ -100,6 +107,7 @@ def add_child(request):
 
     return render(request, 'add_child.html', {'form': form})
 
+
 @login_required
 def booking_view(request):
     if request.method == 'POST':
@@ -114,19 +122,17 @@ def booking_view(request):
 
             if doctors.exists():
                 
-                # Randomly select a doctor from the available doctors
-
+                #Randomly select a doctor from the available doctors
                 random_doctor = choice(doctors)
                 appointment.doctor = random_doctor
                 appointment.status = 'Confirmed'
                 appointment.save()
 
-                # Update the doctor's appoitment
-
+                #Update the doctor's appoitment
                 random_doctor.appointments.add(appointment)
                 appointment.save()
 
-                # Associate selected vaccines with the appointment
+                #Associate selected vaccines with the appointment
                 selected_vaccine = form.cleaned_data.get('vaccines')
                 if selected_vaccine:
                     appointment.vaccines.set([selected_vaccine])
@@ -145,6 +151,65 @@ def booking_view(request):
 
     context = {'form': form}
     return render(request, 'booking.html', context)
+
+
+
+@login_required
+def reschedule_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
+
+    if request.method == 'POST':
+        form = RescheduleForm(request.POST)
+        if form.is_valid():
+            new_date = form.cleaned_data['date']
+            new_time = form.cleaned_data['time']
+
+            # Validate the new date and time
+            if new_date < date.today():
+                form.add_error('date', 'Invalid date. Please select a date in the future')
+            elif new_date == appointment.date and new_time == appointment.time:
+                form.add_error('time', 'Please select a different time')
+
+            if not form.errors:
+                # Update the appointment's date and time
+                appointment.date = new_date
+                appointment.time = new_time
+                appointment.save()
+
+                 # Create an admin log entry for the rescheduled appointment
+                log_entry = LogEntry.objects.log_action(
+                    user_id=request.user.id,
+                    content_type_id=ContentType.objects.get_for_model(appointment).pk,
+                    object_id=appointment.id,
+                    object_repr=str(appointment),
+                    action_flag=CHANGE,
+                    change_message='Appointment rescheduled by user'
+                )
+                log_entry.save()
+
+                messages.success(request, 'Appointment rescheduled successfully.')
+
+
+                return redirect('dashboard')
+    else:
+        form = RescheduleForm()
+
+    context = {'form': form}
+    return render(request, 'reschedule.html', context)
+
+
+@login_required
+def cancel_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
+
+    if request.method == 'POST':
+        appointment.delete()
+        return redirect('dashboard')
+
+    form = CancelForm()
+    context = {'form': form}
+    return render(request, 'cancel.html', context)
+
 
 
 

@@ -1,0 +1,14 @@
+{% extends "main.html"%}
+
+{% load static %}
+
+{% block content %}
+  <div class="form-container">
+    <form method="post" class="rescheduling-form">
+      {% csrf_token %}
+      <h2>Reschedule Appointment</h2>
+      {{ form.as_p }}
+      <button type="submit">Reschedule</button>
+    </form>
+  </div>
+{% endblock %}

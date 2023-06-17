@@ -1,0 +1,65 @@
+@font-face { 
+    font-family: TT Wellingtons Trial Regular;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+  }
+  
+  @font-face {
+  font-family: TT Wellingtons Trial Bold;
+  src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
+  }
+  @font-face {
+    font-family: TT Wellingtons Trial DemiBold;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
+    }
+
+.contact-form{
+    display: flex;
+    width: 100%;
+
+}
+.image1,.image2 {
+    width:50%;
+    background-size:cover;
+}
+.location{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 30px;
+}
+.little-known, .hope{
+    width: 50%;
+}
+.hope p{
+    font-family: TT Wellingtons Trial Regular;
+    font-style: none;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 36px;
+    color: #757575;
+}
+.little-known p{
+    font-family:TT Wellingtons Trial DemiBold;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 40px;
+    color: #0f0f14;
+}
+.hope h1{
+    font-family:TT Wellingtons Trial DemiBold;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 40px;
+    color: #0f0f14;
+}
+.address{
+    font-family: TT Wellingtons Trial Regular;
+    font-style: none;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 33px;
+    color: #757575;
+}
+.hope a{
+    color:#757575 ;
+}

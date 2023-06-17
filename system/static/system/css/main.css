@@ -7,6 +7,11 @@
     font-family: TT Wellingtons Trial Regular;
     src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
 }
+@font-face {
+    font-family:TT Wellingtons Trial ExtraBold;
+    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ ExtraBold.otf);
+}
+
 
 *{
     padding: 0;
@@ -27,11 +32,11 @@
     padding: 0 40px;
 }
 .brand-title{
-    font-family:TT Wellingtons Trial ExtraBold ;
-    font-size: 35px;
+    font-family:'TT Wellingtons Trial ExtraBold' ;
+    font-size: 50px;
     line-height: 80px;
     padding: 0;
-    font-weight:bolder;
+    font-weight:900;
     color: black;
 }
 

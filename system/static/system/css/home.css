@@ -9,7 +9,7 @@
 }
 
 @font-face {
-    font-family: TT Wellingtons Trial DemiBold;
+    font-family: 'TT Wellingtons Trial DemiBold';
     src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
 }
 
@@ -50,6 +50,10 @@
     padding-left: 0;
    
 }
+/* .wrapper {
+    font-weight: 500;
+    font-family: 'TT Wellingtons Trial DemiBold';
+  } */
 
 .pic{
    background-image: url('../images/withparents2-transformed.jpeg');
@@ -57,6 +61,30 @@
     outline: none;
     object-fit: contain;
 }
+.short{
+    font-family: TT Wellingtons Trial Regular;
+    font-style: none;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 36px;
+    color: #757575;
+}  
+
+.ourmission h1{
+    font-weight: 500;
+    font-family: 'TT Wellingtons Trial DemiBold';
+    font-size: 30px;
+}
+.praise p{
+    font-family: TT Wellingtons Trial Regular;
+    font-style: none;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 40px;
+    color: #757575;
+}
+
+
 
 @media (max-width: 767px) {
     .intro {

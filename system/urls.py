@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [ 
     path('', views.home, name='home'),
-    path('contact/', views.contact,name='contact'),
+    path('contact/', views.contact, name ='contact'),
     path('book/', views.book, name='book'),
     path('about/', views.about, name='about'),
     
@@ -47,7 +47,10 @@ urlpatterns = [
     path('add-child/', views.add_child, name='add_child'),
 
 # Booking url
-     path('booking/',views.booking_view, name='booking'),
+    path('booking/',views.booking_view, name='booking'),
+    path('reschedule/<int:appointment_id>/', views.reschedule_view, name='reschedule'),
+    path('cancel/<int:appointment_id>/', views.cancel_view, name='cancel'),
+  
 
 
 

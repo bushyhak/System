@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.forms.widgets import DateInput
 from datetime import date, time
 from django.forms.widgets import CheckboxSelectMultiple
+from django.forms.widgets import Select
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -61,6 +62,8 @@ class ProfileEditForm(forms.ModelForm):
             fields = ['username', 'date_of_birth', 'phone_number']
 
 
+
+
 class ChildForm(forms.ModelForm):
     class Meta:
         model = Child
@@ -83,58 +86,98 @@ class ChildForm(forms.ModelForm):
          return date_of_birth
     
 
+
+
+#Custom widget to display hour intervals for time field
+class HourIntervalSelectWidget(Select):
+    def __init__(self, attrs=None, choices=()):
+        intervals = [
+                    ('08:00', '08:00 AM'),
+                    ('09:00', '09:00 AM'),
+                    ('10:00', '10:00 AM'),
+                    ('11:00', '11:00 AM'),
+                    ('12:00', '12:00 PM'),
+                    ('13:00', '1:00 PM'),
+                    ('14:00', '2:00 PM'),
+                    ('15:00', '3:00 PM'),
+                    ('16:00', '4:00 PM'),
+            # Add more hour intervals as needed
+        ]
+        super().__init__(attrs, choices=intervals)
+
+#Form for booking appointments
 class BookingForm(forms.ModelForm):
-    
+
+    #Field for selecting the child
     child = forms.ModelChoiceField(queryset=Child.objects.none())
+
+    #Field for selecting vaccines
     vaccines = forms.ModelChoiceField(queryset=Vaccines.objects.all(), widget=forms.Select)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super(BookingForm, self).__init__(*args, **kwargs)
-
-        # Querysets for child and vaccine fields
         self.fields['child'].queryset = Child.objects.filter(parent=user)
-   
-    # Verifies date is not in the future
+
+    #Validate that the selected date is not in the past
     def clean_date(self):
         selected_date = self.cleaned_data['date']
         if selected_date < date.today():
-             raise forms.ValidationError("Invalid date. Please select a date in the future")
+            raise forms.ValidationError("Invalid date. Please select a date in the future")
         return selected_date
     
-    # Limits booking time to 7am - 4pm
-    def clean_time(self):
-         selected_time = self.cleaned_data['time']
-         if not (time(7,0) <= selected_time <= time(16,0)):
-              raise forms.ValidationError("Invalid time. Booking times are available between 7am and 4pm")
-         return selected_time
+    #Validate that the selected time is within the allowed range
+    # def clean_time(self):
+    #     selected_time = self.cleaned_data['time']
+    #     if not (time(7, 0) <= selected_time <= time(16, 0)):
+    #         raise forms.ValidationError("Invalid time. Booking times are available between 7am and 4pm")
+    #     return selected_time
     
+    #Validate the overall form data
     def clean(self):
         cleaned_data = super().clean()
         selected_date = cleaned_data.get('date')
         selected_time = cleaned_data.get('time')
 
-    # Check if the selected date is fully booked
         if selected_date:
-             appointment_count = Appointment.objects.filter(date=selected_date).count()
-             if appointment_count >= 50:
-                  raise forms.ValidationError("This date is fully booked. Please select another date.")
-             
-            #  Check if the selected time is already booked
-             existing_appointment = Appointment.objects.filter(date=selected_date, time=selected_time).first()
-             if existing_appointment:
-                  raise forms.ValidationError("This time slot is already booked. Please select another time")
+            #Check if the selected date is fully booked
+            appointment_count = Appointment.objects.filter(date=selected_date).count()
+            if appointment_count >= 50:
+                raise forms.ValidationError("This date is fully booked. Please select another date.")
             
+            #Check if the selected time is already booked
+            # existing_appointment = Appointment.objects.filter(date=selected_date, time=selected_time).first()
+            # if existing_appointment:
+            #     raise forms.ValidationError("This time slot is already booked. Please select another time")
+
         return cleaned_data
-     
 
     class Meta:
         model = Appointment
-        fields = ['child','date', 'time']
+        fields = ['child', 'date', 'time']
         widgets = {
-            'date': forms.DateInput(attrs={'type':'date'}),
-            'time': forms.DateTimeInput(attrs={'type': 'time'}),
-          }
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': HourIntervalSelectWidget(attrs={'type': 'time'}),
+        }
+
+    
+
+class RescheduleForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['date', 'time']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': HourIntervalSelectWidget(attrs={'type': 'time'}),
+        }
+
+class CancelForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = []  # No fields needed for canceling
+
+
+
 
 
 
