@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="cancel">
+    <h1>Cancel Appointment</h1>
+
+    <p>Cancel the appointment for {{ appointment.child }}?</p>
+
+    <form method="post" class="cancel-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Cancel Appointment</button>
+    </form>
+
+
+</div>
+
+
+{% endblock %}

@@ -2,15 +2,24 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+
+PERMISSION_LEVELS = [
+    ('admin', 'Admin'),
+    ('moderator', 'Moderator'),
+    ('user', 'User'),
+]
+
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE)
     date_of_birth = models.DateField(null=True, blank=True, default=None)
     username = models.CharField(max_length=50, default="")
     phone_number = models.CharField(max_length=20)
+    permissions = models.CharField(max_length=20, choices=PERMISSION_LEVELS, default='user')
     # photo = models.ImageField(upload_to='user/%Y/%m/%d/', blank=True)
     
-    
+     
     def __str__(self):
         return f'Profile of {self.user.username}'
     
@@ -57,6 +66,7 @@ class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     appointments = models.ManyToManyField(Appointment,related_name='doctors', blank=True)
+    license_no = models.CharField(max_length=10, null=False)
     # vaccination = models.ForeignKey(Vaccination, on_delete=models.CASCADE)
 
     def __str__(self):

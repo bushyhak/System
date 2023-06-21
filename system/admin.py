@@ -13,6 +13,11 @@ from .models import Profile, Child, Appointment, Vaccines, Doctor
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'date_of_birth','username','phone_number']
     raw_id_fields = ['user']
+    
+    # Add the permissions field to the admin panel
+    fieldsets = (
+        ('Permissions', {'fields': ('permissions',)}),
+    )
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
@@ -30,7 +35,7 @@ class VaccinesAdmin(admin.ModelAdmin):
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
+    list_display = ('first_name', 'last_name','license_no')
 
 
 

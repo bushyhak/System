@@ -116,6 +116,7 @@ class BookingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
+        self.request = kwargs.pop('request')  # Store the request object as an instance variable
         super(BookingForm, self).__init__(*args, **kwargs)
         self.fields['child'].queryset = Child.objects.filter(parent=user)
 
@@ -126,29 +127,43 @@ class BookingForm(forms.ModelForm):
             raise forms.ValidationError("Invalid date. Please select a date in the future")
         return selected_date
     
-    #Validate that the selected time is within the allowed range
-    # def clean_time(self):
-    #     selected_time = self.cleaned_data['time']
-    #     if not (time(7, 0) <= selected_time <= time(16, 0)):
-    #         raise forms.ValidationError("Invalid time. Booking times are available between 7am and 4pm")
-    #     return selected_time
     
     #Validate the overall form data
     def clean(self):
         cleaned_data = super().clean()
         selected_date = cleaned_data.get('date')
         selected_time = cleaned_data.get('time')
+        child = cleaned_data.get('child')
+        parent = self.request.user
+
+        if selected_date and selected_time and child:
+            # Check if the parent has already booked an appointment for the selected child
+            existing_appointment = Appointment.objects.filter(
+                child=child,
+                parent=parent
+            ).first()
+
+            if existing_appointment:
+                raise forms.ValidationError("You have already booked an appointment for this child.")
+                                     
+
+
+        # if selected_date and selected_time and child:
+        #     # Check if the selected date, time, and child combination already exists
+        #     existing_appointment = Appointment.objects.filter(
+        #         date=selected_date,
+        #         time=selected_time,
+        #         child=child
+        #     ).first()
+
+        #     if existing_appointment:
+        #         raise forms.ValidationError("You have already booked an appointment at this date and time.")
 
         if selected_date:
             #Check if the selected date is fully booked
             appointment_count = Appointment.objects.filter(date=selected_date).count()
             if appointment_count >= 50:
                 raise forms.ValidationError("This date is fully booked. Please select another date.")
-            
-            #Check if the selected time is already booked
-            # existing_appointment = Appointment.objects.filter(date=selected_date, time=selected_time).first()
-            # if existing_appointment:
-            #     raise forms.ValidationError("This time slot is already booked. Please select another time")
 
         return cleaned_data
 

@@ -49,9 +49,11 @@ urlpatterns = [
 # Booking url
     path('booking/',views.booking_view, name='booking'),
     path('reschedule/<int:appointment_id>/', views.reschedule_view, name='reschedule'),
-    path('cancel/<int:appointment_id>/', views.cancel_view, name='cancel'),
+#     path('cancel/<int:appointment_id>/', views.cancel_view, name='cancel'),
+    path('cancel/<int:appointment_id>/', views.cancel_appointment, name='cancel'),
+]
+
   
 
 
 
-]

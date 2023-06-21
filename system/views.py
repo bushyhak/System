@@ -2,6 +2,8 @@ from datetime import date, time
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+
+from system import report
 from .forms import LoginForm, UserRegistrationForm, \
                      UserEditForm, ProfileEditForm
 from django.contrib.auth.forms import UserCreationForm
@@ -111,7 +113,7 @@ def add_child(request):
 @login_required
 def booking_view(request):
     if request.method == 'POST':
-        form = BookingForm(request.POST, user=request.user)
+        form = BookingForm(request.POST,user=request.user,request=request)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.parent = request.user
@@ -127,6 +129,14 @@ def booking_view(request):
                 appointment.doctor = random_doctor
                 appointment.status = 'Confirmed'
                 appointment.save()
+
+            # Retrieve the selected child and vaccine
+                child = form.cleaned_data['child']
+                vaccines = form.cleaned_data['vaccine']
+
+            # Assigns the selected vaccine to child.
+                child.vaccines = vaccines
+                child.save()
 
                 #Update the doctor's appoitment
                 random_doctor.appointments.add(appointment)
@@ -147,7 +157,7 @@ def booking_view(request):
             
         
     else:
-        form = BookingForm(user=request.user)
+        form = BookingForm(user=request.user, request=request)
 
     context = {'form': form}
     return render(request, 'booking.html', context)
@@ -199,21 +209,58 @@ def reschedule_view(request, appointment_id):
 
 
 @login_required
-def cancel_view(request, appointment_id):
-    appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
 
-    if request.method == 'POST':
-        appointment.delete()
-        return redirect('dashboard')
-
-    form = CancelForm()
-    context = {'form': form}
-    return render(request, 'cancel.html', context)
-
-
-
-
+def cancel_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(pk=appointment_id)
     
+    if request.method == 'POST':
+        form = CancelForm(request.POST, instance=appointment)
+        if form.is_valid():
+            appointment.delete()
+            return redirect('dashboard')
+    else:
+        form = CancelForm(instance=appointment)
+
+    return render(request, 'cancel_appointment.html', {'form': form, 'appointment': appointment})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def cancel_view(request, appointment_id):
+#     appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
+
+#     if request.method == 'POST':
+#         appointment.delete()
+#         return redirect('dashboard')
+
+#     form = CancelForm()
+#     context = {'form': form}
+#     return render(request, 'cancel.html', context)
+
+# # def report_view(request):
+# #     report = report()
+#     return HttpResponse(report, content_type='text/plain')
+
 
 
 
