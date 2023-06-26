@@ -11,19 +11,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6$65wq1r@fo(pzlr(kjkf5y5cx)k#8%a7x&12iw_tw_!@5mdv-'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = []
 
@@ -31,7 +35,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'system',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
    
-    
+    'system',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +82,11 @@ WSGI_APPLICATION = 'bookingsys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'immunize',
-        'USER': 'root',
-        'PASSWORD': 'bushymane',
-        'HOST': 'localhost',
-        'PORT':'3306',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASS'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -124,9 +127,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
-        BASE_DIR/'system/static'
-    
-    ]
+    BASE_DIR/'system/static'    
+]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -140,17 +142,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTHENTICATION_BACKENDS = [
-'system.authentication.EmailAuthBackend',
-'django.contrib.auth.backends.ModelBackend',
-
+    'system.authentication.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
-# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'geratechinfo@gmail.com'
-EMAIL_HOST_PASSWORD = 'notfutzszrmmeibi'
 EMAIL_USE_TLS = True
-EMAIL_USER_SSL = False
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
