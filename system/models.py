@@ -8,13 +8,21 @@ PERMISSION_LEVELS = [
     ('moderator', 'Moderator'),
     ('user', 'User'),
 ]
-
+VACCINE_STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('completed', 'Completed')
+   
+]
+APPOINTMENT_STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('completed', 'Completed')
+]   
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE)
     date_of_birth = models.DateField(null=True, blank=True, default=None)
-    username = models.CharField(max_length=50, default="")
+    username = models.CharField(max_length=50, default='')
     phone_number = models.CharField(max_length=20)
     permissions = models.CharField(max_length=20, choices=PERMISSION_LEVELS, default='user')
     # photo = models.ImageField(upload_to='user/%Y/%m/%d/', blank=True)
@@ -33,7 +41,7 @@ class Child(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
-    vaccines = models.ManyToManyField('Vaccines')
+    # vaccines = models.ForeignKey('Vaccines', related_name='children')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
     def __str__(self):
@@ -45,8 +53,9 @@ class Appointment(models.Model):
     date = models.DateField()
     time = models.TimeField()
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
-    status = models.CharField(max_length=100, default="Pending")
+    status = models.CharField(max_length=50, choices=APPOINTMENT_STATUS_CHOICES, default='Pending')
     vaccines = models.ManyToManyField('Vaccines', related_name='appointments', blank=True)
+  
 
     def __str__(self):
          return f'Appointment for {self.child}'
@@ -56,6 +65,8 @@ class Vaccines(models.Model):
     # date = models.DateField()
     minimum_age = models.IntegerField(default=0)
     maximum_age = models.IntegerField(default=0)
+    # status = models.CharField(max_length=20, choices=VACCINE_STATUS_CHOICES, default='')
+    child = models.ForeignKey(Child,on_delete=models.CASCADE, related_name="vaccines", null=True, blank=True)
 
     # status = models.CharField(max_length=100)
 
@@ -71,6 +82,14 @@ class Doctor(models.Model):
 
     def __str__(self):
         return f'Dr. {self.first_name} {self.last_name}'
+
+class AdministeredVaccine(models.Model):
+    child = models.ForeignKey(Child, on_delete=models.CASCADE, related_name='administered_vaccines')
+    vaccine = models.ForeignKey(Vaccines, on_delete=models.CASCADE)
+    date_administered = models.DateField()
+
+    def __str__(self):
+        return f'{self.child} - {self.vaccine}'
     
 
 # class Parent(models.Model):

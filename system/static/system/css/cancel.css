@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 59vh;
     margin: 30px;
     margin-top: 30px;
 
@@ -24,7 +24,7 @@
   .cancel h1{
     font-family:'TT Wellingtons Trial DemiBold' ;
     font-weight:bolder;
-    font-size: 50px;
+    font-size: 40px;
     /* text-transform: uppercase; */
   }
   .cancel p{
@@ -39,8 +39,8 @@
     color: white;
     margin: auto;
     margin-top: 45%;
-    padding: 40px;
-    font-size: 35px;
+    padding: 20px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     border-radius: 3px;

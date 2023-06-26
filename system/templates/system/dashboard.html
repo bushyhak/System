@@ -15,7 +15,7 @@
   <div class="container">
     <nav>
       <ul>
-        <li><a href="#" class="logo">
+        <li><a href="{% url 'home' %}" class="logo">
           <img src="/logo.jpg" alt="">
           <span class="nav-item">GEVAC</span>
         </a></li>
@@ -25,25 +25,24 @@
         </a></li>
         <li><a href="{% url "edit" %}">
           <i class="fas fa-user"></i>
-          <span class="nav-item">My Profile</a></span>
+          <span class="nav-item">Edit Profile</a></span>
         </a></li>
         
-        <li><a href="">
-          <i class="fas fa-chart-bar"></i>
-          <span class="nav-item">Child Info</span>
-        </a></li>
+        <li>
+          <a href="">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-item">Child Info</span>
+          </a>
+        </li>
+
         <li><a href="">
           <i class="fas fa-cog"></i>
           <span class="nav-item">Settings</span>
         </a></li>
-        <li><a href="">
-          <i class="fas fa-comment"></i>
-          <span class="nav-item">Feedback</span>
-        </a></li>
-        <li><a href="">
+        <!-- <li><a href="">
           <i class="fas fa-question-circle"></i>
           <span class="nav-item">Help</span>
-        </a></li>
+        </a></li> -->
         <li><a href="{% url 'home'%}" class="logout">
           <i class="fas fa-sign-out-alt"></i>
           <span class="nav-item">Log out</span>
@@ -60,13 +59,13 @@
           <i class="fas fa-chart-bar"></i>
           <h3>New Child Record</h3>
           <p>Join Over a Thousand Parents</p>
-          <button>Add Record</button>
+          <a href="{% url 'add_child' %}"><button>Add Record</button></a>
         </div>
         <div class="card">
           <i class="fas fa-calendar-check"></i>
           <h3>Schedule</h3>
           <p>Join Over a Thousand Parents</p>
-          <button>Schedule</button>
+          <a href="{% url 'booking' %}"><button>Schedule</button></a>
         </div>
         <div class="card">
           

@@ -173,6 +173,22 @@ a:hover{
   background-color: #fff;
   border-radius: 8px;
 }
+
+/* .settings-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.settings-menu.show {
+  display: block;
+} */
+
   @media (max-width: 952px){
     .navbar {
         height: auto;

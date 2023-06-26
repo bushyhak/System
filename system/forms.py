@@ -1,45 +1,52 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
-from .models import Child
-from .models import Appointment
-from .models import  Vaccines
+from .models import Profile, Child, Appointment, Vaccines
 from django.utils import timezone
-from django.forms.widgets import DateInput
 from datetime import date, time
-from django.forms.widgets import CheckboxSelectMultiple
-from django.forms.widgets import Select
+from django.forms.widgets import CheckboxSelectMultiple, Select, DateInput
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password',
-                               widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repeat Password',
-                                widget=forms.PasswordInput)
-    last_name = forms.CharField(label='Last Name')
+# class UserRegistrationForm(forms.ModelForm):
+#     password = forms.CharField(label='Password',
+#                                widget=forms.PasswordInput)
+#     password2 = forms.CharField(label='Repeat Password',
+#                                 widget=forms.PasswordInput)
+#     last_name = forms.CharField(label='Last Name')
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['username'].help_text=None
+    
+#     class Meta:
+#         model = User
+#         fields = ['username','first_name', 'last_name','email']
+        
+#     def clean_password2(self):
+#         cd = self.cleaned_data
+#         if cd['password'] != cd['password2']:
+#              raise forms.ValidationError('Passwords don\'t match.')
+#         return cd['password2']
+    
+#     def clean_email(self):
+#          data = self.cleaned_data['email']
+#          if User.objects.filter(email=data).exists():
+#               raise forms.ValidationError('Email already in use.')
+#          return data
+
+
+class UserRegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].help_text=None
-    
-    class Meta:
-        model = User
-        fields = ['username','first_name', 'last_name','email']
-        
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-             raise forms.ValidationError('Passwords don\'t match.')
-        return cd['password2']
-    
-    def clean_email(self):
-         data = self.cleaned_data['email']
-         if User.objects.filter(email=data).exists():
-              raise forms.ValidationError('Email already in use.')
-         return data
+        for field in self.fields:
+            self.fields[field].help_text=''
 
     
 class UserEditForm(forms.ModelForm):
@@ -59,7 +66,7 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
         class Meta:
             model = Profile
-            fields = ['username', 'date_of_birth', 'phone_number']
+            fields = [ 'date_of_birth', 'phone_number']
 
 
 
@@ -119,6 +126,7 @@ class BookingForm(forms.ModelForm):
         self.request = kwargs.pop('request')  # Store the request object as an instance variable
         super(BookingForm, self).__init__(*args, **kwargs)
         self.fields['child'].queryset = Child.objects.filter(parent=user)
+        # self.fields['vaccines'].queryset = Vaccines.objects.filter(child__parent=user/)
 
     #Validate that the selected date is not in the past
     def clean_date(self):
@@ -135,6 +143,13 @@ class BookingForm(forms.ModelForm):
         selected_time = cleaned_data.get('time')
         child = cleaned_data.get('child')
         parent = self.request.user
+        selected_vaccine = cleaned_data.get('vaccines')
+
+        if child and selected_vaccine:
+            # Check if the selected vaccine has already been administered to the child
+            if child.vaccines.filter(id=selected_vaccine.id).exists():
+                self.add_error('vaccines', "This vaccine has already been administered to the child.")
+
 
         if selected_date and selected_time and child:
             # Check if the parent has already booked an appointment for the selected child
@@ -146,19 +161,13 @@ class BookingForm(forms.ModelForm):
             if existing_appointment:
                 raise forms.ValidationError("You have already booked an appointment for this child.")
                                      
+        # Associate selected vaccines with the appointment and child
+        # selected_vaccine = cleaned_data.get('vaccines')
+        # if selected_vaccine:
+        #     selected_vaccine.child = child
+        #     selected_vaccine.save()
 
-
-        # if selected_date and selected_time and child:
-        #     # Check if the selected date, time, and child combination already exists
-        #     existing_appointment = Appointment.objects.filter(
-        #         date=selected_date,
-        #         time=selected_time,
-        #         child=child
-        #     ).first()
-
-        #     if existing_appointment:
-        #         raise forms.ValidationError("You have already booked an appointment at this date and time.")
-
+       
         if selected_date:
             #Check if the selected date is fully booked
             appointment_count = Appointment.objects.filter(date=selected_date).count()
