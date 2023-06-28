@@ -1,47 +1,34 @@
-from time import localtime
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
-from django.utils.html import format_html
-admin.site.register(LogEntry)
-from django.utils import timezone
-from django.utils.formats import localize
-
 from .models import Profile, Child, Appointment, Vaccines, Doctor
 
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'date_of_birth','username','phone_number']
-    raw_id_fields = ['user']
-    search_fields = ['username']
-    
-    # Add the permissions field to the admin panel
-    fieldsets = (
-        ('Permissions', {'fields': ('permissions',)}),
-    )
+    list_display = ["user", "date_of_birth", "phone_number"]
+    raw_id_fields = ["user"]
+
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'date_of_birth', 'parent']
-    raw_id_fields = ['parent']
-    list_filter = ['parent', 'last_name',]
-    search_fields = ['first_name', 'last_name']
+    list_display = ["first_name", "last_name", "date_of_birth", "parent", "gender"]
+    raw_id_fields = ["parent"]
+
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('child', 'parent', 'date', 'time', 'doctor', 'status')
-    raw_id_fields = ('child', 'parent', 'doctor')
+    list_display = ("child", "date", "time", "doctor", "vaccine")
+    raw_id_fields = ["child"]
+
 
 @admin.register(Vaccines)
 class VaccinesAdmin(admin.ModelAdmin):
-    list_display = ('name','maximum_age','minimum_age','child')
+    list_display = ("name", "weeks_maximum_age", "weeks_minimum_age")
+
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name','license_no')
-
-
-
+    list_display = ("first_name", "last_name", "license_no")
 
 
 class CustomLogEntry(LogEntry):
@@ -49,13 +36,14 @@ class CustomLogEntry(LogEntry):
         proxy = True
 
     def __str__(self):
-        if self.change_message == 'Appointment rescheduled by user':
+        if self.change_message == "Appointment rescheduled by user":
             appointment = Appointment.objects.get(id=self.object_id)
             child_id = appointment.child.id
             vaccine = appointment.vaccines
             return f"Appointment rescheduled by {self.user} to {appointment.date} {appointment.time} for Child ID: {child_id}, Vaccine: {vaccine}"
         else:
             return super().__str__()
+
 
 # class CustomLogEntryAdmin(admin.ModelAdmin):
 #     list_display = ['action_time', 'user', 'content_type', 'get_appointment_details', 'change_message']
@@ -78,8 +66,7 @@ class CustomLogEntry(LogEntry):
 #         return ''
 
 #     get_appointment_details.short_description = 'Appointment Details'
-  
+
 
 # admin.site.unregister(LogEntry)
 # admin.site.register(CustomLogEntry, CustomLogEntryAdmin)
-
