@@ -1,52 +1,34 @@
+{% extends 'main.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="{%static 'system/css/register.css'%}">
-  </head>
-  <body>
-    <div class="brand"><h1>GEVAC</h1></div>
-    <div class="signup-box">
-      <h1>Sign Up</h1>
-      <h4>It's free and only takes a minute</h4>
-      <form  method="POST">
-        {{user_form.as_p}}
-        {% csrf_token %}
-        <p><input type="submit" class="styled" value="Create Account"></p>
-        <p class="terms">
-          By clicking the Sign Up button,you agree to our <br />
-          <a href="#">Terms and Condition</a> and <a href="#">Policy Privacy</a>
-        </p>
-      </form>
-    </div>
+
+{% block title %}Sign Up - Infant Immunization System{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'system/css/register.css' %}">
+{% endblock styles %}
+
+
+{% block content %}
+{% include 'system/components/messages.html' %}
+<div class="brand">GEVAC</div>
+
+<div class="signup-box">
+  <h1 class="title">Sign Up</h1>
+
+  <form method="POST" id="form">
+    {{user_form.as_p}}
+    {% csrf_token %}
     
-    <p class="para-2">
-      Already have an account? <a href="{% url 'login' %}">Login here</a>
-    </p> 
+    <input type="submit" id="btn-submit" value="Create Account">
+  </form>
+</div>
 
+<p class="para-2">
+  Already have an account? <a href="{% url 'login' %}">Login here</a>
+</p> 
+{% endblock content %}
 
-  </body>
-</html>
-       <!-- <label>First Name</label>
-        <input type="text" placeholder="" />
-        <label>Last Name</label>
-        <input type="text" placeholder="" />
-        <label>Email</label>
-        <input type="email" placeholder="" />
-        <label>Password</label>
-        <input type="password" placeholder="" />
-        <label>Confirm Password</label>
-        <input type="password" placeholder="" /> 
-        <button type="submit" class="styled">Submit</button>
-      <closeform></closeform></form>
-      <p>
-        By clicking the Sign Up button,you agree to our <br />
-        <a href="#">Terms and Condition</a> and <a href="#">Policy Privacy</a>
-      </p>
-    </div>
-    <p class="para-2">
-      Already have an account? <a href="{% url 'login' %}">Login here</a>
-    </p> -->
-
-
+{% block navigation %}{% endblock navigation %}
+{% block footer %}{% endblock footer %}
+{% comment %} {% block bootstrap %}{% endblock bootstrap %} {% endcomment %}
+{% block gfonts %}{% endblock gfonts %}

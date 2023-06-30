@@ -1,94 +1,71 @@
-@font-face {
-    font-family: TT Wellingtons Trial Regular;
-    src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
+body {
+  background-color: rgb(41, 51, 82);
+  font-family: "TT Wellingtons Trial Regular";
 }
 
-@font-face {
-  font-family: TT Wellingtons Trial Bold;
-  src: url(/bookingsys/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
+.brand {
+  color: white;
+  font-family: "TT Wellingtons Trial ExtraBold";
+  font-size: 2.5rem;
+  font-weight: bolder;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
-body {
-    background-color: rgb(41, 51, 82);
-    font-family:TT Wellingtons Trial Regular ;
-  
-  }
-  .brand{
-    color: white;
-    font-family:TT Wellingtons Trial ExtraBold ;
-    font-size: 20px;
-    line-height: 8px;
-    padding: 0 100px;
-    font-weight:bolder;
-    margin-top: 2px;
-    
-}
-  
+
 .signup-box {
-    width: 385px;
-    height: 630px;
-    border-radius: 14px;
-    margin: auto;
-    background-color: white;
-   
-  }
-  
-  h1 {
-    font-family: TT Wellingtons Trial Bold;
-    text-align: center;
-    padding-top: 15px;
-    font-weight: 900;
-  }
-  
-h4 {
-    text-align: center;
-  }
-  
-  form {
-    width: 300px;
-    margin-left: 20px;
-  }
-  
-  form label {
-    display: flex;
-    margin-top: 8px;
-    font-size: 18px;
-  }
-  
-  form input {
-    width: 110%;
-    padding: 6px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 6px;
-    outline: none;
-  }
-  .styled{
-    width: 350px;
-    height: 35px;
-    margin-top: 15px;
-    border: none;
-    background-color: blue;
-    color: white;
-    font-size: 18px;
-    border-radius: 6px;
-  }
-  .terms{
-    color: black;
-    text-align: center;
-    font-size: 15px;
-    margin-left: 2%;
-  }
-  .terms a{
-    color:blue;
-  }
-  .para-2 {
-    text-align: center;
-    color: white;
-    font-size: 20px;
-    margin-top: 4px;
-   
-  }
-  .para-2 a {
-    color: #49c1a2;
-  }
-  
+  width: 360px;
+  margin: auto;
+  border-radius: 16px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  font-weight: 900;
+}
+
+#form p {
+  margin-bottom: 0;
+}
+
+#form label {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+#form input {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid gray;
+  border-radius: 6px;
+}
+
+#btn-submit {
+  font-family: inherit;
+  border: none;
+  margin-top: 16px;
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px 16px;
+}
+
+.para-2 {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  margin-top: 1rem;
+}
+
+.para-2 a {
+  color: #49c1a2;
+}
+
+.errorlist {
+  color: rgba(255, 0, 0, .8);
+}

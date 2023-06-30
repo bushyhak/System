@@ -5,4 +5,3 @@ const divNavbarLinks = document.querySelector('.navbar-links');
 toggleButton.addEventListener('click', () => {
     divNavbarLinks.classList.toggle('active');
 })
-console.log('my name')

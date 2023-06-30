@@ -3,9 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from system import report
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -21,6 +18,7 @@ from .models import Child
 from django.core.mail import send_mail, EmailMessage
 from bookingsys.settings import EMAIL_HOST_USER
 from django.template.loader import render_to_string
+from django.contrib import messages
 
 
 # Create your views here.
@@ -33,10 +31,7 @@ def home(request):
     return render(request, "system/home.html")
 
 
-def dashboard(request):
-    return render(request, "system/dashboard.html")
-
-
+@login_required
 def book(request):
     return render(request, "system/book.html")
 
@@ -49,24 +44,23 @@ def about(request):
     return render(request, "system/about.html")
 
 
+# TODO: Handle logout logic
 def logout(request):
     return render(request, "system/registration/logout.html")
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect("dashboard")
     if request.method == "POST":
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
-            # new_user = user_form.save(commit=False)
             new_user = user_form.save()
-
-            # new_user.set_password(
-            #     user_form.cleaned_data['password'])
-
-            # new_user.save()
-
-            # Profile.objects.create(user=new_user)
-            return render(request, "system/register_done.html", {"new_user": new_user})
+            messages.success(
+                request,
+                f"'{new_user.username}', your account has been successfully created. Now you can Log in",
+            )
+            return redirect("login", permanent=True)
     else:
         user_form = UserRegistrationForm()
     return render(request, "system/register.html", {"user_form": user_form})
@@ -124,7 +118,7 @@ def booking_view(request):
         form = BookingForm(request.POST, user=request.user, request=request)
         if form.is_valid():
             appointment = form.save(commit=False)
-            appointment.parent = request.user
+            appointment.child = request.user
 
             doctors = Doctor.objects.all()
 
@@ -136,9 +130,7 @@ def booking_view(request):
 
                 random_doctor.appointments.add(appointment)
                 appointment.save()
-
                 return redirect("dashboard")
-
             else:
                 return HttpResponse("No Doctors availabe")
 

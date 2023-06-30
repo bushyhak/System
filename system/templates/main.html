@@ -5,38 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    <title>Home</title>
+    {% block bootstrap %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{%static 'system/css/main.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/home.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_change_form.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_change_done.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/edit.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_reset_form.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_reset_done.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_reset_confirm.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/password_reset_complete.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/register_done.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/add_child.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/booking.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/rescheduling-form.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/contact.css' %}">
-    <link rel="stylesheet" href="{%static 'system/css/cancel.css' %}">
-    
+    {% endblock bootstrap %}
 
-
-
+    {% block gfonts %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'system/css/home.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="{% static 'system/javascript/script.js' %}" defer></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% endblock gfonts %}
+
+    <link rel="stylesheet" href="{% static 'system/css/main.css' %}">
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'system/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_change_form.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_change_done.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/edit.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_reset_form.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_reset_done.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_reset_confirm.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/password_reset_complete.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/register_done.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/add_child.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/booking.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/rescheduling-form.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/contact.css' %}">
+    <link rel="stylesheet" href="{% static 'system/css/cancel.css' %}">
+    {% endblock styles %}
+
+    <title>{% block title %}{{title|default:"Infant Immunization Booking System"}}{% endblock title %}</title>
 </head>
 <body>
+    {% block navigation %}
     <nav class="navbar">
         <div class="my-logo">
             <div class="brand-title"><h1>GEVAC</h1></div>
@@ -52,41 +55,32 @@
                 <li><a href="{% url 'booking' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% if user.is_authenticated %}
+                <li>Hello, {{user}}</li>
+                {% else %}
                 <li><a href="{% url 'register' %}">Join Now</a></li>
                 <li><a href="{% url 'login' %}">Sign In</a></li>
+                {% endif %}
                 <!-- <li> <a href="{% url 'logout' %}">logout</a></li> -->          
             </ul>
-        </div>
-        
+        </div>    
     </nav>
-    <!-- {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{message.tags}}">
-                    {{ message | safe}}
-                    <a href="#" class="close">x</a>
-
-                </li>
-            {% endfor%}
-        </ul>
-    {% endif%} -->
+    {% endblock navigation %}
 
     {% block content%}
     <main class="main">
-    
     </main>
-
     {% endblock content%}
     
-    <footer class="footerContainer">
 
+    {% block footer %}
+    <footer class="footerContainer">
         <div class="socialIcons">
             <a href=""> <i class="fa-brands fa-facebook"></i></a>
             <a href=""> <i class="fa-brands fa-Instagram"></i></a>
             <a href=""> <i class="fa-brands fa-Youtube"></i></a>
             <a href=""> <i class="fa-brands fa-Twitter"></i></a>
             <a href=""> <i class="fa-brands fa-LinkedIn"></i></a>
-        
         </div>
         <div class="footNav">
             <ul>
@@ -94,26 +88,22 @@
                 <li><a href="{% url 'booking' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% if not user.is_authenticated %}
                 <li><a href="{% url 'register' %}">Join Now</a></li>
-                <li><a href="{% url 'login' %}">Sign In</a></li>
-                
+                <li><a href="{% url 'login' %}">Sign In</a></li>         
+                {% endif %}
             </ul>
         </div>
-       
+        
         <div class="footerBottom">
             <p>Copyright &copy; 2023 | Member of MOH</p>
         </div>
     </footer>
-    <!-- <script>
-        const toggleButton = document.getElementsByClassName('toggle-button')[0]
-const navbarLinks = document.getElementsByClassName('navbar-links')[0]
+    {% endblock footer %}
 
-toggleButton.addEventListener('click', () => {
-    navbarLinks.classList.toggle('active')
-})
-    </script> -->
-
-    
+    {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
+    <script src="{% static 'system/javascript/script.js' %}" defer></script>
+    {% endblock scripts %}
 </body>
-
 </html>
