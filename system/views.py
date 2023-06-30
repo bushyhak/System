@@ -44,11 +44,6 @@ def about(request):
     return render(request, "system/about.html")
 
 
-# TODO: Handle logout logic
-def logout(request):
-    return render(request, "system/registration/logout.html")
-
-
 def register(request):
     if request.user.is_authenticated:
         return redirect("dashboard")

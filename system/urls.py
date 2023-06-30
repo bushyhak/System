@@ -15,7 +15,11 @@ urlpatterns = [
         ),
         name="login",
     ),
-    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path(
+        "logout/",
+        auth_views.LogoutView.as_view(template_name="system/logged_out.html"),
+        name="logout",
+    ),
     path(
         "password-change/",
         auth_views.PasswordChangeView.as_view(),
@@ -44,7 +48,6 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
-    path("", include("django.contrib.auth.urls")),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("register/", views.register, name="register"),
     path("edit/", views.edit, name="edit"),

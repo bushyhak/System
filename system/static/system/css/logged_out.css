@@ -1,0 +1,31 @@
+body {
+  background-color: rgb(41, 51, 82);
+  font-family: "TT Wellingtons Trial Regular";
+}
+
+.logout-container {
+  color: white;
+  text-align: center;
+  margin: 4rem auto 0;
+  max-width: 500px;
+  padding: 1rem;
+}
+
+.gevac {
+  font-family: "TT Wellingtons Trial ExtraBold";
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+}
+
+.logout_message {
+  display: block;
+  font-size: 20px;
+}
+
+.logout_message a {
+  color: #49c1a2
+}

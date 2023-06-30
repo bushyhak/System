@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Logged Out{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'system/css/logged_out.css' %}" />
+{% endblock styles %}
+
+{% block content %}
+<div class="logout-container">
+  <h1 class="gevac">GEVAC</h1>
+
+  <div class="logout">
+    <h2 class="subtitle">Logged Out</h2>
+    
+    <p class="logout_message">
+      You have successfully been logged out.
+      You can <a href="{% url 'login' %}">Log in again</a>
+    </p>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block navigation %}{% endblock navigation %}
+{% block footer %}{% endblock footer %}
+{% block bootstrap %}{% endblock bootstrap %}
+{% block gfonts %}{% endblock gfonts %}
+{% block scripts %}{% endblock scripts %}
