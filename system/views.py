@@ -2,38 +2,20 @@ from datetime import date, time
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
-from .models import Doctor, Profile, Appointment, Vaccines
+from .models import Doctor, Profile, Appointment, Vaccines, User
 from .forms import ChildForm, BookingForm, CancelForm
 from random import choice
 from .forms import RescheduleForm
 from django.contrib import messages
-from django.contrib.admin.models import LogEntry, CHANGE
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.admin.utils import quote
 from .models import Child
-from django.core.mail import send_mail, EmailMessage
-from bookingsys.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib import messages
-
-
-# Create your views here.
-@login_required
-def dashboard(request):
-    return render(request, "system/dashboard.html", {"section": "dashboard"})
 
 
 def home(request):
     return render(request, "system/home.html")
-
-
-@login_required
-def book(request):
-    return render(request, "system/book.html")
 
 
 def contact(request):
@@ -53,12 +35,42 @@ def register(request):
             new_user = user_form.save()
             messages.success(
                 request,
-                f"'{new_user.username}', your account has been successfully created. Now you can Log in",
+                f"'{new_user.username}', your account has been successfully created. Now you can Log in",  # noqa: E501
             )
             return redirect("login", permanent=True)
     else:
         user_form = UserRegistrationForm()
     return render(request, "system/register.html", {"user_form": user_form})
+
+
+@login_required
+def dashboard(request):
+    return render(request, "system/dashboard/base.html")
+
+
+@login_required
+def profile(request):
+    return render(request, "system/dashboard/profile.html")
+
+
+@login_required
+def child_info(request):
+    return render(request, "system/dashboard/child-info.html")
+
+
+@login_required
+def settings(request):
+    return render(request, "system/dashboard/settings.html")
+
+
+@login_required
+def report(request):
+    return render(request, "system/dashboard/report.html")
+
+
+@login_required
+def book(request):
+    return render(request, "system/book.html")
 
 
 @login_required

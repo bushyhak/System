@@ -48,7 +48,13 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
+    ############################# Dashboard urls #############################
     path("dashboard/", views.dashboard, name="dashboard"),
+    path("dashboard/profile/", views.profile, name="dashboard_profile"),
+    path("dashboard/child-info/", views.child_info, name="dashboard_child_info"),
+    path("dashboard/settings/", views.settings, name="dashboard_settings"),
+    path("dashboard/report/", views.report, name="dashboard_report"),
+    ##########################################################################
     path("register/", views.register, name="register"),
     path("edit/", views.edit, name="edit"),
     path("add-child/", views.add_child, name="add_child"),

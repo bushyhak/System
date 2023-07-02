@@ -1,18 +1,42 @@
 @font-face {
-    font-family: "TT Wellingtons Trial ExtraBold";
-    src: url("../Fonts/TT Wellingtons Trial ExtraBold.otf");
-}
-
-@font-face {
     font-family: "TT Wellingtons Trial Regular";
     src: url("../Fonts/TT Wellingtons Trial Regular.otf");
 }
 
 @font-face {
+    font-family: "TT Wellingtons Trial Medium";
+    src: url("../Fonts/TT Wellingtons Trial Medium.otf");
+}
+
+@font-face {
+    font-family: "TT Wellingtons Trial Bold";
+    src: url("../Fonts/TT Wellingtons Trial Bold.otf");
+}
+
+@font-face {
     font-family: "TT Wellingtons Trial ExtraBold";
     src: url("../Fonts/TT Wellingtons Trial ExtraBold.otf");
 }
 
+.font-regular {
+    font-family: "TT Wellingtons Trial Regular";
+    font-weight: 400;
+}
+
+.font-medium {
+    font-family: "TT Wellingtons Trial Medium";
+    font-weight: 500;
+}
+
+.font-bold {
+    font-family: "TT Wellingtons Trial Bold";
+    font-weight: 700;
+}
+
+.font-extrabold {
+    font-family: "TT Wellingtons Trial ExtraBold";
+    font-weight: 800;
+}
 
 * {
     padding: 0;
