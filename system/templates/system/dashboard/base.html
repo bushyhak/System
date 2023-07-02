@@ -44,6 +44,12 @@
         </div>
 
         <div class="bottom">
+          {% if user.is_staff %}
+          <a href="{% url 'admin:index' %}" class="item admin">
+            <i class="fa fa-lock"></i>
+            <span class="nav-item">Admin Site</span>
+          </a>
+          {% endif %}
           <a href="{% url 'logout' %}" class="item logout">
             <i class="fas fa-sign-out-alt"></i>
             <span class="nav-item">Log out</span>

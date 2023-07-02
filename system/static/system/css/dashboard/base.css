@@ -90,10 +90,31 @@ body,
     background-color: rgba(255, 165, 0, .75);
 }
 
-.left-nav .item.logout {
-    color: rgba(255, 0, 0, .75);
-    background-color: transparent;
+.bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bottom .item {
     display: block;
+    background-color: transparent;
+}
+
+.left-nav .logout {
+    color: rgba(255, 0, 0, .75);
+}
+
+.left-nav .logout:hover {
+    background-color: rgba(255, 0, 0, .15);
+}
+
+.left-nav .admin {
+    color: rgb(3, 150, 255)
+}
+
+.left-nav .admin:hover {
+    background-color: rgba(3, 150, 255, .15)
 }
 
 /*
@@ -104,21 +125,6 @@ nav .fas {
     top: 14px;
     font-size: 20px;
     text-align: center;
-}
-
-a:hover {
-    background: #eee;
-}
-
-.main {
-    position: relative;
-    padding: 20px;
-    width: 100%;
-}
-
-.main-top {
-    display: flex;
-    width: 100%;
 }
 
 .main-top h1 {

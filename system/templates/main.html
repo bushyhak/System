@@ -50,18 +50,21 @@
             </a>
         </div>
         <div class="navbar-links">
-            <ul>
+            <ul style="align-items: center;">
                 <li><a href="/">Home</a></li>
                 <li><a href="{% url 'booking' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 {% if user.is_authenticated %}
-                <li>Hello, {{user}}</li>
+                <li style="font-size: 0.875rem;">
+                    <a href="{% url 'dashboard' %}" style="color: blue; border: 1px solid blue; padding: 4px; border-radius: 4px">
+                        Hello, <b>{{user}}</b>
+                    </a>
+                </li>
                 {% else %}
                 <li><a href="{% url 'register' %}">Join Now</a></li>
                 <li><a href="{% url 'login' %}">Sign In</a></li>
                 {% endif %}
-                <!-- <li> <a href="{% url 'logout' %}">logout</a></li> -->          
             </ul>
         </div>    
     </nav>
@@ -88,7 +91,13 @@
                 <li><a href="{% url 'booking' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
-                {% if not user.is_authenticated %}
+                {% if user.is_authenticated %}
+                <li style="font-size: 0.875rem;">
+                    <a href="{% url 'dashboard' %}" style="color: blue; border: 1px solid blue; padding: 4px; border-radius: 4px">
+                        <b>Go to Dashboard</b>
+                    </a>
+                </li>
+                {% else %}
                 <li><a href="{% url 'register' %}">Join Now</a></li>
                 <li><a href="{% url 'login' %}">Sign In</a></li>         
                 {% endif %}
