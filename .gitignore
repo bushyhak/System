@@ -1,5 +1,7 @@
 # virtual environment
 myspace/
+VENV/
+ENV/
 
 # cache
 __pycache__/
