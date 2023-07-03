@@ -1,0 +1,14 @@
+<div class="dashboard-card">
+	<div class="dashboard-card__header">
+        {% if card1 %}<i class="fas fa-chart-bar"></i>
+        {% elif card2 %}<i class="fas fa-calendar-check"></i>
+        {% elif card3 %}<i class="fas fa-calendar-check"></i>
+        {% elif card4 %}<i class="fas fa-square"></i>
+        {% else %}<i class="fas fa-chart-bar"></i>{% endif %} 
+		<h3>{{title}}</h3>
+	</div>
+
+	<p class="dashboard-card__body">{{content}}</p>
+
+	<a href="{{btn_url}}" class="btn btn-primary dashboard-card__btn">{{btn_text}}</a>
+</div>

@@ -1,12 +1,10 @@
 body {
   background-color: rgb(41, 51, 82);
-  font-family: "TT Wellingtons Trial Regular";
 }
 
 .logo-login {
-  font-family: "TT Wellingtons Trial ExtraBold";
   font-size: 2.5rem;
-  font-weight: bolder;
+  font-weight: 900;
   text-align: center;
   color: white;
   margin-top: 2rem;
@@ -23,7 +21,7 @@ body {
 
 .title-login {
   text-align: center;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .login-form form label {

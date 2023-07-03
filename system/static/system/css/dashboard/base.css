@@ -34,13 +34,6 @@ body,
     padding: 0.75rem;
 }
 
-.dashboard_content {
-    background-color: #f1f1f1;
-    flex-grow: 1;
-    position: relative;
-    padding: 1.25rem;
-}
-
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -66,6 +59,7 @@ body,
     display: inline-block;
     color: rgb(1, 1, 1);
     font-size: 1.6rem;
+    font-weight: 900;
 }
 
 .wrapper .site-logo .logo .text:hover {
@@ -117,87 +111,59 @@ body,
     background-color: rgba(3, 150, 255, .15)
 }
 
-/*
-nav .fas {
+.dashboard_content {
+    background-color: #f1f1f1;
+    flex-grow: 1;
     position: relative;
-    width: 70px;
-    height: 40px;
-    top: 14px;
-    font-size: 20px;
-    text-align: center;
+    padding: 1.25rem;
+    box-sizing: border-box;
 }
 
-.main-top h1 {
-    margin-top: 1%;
-    font-family: TT Wellingtons Trial Bold;
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
-.main-top i {
-    position: absolute;
-    right: 0;
-    margin: 10px 30px;
-    color: rgb(110, 109, 109);
-    cursor: pointer;
-}
-
-.main-vaccine {
+.dashboard-card-container {
     display: flex;
-    margin-top: 20px;
-    font-family: TT Wellingtons Trial Regular;
+    gap: 1rem;
+    box-sizing: border-box;
 }
 
-.main-vaccine .card {
-    width: 25%;
-    margin: 20px;
-    background: #fff;
-    text-align: center;
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    font-family: TT Wellingtons Trial Regular;
-}
-
-.main-vaccine .card h3 {
-    font-size: 1.2em;
-    margin: 10px;
-    text-transform: capitalize;
-    font-family: TT Wellingtons Trial Regular;
-}
-
-.main-vaccine .card p {
-    font-size: 17px;
-}
-
-.main-vaccine .card button {
-    background: orangered;
-    color: #fff;
-    padding: 7px 15px;
+.dashboard-card {
+    flex: 1;
+    background-color: white;
+    padding: 1rem;
     border-radius: 10px;
-    margin-top: 15px;
-    cursor: pointer;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.main-vaccine .card button:hover {
-    background: rgba(223, 70, 15, 0.856);
+.dashboard-card__header {
+    display: flex;
+    gap: 8px;
 }
 
-.main-vaccine .card i {
-    font-size: 22px;
-    padding: 10px;
+.dashboard-card__header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    word-break: break-all;
 }
 
-.main-course {
-    margin-top: 20px;
-    text-transform: capitalize;
+.dashboard-card__body {
+    font-size: 1rem;
 }
 
-.main-course h1 {
-    font-family: 'TT Wellingtons Trial Bold';
-    font-size: 1.4em;
-    margin-bottom: 3%;
-    text-transform: capitalize;
+.dashboard-card__btn {
+    border-radius: 10px;
 }
 
+.vaccine-schedules {
+    margin-top: 1.5rem;
+}
+
+/*
 .course-box {
     display: flex;
     flex-direction: row;
@@ -205,9 +171,9 @@ nav .fas {
     margin-top: 10px;
     background-color: #fff;
     border-radius: 8px;
-} */
+}
 
-/* .settings-menu {
+.settings-menu {
     display: none;
     position: absolute;
     top: 100%;
@@ -216,11 +182,12 @@ nav .fas {
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
   
-  .settings-menu.show {
+.settings-menu.show {
     display: block;
-  } */
+} 
+*/
 
 @media (max-width: 952px) {
     .navbar {

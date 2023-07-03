@@ -1,13 +1,11 @@
 body {
   background-color: rgb(41, 51, 82);
-  font-family: "TT Wellingtons Trial Regular";
 }
 
 .brand {
   color: white;
-  font-family: "TT Wellingtons Trial ExtraBold";
   font-size: 2.5rem;
-  font-weight: bolder;
+  font-weight: 900;
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-align: center;
@@ -23,7 +21,7 @@ body {
 
 .title {
   text-align: center;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 #form p {

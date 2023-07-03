@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% load adminlte_helpers custom_tags static %}
+{% load custom_tags static %}
 
 {% block title %}Infant Immunization System - Dashboard{% endblock title %}
 
@@ -12,97 +12,76 @@
 
 {% block content %}
 <main class="dashboard">
-    {% include 'system/components/messages.html' %}
-    <nav class="left-nav">
-        <div class="wrapper">
-          <div class="site-logo">
-            <a href="{% url 'home' %}" class="logo">
-              <img src="{% avatar_url size=40 %}" alt=" ">
-              <span class="text font-bold">GEVAC</span>
-            </a>
-          </div>
+	{% include 'system/components/messages.html' %}
+	<nav class="left-nav">
+		<div class="wrapper">
+		  <div class="site-logo">
+			<a href="{% url 'home' %}" class="logo">
+			  {{user.email|gravatar}}
+			  <span class="text">GEVAC</span>
+			</a>
+		  </div>
 
-          <a href="{% url 'dashboard' %}" class="item {% is_active 'dashboard' %}">
-            <i class="fas fa-home"></i>
-            <span class="nav-item">Dashboard</span>
-          </a>
+		  <a href="{% url 'dashboard' %}" class="item {% is_active 'dashboard' %}">
+			<i class="fas fa-home"></i>
+			<span class="nav-item">Dashboard</span>
+		  </a>
 
-          <a href="{% url "dashboard_profile" %}" class="item {% is_active 'dashboard_profile' %}">
-            <i class="fas fa-user"></i>
-            <span class="nav-item">Profile</span>
-          </a>
-          
-          <a href="{% url 'dashboard_child_info' %}" class="item {% is_active 'dashboard_child_info' %}">
-            <i class="fas fa-chart-bar"></i>
-            <span class="nav-item">Child Info</span>
-          </a>
+		  <a href="{% url "dashboard_profile" %}" class="item {% is_active 'dashboard_profile' %}">
+			<i class="fas fa-user"></i>
+			<span class="nav-item">Profile</span>
+		  </a>
+		  
+		  <a href="{% url 'dashboard_child_info' %}" class="item {% is_active 'dashboard_child_info' %}">
+			<i class="fas fa-chart-bar"></i>
+			<span class="nav-item">Child Info</span>
+		  </a>
 
-          <a href="{% url 'dashboard_settings' %}" class="item {% is_active 'dashboard_settings' %}">
-            <i class="fas fa-cog"></i>
-            <span class="nav-item">Settings</span>
-          </a>
-        </div>
+		  <a href="{% url 'dashboard_settings' %}" class="item {% is_active 'dashboard_settings' %}">
+			<i class="fas fa-cog"></i>
+			<span class="nav-item">Settings</span>
+		  </a>
+		</div>
 
-        <div class="bottom">
-          {% if user.is_staff %}
-          <a href="{% url 'admin:index' %}" class="item admin">
-            <i class="fa fa-lock"></i>
-            <span class="nav-item">Admin Site</span>
-          </a>
-          {% endif %}
-          <a href="{% url 'logout' %}" class="item logout">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="nav-item">Log out</span>
-          </a>
-        </div>
-    </nav>
+		<div class="bottom">
+		  {% if user.is_staff %}
+		  <a href="{% url 'admin:index' %}" class="item admin">
+			<i class="fa fa-lock"></i>
+			<span class="nav-item">Admin Site</span>
+		  </a>
+		  {% endif %}
+		  <a href="{% url 'logout' %}" class="item logout">
+			<i class="fas fa-sign-out-alt"></i>
+			<span class="nav-item">Log out</span>
+		  </a>
+		</div>
+	</nav>
 
-    <section class="main dashboard_content">
-        {% block dashboard_content %}
-        <div class="main-top">
-            <h1>Our Services</h1>
-        </div>
+	<section class="dashboard_content">
+		{% block dashboard_content %}
+		<h2 class="dashboard-title">Services</h2>
 
-        <div class="main-vaccine">
-            <div class="card">
-            <i class="fas fa-chart-bar"></i>
-            <h3>New Child Record</h3>
-            <p>Join Over a Thousand Parents</p>
-            <a href="{% url 'add_child' %}"><button>Add Record</button></a>
-            </div>
-            <div class="card">
-            <i class="fas fa-calendar-check"></i>
-            <h3>Schedule</h3>
-            <p>Join Over a Thousand Parents</p>
-            <a href="{% url 'booking' %}"><button>Schedule</button></a>
-            </div>
-            <div class="card">
-            
-            <i class="fas fa-calendar-check"></i>
-            <h3>Manage Appointment</h3>
-            <p>Join Over a Thousand Parents</p>
-            <button>Manage</button>
-            </div>
-            <div class="card">
-            <i class="fas fa-square"></i>
-            <!--  -->
-            <h3>Generate Report</h3>
-            <p>Join Over a Thousand Parents</p>
-            <button>Generate</button>
-            </div>
-        </div>
+		<section class="dashboard-card-container">
+			{% url 'add_child' as add_child %}
+			{% include "./card.html" with title="New Child Record" content="Join Over a Thousand Parents" btn_text="Add Record" btn_url=add_child card1=True %}
+			
+			{% url 'booking' as booking %}
+			{% include "./card.html" with title="Schedule" content="Join Over a Thousand Parents" btn_text="Schedule" btn_url=booking card2=True %}
 
-        <section class="main-course">
-            <h1>Vaccine Schedules <i class="fas fa-viruses"></i></h1>
-            <div class="course-box">
-            <div class="card">
-                
+			{% comment %} {% url '' as  %} {% endcomment %}
+			{% include "./card.html" with title="Manage Appointment" content="Join Over a Thousand Parents" btn_text="Manage" btn_url="#" card3=True %}
 
-            </div>
-            </div>
-        </section>
-        {% endblock dashboard_content %}
-    </section>
+			{% comment %} {% url '' as  %} {% endcomment %}
+			{% include "./card.html" with title="Generate Report" content="Join Over a Thousand Parents" btn_text="Generate" btn_url="#" card4=True %}
+		</section>
+
+		<section class="vaccine-schedules">
+			<h2 class="dashboard-title">
+				Vaccine Schedules <i class="fas fa-viruses"></i>
+			</h2>
+		</section>
+		{% endblock dashboard_content %}
+	</section>
 </main>
 {% endblock content %}
 

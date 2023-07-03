@@ -10,6 +10,14 @@
 	"[css]": {
 		"editor.defaultFormatter": "vscode.css-language-features"
 	},
+	"[django-html]": {
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
 	"python.formatting.provider": "none",
 	"workbench.tree.indent": 16
 }

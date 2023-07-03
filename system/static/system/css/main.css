@@ -1,58 +1,57 @@
 @font-face {
-    font-family: "TT Wellingtons Trial Regular";
-    src: url("../Fonts/TT Wellingtons Trial Regular.otf");
-}
-
-@font-face {
-    font-family: "TT Wellingtons Trial Medium";
-    src: url("../Fonts/TT Wellingtons Trial Medium.otf");
-}
-
-@font-face {
-    font-family: "TT Wellingtons Trial Bold";
-    src: url("../Fonts/TT Wellingtons Trial Bold.otf");
-}
-
-@font-face {
-    font-family: "TT Wellingtons Trial ExtraBold";
-    src: url("../Fonts/TT Wellingtons Trial ExtraBold.otf");
-}
-
-.font-regular {
-    font-family: "TT Wellingtons Trial Regular";
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial Regular.otf") format('opentype');
     font-weight: 400;
 }
 
-.font-medium {
-    font-family: "TT Wellingtons Trial Medium";
+@font-face {
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial Medium.otf") format('opentype');
     font-weight: 500;
 }
 
-.font-bold {
-    font-family: "TT Wellingtons Trial Bold";
+@font-face {
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial DemiBold.otf") format('opentype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial Bold.otf") format('opentype');
     font-weight: 700;
 }
 
-.font-extrabold {
-    font-family: "TT Wellingtons Trial ExtraBold";
+@font-face {
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial ExtraBold.otf") format('opentype');
     font-weight: 800;
+}
+
+@font-face {
+    font-family: "TT Wellingtons Trial";
+    src: url("../Fonts/TT Wellingtons Trial Black.otf") format('opentype');
+    font-weight: 900;
 }
 
 * {
     padding: 0;
     margin: 0;
     text-decoration: none;
-    list-style: none;
     box-sizing: border-box;
+}
+
+ul,
+ol {
+    list-style: none;
 }
 
 html,
 body {
     width: 100%;
     min-height: 100vh;
-    /* height: 100%; */
     box-sizing: border-box;
-    font-family: "TT Wellingtons Trial Regular";
+    font-family: "TT Wellingtons Trial", sans-serif;
 }
 
 
@@ -64,22 +63,16 @@ body {
     color: black;
     height: 71px;
     width: 100%;
-    font-family: TT Wellingtons Trial Regular;
     padding: 0 40px;
 }
 
 .brand-title {
-    font-family: 'TT Wellingtons Trial ExtraBold';
     font-size: 50px;
     line-height: 80px;
     padding: 0;
     font-weight: 900;
     color: black;
 }
-
-/* .navbar ul {
-    margin-right: 20px;    
-} */
 
 .navbar ul li {
     display: inline-block;
@@ -213,7 +206,6 @@ body {
     margin-bottom: auto;
     padding-bottom: 0;
     padding-top: 1px;
-    font-family: TT Wellingtons Trial Regular;
 }
 
 .socialIcons {

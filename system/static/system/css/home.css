@@ -1,26 +1,12 @@
-@font-face {
-    font-family: TT Wellingtons Trial Regular;
-    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Regular.otf);
-}
-  
-@font-face {
-    font-family: TT Wellingtons Trial Bold;
-    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ Bold.otf);
-}
-
-@font-face {
-    font-family: 'TT Wellingtons Trial DemiBold';
-    src: url(/system/templates/system/Fonts/TT\ Wellingtons\ Trial\ DemiBold.otf);
-}
-
-.intro{
+.intro {
     display: flex;
     flex-direction: row;
     width: 100%;
     min-height: 70vh;
 }
 
-.statement, .pic{
+.statement,
+.pic {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -28,55 +14,54 @@
     background-color: #fff;
 }
 
-.statement{
+.statement {
     color: #001855;
 
-   /* color: rgb(15, 15,20);*/    
-   padding-left: 68px;
+    /* color: rgb(15, 15,20);*/
+    padding-left: 68px;
 }
 
-.sentiment{
+.sentiment {
     font-size: 2.5em;
-    line-height:145%;
+    line-height: 145%;
     display: flex;
-    flex-direction:column;
-    margin-top:30%;
-    flex-wrap:wrap;
-    white-space:nowrap;
+    flex-direction: column;
+    margin-top: 30%;
+    flex-wrap: wrap;
+    white-space: nowrap;
     width: 100%;
-    font-family: TT Wellingtons Trial DemiBold;
-    font-weight:900;
+    font-weight: 900;
     font-style: normal;
     padding-left: 0;
-   
+
 }
+
 /* .wrapper {
     font-weight: 500;
     font-family: 'TT Wellingtons Trial DemiBold';
   } */
 
-.pic{
-   background-image: url('../images/withparents2-transformed.jpeg');
+.pic {
+    background-image: url('../images/withparents2-transformed.jpeg');
     background-size: cover;
     outline: none;
     object-fit: contain;
 }
-.short{
-    font-family: TT Wellingtons Trial Regular;
+
+.short {
     font-style: none;
     font-weight: 200;
     font-size: 22px;
     line-height: 36px;
     color: #757575;
-}  
+}
 
-.ourmission h1{
+.ourmission h1 {
     font-weight: 500;
-    font-family: 'TT Wellingtons Trial DemiBold';
     font-size: 30px;
 }
-.praise p{
-    font-family: TT Wellingtons Trial Regular;
+
+.praise p {
     font-style: none;
     font-weight: 200;
     font-size: 22px;
@@ -97,25 +82,30 @@
         /* display: flex;
         align-items: center; */
     }
-    .statement, .pic {
+
+    .statement,
+    .pic {
         all: unset;
     }
+
     .sentiment {
         margin-top: 0;
         padding-top: 20px;
-        
+
     }
+
     .sentiment p {
         text-shadow: 2px 2px 6px red;
         margin-left: 20px;
     }
+
     .pic {
         display: none;
     }
 }
 
 
-.our-thing{
+.our-thing {
     /* display: flex; */
     /* flex-direction: row; */
     width: 100%;
@@ -123,7 +113,8 @@
     background-color: #fff;
     padding: 20px;
 }
-.purpose{
+
+.purpose {
     border-color: blue;
     display: flex;
     flex-direction: column;
@@ -133,84 +124,92 @@
     color: #151520;
     font-style: normal;
     font-weight: 500;
-    font-family: TT Wellingtons Trial DemiBold;
     font-size: 20px;
     margin-top: 0;
     background-color: #fff;
 }
+
 .our-thing .purpose .wrapper {
     display: grid;
     box-sizing: border-box;
     grid-template-columns: 1fr 1fr;
     grid-template: "one  txt1"
-                   "img1 .   "
-                   "img1 img2"
-                   ".    img2"
-                   ".    txt2"
-                   "img3 img4";
+        "img1 .   "
+        "img1 img2"
+        ".    img2"
+        ".    txt2"
+        "img3 img4";
     gap: 8px;
 }
+
 .our-thing .purpose .wrapper .one-thing {
     grid-area: one;
     padding: 0;
-    padding-left:24px ;
+    padding-left: 24px;
     /* --pl: 128px;
     padding-left: calc(var(--pl) - 20px); */
 }
+
 .our-thing .purpose .wrapper .img1 {
     grid-area: img1;
     display: block;
     width: 100%;
 }
+
 .our-thing .purpose .wrapper .short {
     grid-area: txt1;
     margin-bottom: 100px;
     line-height: 2;
 }
+
 .our-thing .purpose .wrapper .praise {
     grid-area: txt2;
     line-height: 2;
     padding-bottom: 15px;
 }
+
 .our-thing .purpose .wrapper .img2 {
     grid-area: img2;
     width: 100%;
 }
+
 .our-thing .purpose .wrapper .img3 {
     grid-area: img3;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .our-thing .purpose .wrapper .img4 {
     grid-area: img4;
     width: 100%;
 }
 
-@media (max-width: 767px) {    
+@media (max-width: 767px) {
     .our-thing .purpose .wrapper {
-        grid-template: "one"   
-                       "txt1"
-                       "img1"
-                       "img2"
-                       "txt2"
-                       "img3"
-                       "img4";
+        grid-template: "one"
+            "txt1"
+            "img1"
+            "img2"
+            "txt2"
+            "img3"
+            "img4";
     }
+
     .our-thing .purpose .wrapper .short {
         margin-bottom: 0;
     }
+
     .our-thing .purpose .wrapper .one-thing {
         padding-left: 0;
     }
-        
-        
+
+
 }
 
 
 /* .container-1{
     width: 50%;
-    font-family: TT Wellingtons Trial Regular;
     font-style: normal;
     font-size:22px;
     font-weight: 400;
@@ -239,7 +238,6 @@
 }
 .ourmission{
     color: black;
-    font-family: TT Wellingtons Trial Regular;
     font-weight: bolder;
     font-size: 1.2em;
     line-height: 1.5;
@@ -287,7 +285,6 @@
     }
     .container-1{
         width: 100%;
-        font-family: TT Wellingtons Trial Regular;
         font-style: normal;
         font-size: 22px;
         font-weight: 400;
