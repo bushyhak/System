@@ -87,7 +87,7 @@ def add_child(request):
             child = form.save(commit=False)
             child.parent = request.user
             child.save()
-            return redirect("dashboard")
+            return redirect("dashboard_child_info")
     else:
         form = ChildForm
 

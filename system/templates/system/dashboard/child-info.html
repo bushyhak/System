@@ -6,6 +6,15 @@
 <div>
     <h2 class="dashboard-title">Child Info</h2>
 
+    <h3>My Children</h3>
+    <div>
+        {% for child in children %}
+        <a href={% url 'child_detail' child.pk %} class="d-block">{{child.first_name}}</a>
+        {% empty %}
+        <p class="text-muted">You have no children added</p>
+        {% endfor %}
+    </div>
+
     <a href="{% url 'add_child' %}" class="btn btn-primary">
         <i class="fa fa-plus"></i> Add Child
     </a>
