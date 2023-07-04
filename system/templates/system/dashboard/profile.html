@@ -1,9 +1,30 @@
 {% extends './base.html' %}
 
-{% block dashboard_styles %}{% endblock dashboard_styles %}
+{% block dashboard_styles %}
+<style>
+    .dashboard_content {
+        background-color: white;
+        border-left: 2px solid rgba(1, 1, 1, .10);
+    }
+    .profile-form {
+        max-width: 480px;
+    }
+    .btn-submit {
+        display: block;
+        margin-left: auto;
+    }
+</style>
+{% endblock dashboard_styles %}
 
 {% block dashboard_content %}
 <div>
-    <h1>Profile</h1>
+    <h1 class="dashboard-title">My Profile</h1>
+
+    <form method="post" class="profile-form">
+        {% csrf_token %}
+        {% include 'system/components/form_fields.html' with form=user_form %}
+        {% include 'system/components/form_fields.html' with form=profile_form %}
+        {% include 'system/components/btn_submit.html' with btn_text="Save Profile" %}
+    </form>
 </div>
 {% endblock dashboard_content %}

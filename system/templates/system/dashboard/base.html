@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% load custom_tags static %}
+{% load adminlte_helpers custom_tags static %}
 
 {% block title %}Infant Immunization System - Dashboard{% endblock title %}
 
@@ -27,14 +27,14 @@
 			<span class="nav-item">Dashboard</span>
 		  </a>
 
+		  <a href="{% url 'dashboard_child_info' %}" class="item {% add_active 'dashboard_child_info' %}">
+			<i class="fas fa-chart-bar"></i>
+			<span class="nav-item">Child Info</span>
+		  </a>
+
 		  <a href="{% url "dashboard_profile" %}" class="item {% is_active 'dashboard_profile' %}">
 			<i class="fas fa-user"></i>
 			<span class="nav-item">Profile</span>
-		  </a>
-		  
-		  <a href="{% url 'dashboard_child_info' %}" class="item {% is_active 'dashboard_child_info' %}">
-			<i class="fas fa-chart-bar"></i>
-			<span class="nav-item">Child Info</span>
 		  </a>
 
 		  <a href="{% url 'dashboard_settings' %}" class="item {% is_active 'dashboard_settings' %}">
