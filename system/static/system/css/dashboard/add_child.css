@@ -1,0 +1,49 @@
+.dashboard_content {
+	background-color: #fafafa;
+}
+
+.add-child {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title-add-child {
+	font-weight: bold;
+}
+
+.add-child-form {
+	box-shadow: 0 0 5px 0px #ccc;
+	background-color: white;
+}
+
+label {
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.add-child p {
+	margin: 20px;
+	font-size: 18px;
+}
+
+input[type="text"],
+input[type="date"] {
+	width: 100%;
+	border: 1px solid #ccc;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+
+button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+	background-color: #000;
+	color: #fff;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 1.2rem;
+	font-weight: bold;
+}

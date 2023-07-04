@@ -1,0 +1,18 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block dashboard_styles %}
+<link rel="stylesheet" href="{% static 'system/css/dashboard/add_child.css' %}">
+{% endblock dashboard_styles %}
+
+{% block dashboard_content %}
+<div class="add-child">
+    <h2 style='title-add-child'>ADD CHILD</h2>
+    <form method="POST" class="add-child-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn-add-child">Add Child</button>
+    </form>
+</div>
+{% endblock dashboard_content %}

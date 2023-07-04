@@ -40,7 +40,7 @@ def register(request):
             return redirect("login", permanent=True)
     else:
         user_form = UserRegistrationForm()
-    return render(request, "system/register.html", {"user_form": user_form})
+    return render(request, "system/auth/register.html", {"user_form": user_form})
 
 
 @login_required
@@ -50,12 +50,54 @@ def dashboard(request):
 
 @login_required
 def profile(request):
-    return render(request, "system/dashboard/profile.html")
+    if request.method == "POST":
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(
+            instance=request.user.profile, data=request.POST, files=request.FILES
+        )
+        if user_form.is_valid and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Profile saved successfully")
+        else:
+            messages.error(request, "Failed to save Profile")
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    }
+    return render(request, "system/dashboard/profile.html", context)
 
 
 @login_required
 def child_info(request):
-    return render(request, "system/dashboard/child-info.html")
+    children = Child.objects.filter(parent=request.user)
+    context = {"children": children}
+    return render(request, "system/dashboard/child-info.html", context)
+
+
+@login_required
+def add_child(request):
+    if request.method == "POST":
+        form = ChildForm(request.POST)
+
+        if form.is_valid():
+            child = form.save(commit=False)
+            child.parent = request.user
+            child.save()
+            return redirect("dashboard")
+    else:
+        form = ChildForm
+
+    return render(request, "system/dashboard/add_child.html", {"form": form})
+
+
+@login_required
+def child_detail(request, child_id):
+    child = get_object_or_404(Child, id=child_id, parent=request.user)
+    return render(request, "system/dashboard/child_detail.html", {"child": child})
 
 
 @login_required
@@ -95,28 +137,6 @@ def edit(request):
         "system/edit.html",
         {"user_form": user_form, "profile_form": profile_form},
     )
-
-
-@login_required
-def add_child(request):
-    if request.method == "POST":
-        form = ChildForm(request.POST)
-
-        if form.is_valid():
-            child = form.save(commit=False)
-            child.parent = request.user
-            child.save()
-            return redirect("dashboard")
-    else:
-        form = ChildForm
-
-    return render(request, "add_child.html", {"form": form})
-
-
-@login_required
-def child_detail(request, child_id):
-    child = get_object_or_404(Child, id=child_id, parent=request.user)
-    return render(request, "child_detail.html", {"child": child})
 
 
 @login_required
