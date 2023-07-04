@@ -141,8 +141,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "dashboard"
 LOGIN_URL = "login"
-LOGOUT_URL = "logout"
-LOGOUT_REDIRECT_URL = "logout"
+# LOGOUT_URL = "logout"
+# LOGOUT_REDIRECT_URL = "logout"
 
 AUTHENTICATION_BACKENDS = [
     "system.authentication.EmailAuthBackend",
@@ -150,7 +150,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # NOTE: Temporary
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 

@@ -38,7 +38,6 @@ def gravatar(email: str, size=40, **kwargs):
 
     TEMPLATE USE:  {{ email|gravatar:150 }}
     """
-    size = kwargs.get("size", 40)
     classname = kwargs.get("classname", "gravatar-img")
     alt = kwargs.get("alt", " ")
     url = gravatar_url(email, size)
@@ -55,7 +54,14 @@ def gravatar(email: str, size=40, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def gravatar_tag(context, **kwargs):
-    email = context["request"].user.email
+    """return an html img tag with a gravatar url
+
+    TEMPLATE USE:  {% gravatar_tag size=80 classname='d-block border' alt='My image' %}
+    """
+    user = context["request"].user
+    email = "None"
+    if user.is_authenticated:
+        email = user.email
     size = kwargs.get("size", 40)
     classname = kwargs.get("classname", "gravatar-img")
     alt = kwargs.get("alt", " ")

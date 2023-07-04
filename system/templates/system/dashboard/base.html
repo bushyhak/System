@@ -17,8 +17,11 @@
 		<div class="wrapper">
 		  <div class="site-logo">
 			<a href="{% url 'home' %}" class="logo">
-			  {{user.email|gravatar:50}}
-			  <span class="text">GEVAC</span>
+				{{user.email|gravatar:80}}
+				<div>
+					<span class="text">GEVAC</span>
+					<span class="d-block">{{user.username}}</span>
+				</div>
 			</a>
 		  </div>
 
