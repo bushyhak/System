@@ -11,8 +11,8 @@
 
 
 {% block content %}
+{% include 'system/components/messages.html' %}
 <main class="dashboard">
-	{% include 'system/components/messages.html' %}
 	<nav class="left-nav">
 		<div class="wrapper">
 		  <div class="site-logo">
@@ -58,6 +58,8 @@
 	</nav>
 
 	<section class="dashboard_content">
+		{% include 'system/components/breadcrumb.html' %}
+		
 		{% block dashboard_content %}
 		<h2 class="dashboard-title">Services</h2>
 

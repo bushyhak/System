@@ -1,21 +1,55 @@
 {% extends './base.html' %}
 
-{% block dashboard_styles %}{% endblock dashboard_styles %}
+{% block dashboard_styles %}
+<style>
+.children {
+    display: block;
+    width: max-content;
+}
+.child-card {
+    display: block;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.child-card:hover {
+    background-color: rgba(13, 110, 253, 0.01);
+}
+.child-card .name {
+    display: block;
+}
+.child-card .age {
+    display: block;
+    font-size: 0.875rem;
+}
+.f-sm { font-size: .75rem;}
+</style>
+{% endblock dashboard_styles %}
 
 {% block dashboard_content %}
 <div>
     <h2 class="dashboard-title">Child Info</h2>
 
-    <h3>My Children</h3>
-    <div>
+    <div class='children'>
         {% for child in children %}
-        <a href={% url 'child_detail' child.pk %} class="d-block">{{child.first_name}}</a>
+        <a href={% url 'child_detail' child.pk %} class="child-card">
+            <span class='name'>
+                <span class='text-muted f-sm'>Name:</span>
+                {{child.first_name}} {{child.last_name}}
+            </span>
+            <span class='age text-muted'>
+                <span class='text-muted f-sm'>Age:</span>
+                {{child.first_name}}
+            </span>
+        </a>
         {% empty %}
-        <p class="text-muted">You have no children added</p>
+        <p class="text-muted">You haven't added any children</p>
         {% endfor %}
     </div>
 
-    <a href="{% url 'add_child' %}" class="btn btn-primary">
+    <a href="{% url 'add_child' %}" class="btn btn-primary mt-3">
         <i class="fa fa-plus"></i> Add Child
     </a>
 </div>

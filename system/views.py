@@ -2,6 +2,7 @@ from datetime import date, time
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.urls import reverse
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from .models import Doctor, Profile, Appointment, Vaccines, User
@@ -55,7 +56,7 @@ def profile(request):
         profile_form = ProfileEditForm(
             instance=request.user.profile, data=request.POST, files=request.FILES
         )
-        if user_form.is_valid and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request, "Profile saved successfully")
@@ -97,7 +98,15 @@ def add_child(request):
 @login_required
 def child_detail(request, child_id):
     child = get_object_or_404(Child, id=child_id, parent=request.user)
-    return render(request, "system/dashboard/child_detail.html", {"child": child})
+    breadcrumb = [
+        {"label": "Child Info", "url": reverse("dashboard_child_info")},
+        {"label": "Child Detail", "url": None},
+    ]
+    context = {
+        "child": child,
+        "breadcrumb": breadcrumb,
+    }
+    return render(request, "system/dashboard/child_detail.html", context)
 
 
 @login_required
@@ -124,7 +133,7 @@ def edit(request):
             instance=request.user.profile, data=request.POST, files=request.FILES
         )
 
-        if user_form.is_valid and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
 

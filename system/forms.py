@@ -7,6 +7,32 @@ from django.forms.widgets import Select, DateInput
 from django.contrib.auth.forms import UserCreationForm
 
 
+class CustomModelForm(forms.ModelForm):
+    """Extend the django ModelForm, adding "form-control" css class and a placeholder"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field_name.lower().find("date") >= 0:
+                field.widget.input_type = "date"
+            if field_name.lower().find("phone") >= 0:
+                field.widget.input_type = "tel"
+
+            self.add_class(field, "form-control")
+
+            if not field.widget.attrs.get("placeholder"):
+                field.widget.attrs["placeholder"] = "Enter %s..." % field.label.lower()
+
+            if self.has_error(field_name):
+                self.add_class(field, "is-invalid")
+
+    def add_class(self, field, css_class):
+        if field.widget.attrs.get("class"):
+            field.widget.attrs["class"] += f" {css_class}"
+        else:
+            field.widget.attrs["class"] = css_class
+
+
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -29,7 +55,7 @@ class UserRegistrationForm(UserCreationForm):
             self.fields[field].help_text = ""
 
 
-class UserEditForm(forms.ModelForm):
+class UserEditForm(CustomModelForm):
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email"]
@@ -42,10 +68,19 @@ class UserEditForm(forms.ModelForm):
         return data
 
 
-class ProfileEditForm(forms.ModelForm):
+class ProfileEditForm(CustomModelForm):
     class Meta:
         model = Profile
         fields = ["date_of_birth", "phone_number"]
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get("date_of_birth")
+
+        if date_of_birth:
+            if date_of_birth > timezone.now().date():
+                raise forms.ValidationError("Date of birth cannot be in the future")
+
+        return date_of_birth
 
 
 class ChildForm(forms.ModelForm):
@@ -56,6 +91,8 @@ class ChildForm(forms.ModelForm):
 
     def clean_date_of_birth(self):
         date_of_birth = self.cleaned_data.get("date_of_birth")
+        if not date_of_birth:  # prevents errors below if date_of_birth is None
+            return date_of_birth
 
         if date_of_birth > timezone.now().date():
             raise forms.ValidationError("Child's date of birth cannot be in the future")
@@ -64,6 +101,7 @@ class ChildForm(forms.ModelForm):
 
         if age_in_months > 18:
             raise forms.ValidationError("Child must be 18 months or below.")
+
         return date_of_birth
 
 

@@ -20,7 +20,7 @@
 <div>
     <h1 class="dashboard-title">My Profile</h1>
 
-    <form method="post" class="profile-form">
+    <form method="post" class="profile-form needs-validation" novalidate>
         {% csrf_token %}
         {% include 'system/components/form_fields.html' with form=user_form %}
         {% include 'system/components/form_fields.html' with form=profile_form %}

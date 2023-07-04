@@ -2,22 +2,14 @@
     <div class="form-group mb-3">
         <label for="{{ field.id_for_label }}" class="form-label fw-bold mb-1">{{ field.label|add:":" }}</label>
 
-        {% if field.widget.input_type == 'textarea' %}
-        <textarea class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" placeholder="{{ field.label|add:"..." }}" rows="4">{{ field.value|default:'' }}</textarea>
-        {% else %}
-        <input class="form-control" type="{{ field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" placeholder="{{ field.label|add:"..." }}" value="{{ field.value|default:'' }}">
-        {% endif %}
+        {{ field.as_widget }}
 
         {% if field.help_text %}
         <small class="form-text text-muted">{{ field.help_text }}</small>
         {% endif %}
 
-        {% if field.errors %}
-        <div class="invalid-feedback">
-            {% for error in field.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
+        {% if field.errors %}{% for error in field.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}{% endif %}
     </div>
 {% endfor %}
