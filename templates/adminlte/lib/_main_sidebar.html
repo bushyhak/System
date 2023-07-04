@@ -1,11 +1,11 @@
-{% load adminlte_helpers %}
-{%load static %}
+{% load custom_tags %}
+{% load static %}
 <!-- Left side column. contains the sidebar -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
      <!-- Brand Logo -->
     {% block logo %}
         <a href="/" class="brand-link">
-            <img src="{%static 'admin-lte/dist/img/AdminLTELogo.png' %}" alt="Gevac Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{% static 'admin-lte/dist/img/AdminLTELogo.png' %}" alt="Gevac Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             {% block logo_text %}<span class="brand-text font-weight-bold">Gevac</span>{% endblock %}
         </a>
     {% endblock %}
@@ -16,7 +16,7 @@
         <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{% avatar_url size=90 %}" class="img-circle elevation-2" alt="User Image">
+          {% gravatar_tag size=90 classname="img-circle elevation-2" alt="User Image" %}
         </div>
         <div class="info">
           <a href="#" class="d-block">{% firstof request.user.get_full_name request.user.username %}</a>

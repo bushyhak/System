@@ -49,9 +49,10 @@ body,
     gap: 1rem;
 }
 
-.wrapper .site-logo .logo img {
-    width: 48px;
-    height: 48px;
+.wrapper .site-logo .logo .gravatar-img {
+    /* width: 48px; */
+    /* height: 48px; */
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
 }
 

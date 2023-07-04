@@ -24,8 +24,8 @@ def gravatar_url(email: str, size=40):
 
     TEMPLATE USE:  {{ email|gravatar_url:150 }}
     """
-
-    default = "retro"
+    # mp | identicon | monsterid | wavatar | retro | robohash | blank
+    default = "identicon"
     hash = hashlib.md5(email.lower().encode()).hexdigest()
     params = urlencode({"d": default, "s": str(size)})
 
@@ -33,13 +33,34 @@ def gravatar_url(email: str, size=40):
 
 
 @register.filter
-def gravatar(email: str, size=40, classname="gravatar-img", alt=" "):
+def gravatar(email: str, size=40, **kwargs):
     """return an image tag with the gravatar
 
     TEMPLATE USE:  {{ email|gravatar:150 }}
     """
-
+    size = kwargs.get("size", 40)
+    classname = kwargs.get("classname", "gravatar-img")
+    alt = kwargs.get("alt", " ")
     url = gravatar_url(email, size)
+
+    img_tag = '<img src="%s" height="%d" width="%d" class="%s" alt="%s">' % (
+        url,
+        size,
+        size,
+        classname,
+        alt,
+    )
+    return mark_safe(img_tag)
+
+
+@register.simple_tag(takes_context=True)
+def gravatar_tag(context, **kwargs):
+    email = context["request"].user.email
+    size = kwargs.get("size", 40)
+    classname = kwargs.get("classname", "gravatar-img")
+    alt = kwargs.get("alt", " ")
+    url = gravatar_url(email, size)
+
     img_tag = '<img src="%s" height="%d" width="%d" class="%s" alt="%s">' % (
         url,
         size,

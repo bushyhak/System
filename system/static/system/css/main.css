@@ -54,6 +54,10 @@ body {
     font-family: "TT Wellingtons Trial", sans-serif;
 }
 
+img.gravatar-img {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
 
 .navbar {
     background-color: #F0EFED;
