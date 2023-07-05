@@ -1,147 +1,130 @@
-[
-  {
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$7JUwZNN2NFPWUo4JDPJAav$FyOIuJphw/NcMH+E3LUpxpY/+niSgVglgcjfOeonj34=",
-      "last_login": null,
-      "is_superuser": true,
-      "username": "KK",
-      "first_name": "Kim",
-      "last_name": "Njosh",
-      "email": "kiptoo@gmail.com",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2023-06-26T18:08:12.941Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$K1cXnatyIGFGWS5vmFoVfA$U0iurOukIsxJLqA4HKXOIDz1+n2ZbsKqZYYWvKg7KBs=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "KT",
-      "first_name": "Kim",
-      "last_name": "Njosh",
-      "email": "hh@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2023-06-26T18:09:06.861Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$b14liMJUJ0LrDATL2K6Dej$Y32qvsvNwK5EUO/XI1F38ah1EmkMK4SBTYLAaI7ChuQ=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "K",
-      "first_name": "K",
-      "last_name": "N",
-      "email": "kk@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2023-06-26T18:32:24.977Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 4,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$9CbYZeA5gZ2egPhUtKnYbj$WbC7hS/aX/G0msI124VpL8APNrcOT0AJKCSEAmZAULQ=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "KR",
-      "first_name": "R",
-      "last_name": "LL",
-      "email": "hg@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2023-06-26T19:17:59.929Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 5,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$8LLJDYQU9PWec2oHVYsByi$1SsUSDwPZjxkl8NHBz4UtI0f1AdGkPzVfzRwpA3SOLA=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "ss",
-      "first_name": "sd",
-      "last_name": "ds",
-      "email": "ll@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2023-06-26T20:32:42.092Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "system.profile",
-    "pk": 1,
-    "fields": {
-      "user": 1,
-      "date_of_birth": null,
-      "username": "",
-      "phone_number": "",
-      "permissions": "user"
-    }
-  },
-  {
-    "model": "system.profile",
-    "pk": 2,
-    "fields": {
-      "user": 2,
-      "date_of_birth": null,
-      "username": "",
-      "phone_number": "",
-      "permissions": "user"
-    }
-  },
-  {
-    "model": "system.profile",
-    "pk": 3,
-    "fields": {
-      "user": 3,
-      "date_of_birth": null,
-      "username": "",
-      "phone_number": "",
-      "permissions": "user"
-    }
-  },
-  {
-    "model": "system.profile",
-    "pk": 4,
-    "fields": {
-      "user": 4,
-      "date_of_birth": null,
-      "username": "",
-      "phone_number": "",
-      "permissions": "user"
-    }
-  },
-  {
-    "model": "system.profile",
-    "pk": 5,
-    "fields": {
-      "user": 5,
-      "date_of_birth": null,
-      "username": "",
-      "phone_number": "",
-      "permissions": "user"
-    }
-  }
-]
+from django.core.management.base import BaseCommand
+import json
+from system.models import Vaccines
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **kwargs):
+        vaccines = [
+            {
+                "name": "BCG",
+                "weeks_minimum_age": 0,
+                "weeks_maximum_age": 0,
+            },
+            {
+                "name": "Hepatitis B Birth Dose",
+                "weeks_minimum_age": 0,
+                "weeks_maximum_age": 0,
+            },
+            {
+                "name": "Polio Birth Dose",
+                "weeks_minimum_age": 0,
+                "weeks_maximum_age": 0,
+            },
+            {
+                "name": "DPT Birth Dose",
+                "weeks_minimum_age": 0,
+                "weeks_maximum_age": 0,
+            },
+            {
+                "name": "Hib 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "Polio 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "DPT 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "Rotavirus 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "PCV 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "Hepatitis B 6 Weeks Dose",
+                "weeks_minimum_age": 6,
+                "weeks_maximum_age": 6,
+            },
+            {
+                "name": "Hib 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "Polio 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "DPT 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "Rotavirus 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "PCV 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "Hepatitis B 10 Weeks Dose",
+                "weeks_minimum_age": 10,
+                "weeks_maximum_age": 10,
+            },
+            {
+                "name": "Hib 14 Weeks Dose",
+                "weeks_minimum_age": 14,
+                "weeks_maximum_age": 14,
+            },
+            {
+                "name": "Polio 14 Weeks Dose",
+                "weeks_minimum_age": 14,
+                "weeks_maximum_age": 14,
+            },
+            {
+                "name": "DPT 14 Weeks Dose",
+                "weeks_minimum_age": 14,
+                "weeks_maximum_age": 14,
+            },
+            {
+                "name": "PCV 14 Weeks Dose",
+                "weeks_minimum_age": 14,
+                "weeks_maximum_age": 14,
+            },
+            {
+                "name": "MMR 9 Months Dose",
+                "weeks_minimum_age": 36,
+                "weeks_maximum_age": 36,
+            },
+            {
+                "name": "Chickenpox 12 Months Dose",
+                "weeks_minimum_age": 48,
+                "weeks_maximum_age": 48,
+            },
+            {
+                "name": "HPV 10-14 Years Dose 1",
+                "weeks_minimum_age": 120,
+                "weeks_maximum_age": 168,
+            },
+        ]
+
+        with open('vaccines.json', 'w') as f:
+            json.dump(vaccines, f)
+
+        for vaccine in vaccines:
+            Vaccines.objects.create(**vaccine)
