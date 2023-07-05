@@ -1,0 +1,20 @@
+{% extends "system/dashboard/base.html" %}
+
+
+{% block title %}{{ block.super }} | Book Appointment{% endblock title %}
+
+{% block dashboard_styles %}
+<style>
+    .form {
+        max-width: 480px;
+    }
+</style>
+{% endblock dashboard_styles %}
+
+{% block dashboard_content %}
+<div class="flex-container">
+    <h2>Book Appointment</h2>
+
+    {% include 'system/components/form.html' with btn_text="Book Appointment" %}
+</div>
+{% endblock dashboard_content %}

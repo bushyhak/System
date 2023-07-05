@@ -56,7 +56,7 @@
         <div class="navbar-links">
             <ul style="align-items: center;">
                 <li><a href="/">Home</a></li>
-                <li><a href="{% url 'booking' %}">Book</a></li>
+                <li><a href="{% url 'book_appointment' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 {% if user.is_authenticated %}
@@ -92,7 +92,7 @@
         <div class="footNav">
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="{% url 'booking' %}">Book</a></li>
+                <li><a href="{% url 'book_appointment' %}">Book</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 {% if user.is_authenticated %}

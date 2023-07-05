@@ -6,13 +6,6 @@
         background-color: white;
         border-left: 2px solid rgba(1, 1, 1, .10);
     }
-    .profile-form {
-        max-width: 480px;
-    }
-    .btn-submit {
-        display: block;
-        margin-left: auto;
-    }
 </style>
 {% endblock dashboard_styles %}
 
@@ -20,7 +13,7 @@
 <div>
     <h1 class="dashboard-title">My Profile</h1>
 
-    <form method="post" class="profile-form">
+    <form method="post" class="dashboard-form">
         {% csrf_token %}
         {% include 'system/components/form_fields.html' with form=user_form %}
         {% include 'system/components/form_fields.html' with form=profile_form %}

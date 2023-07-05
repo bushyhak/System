@@ -80,6 +80,10 @@ class Child(models.Model):
     def age(self):
         return self.get_age(self.date_of_birth)
 
+    @property
+    def full_name(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
 
 class Appointment(models.Model):
     child = models.ForeignKey(
@@ -91,6 +95,7 @@ class Appointment(models.Model):
     vaccine = models.ForeignKey(
         "Vaccines", related_name="appointments", on_delete=models.SET_NULL, null=True
     )
+    # completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Appointment for {self.child}"
@@ -109,6 +114,11 @@ class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     license_no = models.CharField(max_length=10)
+    # available = models.BooleanField(default=True)
 
     def __str__(self):
         return f"Dr. {self.first_name} {self.last_name}"
+
+    @property
+    def full_name(self):
+        return "%s %s" % (self.first_name, self.last_name)

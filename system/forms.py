@@ -21,7 +21,8 @@ class CustomModelForm(forms.ModelForm):
             self.add_class(field, "form-control")
 
             if not field.widget.attrs.get("placeholder"):
-                field.widget.attrs["placeholder"] = "Enter %s..." % field.label.lower()
+                txt = field.label.lower() if field.label else "data"
+                field.widget.attrs["placeholder"] = "Enter %s..." % txt
 
             if self.has_error(field_name):
                 self.add_class(field, "is-invalid")
@@ -123,7 +124,7 @@ class HourIntervalSelectWidget(Select):
 
 
 # Form for booking appointments
-class BookingForm(forms.ModelForm):
+class BookingForm(CustomModelForm):
     child = forms.ModelChoiceField(queryset=Child.objects.none())
 
     def __init__(self, *args, **kwargs):
@@ -179,7 +180,7 @@ class BookingForm(forms.ModelForm):
         }
 
 
-class RescheduleForm(forms.ModelForm):
+class RescheduleForm(CustomModelForm):
     class Meta:
         model = Appointment
         fields = ["date", "time"]
@@ -189,7 +190,7 @@ class RescheduleForm(forms.ModelForm):
         }
 
 
-class CancelForm(forms.ModelForm):
+class CancelForm(CustomModelForm):
     class Meta:
         model = Appointment
         fields = []  # No fields needed for canceling

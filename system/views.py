@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
-from .models import Doctor, Profile, Appointment, Vaccines, User
+from .models import Doctor, Appointment, Vaccines, User
 from .forms import ChildForm, BookingForm, CancelForm
 from random import choice
 from .forms import RescheduleForm
@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
+##################################### Landing Site #####################################
 def home(request):
     return render(request, "system/home.html")
 
@@ -27,6 +28,7 @@ def about(request):
     return render(request, "system/about.html")
 
 
+##################################### Auth #####################################
 def register(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
@@ -44,11 +46,13 @@ def register(request):
     return render(request, "system/auth/register.html", {"user_form": user_form})
 
 
+##################################### Dashboard #####################################
 @login_required
 def dashboard(request):
     return render(request, "system/dashboard/base.html")
 
 
+##################### Profile
 @login_required
 def profile(request):
     if request.method == "POST":
@@ -72,6 +76,7 @@ def profile(request):
     return render(request, "system/dashboard/profile.html", context)
 
 
+##################### Children Info
 @login_required
 def child_info(request):
     children = Child.objects.filter(parent=request.user)
@@ -109,56 +114,51 @@ def child_detail(request, child_id):
     return render(request, "system/dashboard/child_detail.html", context)
 
 
+##################### Settings
 @login_required
 def settings(request):
     return render(request, "system/dashboard/settings.html")
 
 
+##################### Report
 @login_required
 def report(request):
     return render(request, "system/dashboard/report.html")
 
 
+##################### Appointments
 @login_required
-def book(request):
-    return render(request, "system/book.html")
-
-
-@login_required
-def edit(request):
-    if request.method == "POST":
-        user_form = UserEditForm(instance=request.user, data=request.POST)
-
-        profile_form = ProfileEditForm(
-            instance=request.user.profile, data=request.POST, files=request.FILES
-        )
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
-
-    return render(
-        request,
-        "system/edit.html",
-        {"user_form": user_form, "profile_form": profile_form},
-    )
+def appointments(request):
+    """List all appointments"""
+    appointments = Appointment.objects.filter(child__parent=request.user)
+    context = {
+        "appointments": appointments,
+    }
+    return render(request, "system/appointments/list.html", context)
 
 
 @login_required
-def booking_view(request):
+def appointment_detail(request, id):
+    """Get the details of a single appointment using the id"""
+    appointment = Appointment.objects.get(id=id)
+    context = {
+        "appointment": appointment,
+    }
+    return render(request, "system/appointments/detail.html", context)
+
+
+@login_required
+def book_appointment(request):
+    """Book a new appointment"""
     if request.method == "POST":
         form = BookingForm(request.POST, user=request.user, request=request)
         if form.is_valid():
             appointment = form.save(commit=False)
-            appointment.child = request.user
+            # appointment.child = request.user
 
-            doctors = Doctor.objects.all()
+            doctors = Doctor.objects.filter()  # get available doctors only
 
-            if doctors.exists():
+            if doctors.exists():  # TODO: Handle logic
                 random_doctor = choice(doctors)
                 appointment.doctor = random_doctor
                 appointment.status = "Pending"
@@ -166,20 +166,27 @@ def booking_view(request):
 
                 random_doctor.appointments.add(appointment)
                 appointment.save()
-                return redirect("dashboard")
+                return redirect("appointments")
             else:
-                return HttpResponse("No Doctors availabe")
-
+                messages.error("No Doctors available at the moment.")
     else:
         form = BookingForm(user=request.user, request=request)
 
-    context = {"form": form}
-    return render(request, "booking.html", context)
+    breadcrumb = [
+        {"label": "Appointments", "url": reverse("appointments")},
+        {"label": "New Appointment", "url": None},
+    ]
+    context = {
+        "form": form,
+        "breadcrumb": breadcrumb,
+    }
+    return render(request, "system/appointments/new.html", context)
 
 
 @login_required
-def reschedule_view(request, appointment_id):
-    appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
+def reschedule_appointment(request, id):
+    """Reschedule an existing appointment"""
+    appointment = get_object_or_404(Appointment, id=id, parent=request.user)
 
     if request.method == "POST":
         form = RescheduleForm(request.POST)
@@ -200,58 +207,39 @@ def reschedule_view(request, appointment_id):
                 appointment.time = new_time
                 appointment.save()
 
-                # # Create an admin log entry for the rescheduled appointment
-                # log_entry = LogEntry.objects.log_action(
-                #     user_id=request.user.id,
-                #     content_type_id=ContentType.objects.get_for_model(appointment).pk,
-                #     object_id=appointment.id,
-                #     object_repr=str(appointment),
-                #     action_flag=CHANGE,
-                #     change_message="Appointment rescheduled by user",
-                # )
-                # log_entry.save()
-
                 messages.success(request, "Appointment rescheduled successfully.")
 
-                return redirect("dashboard")
+                return redirect("appointments")
     else:
         form = RescheduleForm()
 
     context = {"form": form}
-    return render(request, "reschedule.html", context)
+    return render(request, "system/appointments/reschedule.html", context)
 
 
 @login_required
-def cancel_appointment(request, appointment_id):
-    appointment = Appointment.objects.get(pk=appointment_id)
+def cancel_appointment(request, id):
+    """Cancel an existing appointment"""
+    appointment = Appointment.objects.get(id=id)
 
     if request.method == "POST":
         form = CancelForm(request.POST, instance=appointment)
         if form.is_valid():
             appointment.delete()
-            return redirect("dashboard")
+            return redirect("appointments")
     else:
         form = CancelForm(instance=appointment)
 
-    return render(
-        request, "cancel_appointment.html", {"form": form, "appointment": appointment}
-    )
+    context = {
+        "form": form,
+        "appointment": appointment,
+    }
+    return render(request, "system/appointments/cancel.html", context)
 
 
 def send_booking_confirmation_email(appointment):
-    parent_email = appointment.parent.email
+    parent_email = appointment.child.parent.email
     subject = "Booking Confirmation"
-    message = render_to_string("confirm_booking.html", {"appointment": appointment})
-    send_mail(subject, message, "your_email@example.com", [parent_email])
-
-
-# def cancel_view(request, appointment_id):
-#     appointment = get_object_or_404(Appointment, id=appointment_id, parent=request.user)
-
-#     if request.method == 'POST':
-#         appointment.delete()
-#         return redirect('dashboard')
-
-#     form = CancelForm()
-#     context = {'form': form}
-#     return render(request, 'cancel.html', context)
+    context = {"appointment": appointment}
+    message = render_to_string("system/appointments/confirm_booking.html", context)
+    send_mail(subject, message, [parent_email])

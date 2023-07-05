@@ -5,7 +5,6 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("contact/", views.contact, name="contact"),
-    path("book/", views.book, name="book"),
     path("about/", views.about, name="about"),
     ############################# Dashboard urls #############################
     path("dashboard/", views.dashboard, name="dashboard"),
@@ -19,10 +18,25 @@ urlpatterns = [
     ),
     path("dashboard/settings/", views.settings, name="dashboard_settings"),
     path("dashboard/report/", views.report, name="dashboard_report"),
+    path("dashboard/appointments/", views.appointments, name="appointments"),
+    path(
+        "dashboard/appointments/new/", views.book_appointment, name="book_appointment"
+    ),
+    path(
+        "dashboard/appointments/<int:id>/",
+        views.appointment_detail,
+        name="appointment_detail",
+    ),
+    path(
+        "dashboard/appointments/<int:id>/reschedule/",
+        views.reschedule_appointment,
+        name="reschedule_appointment",
+    ),
+    path(
+        "dashboard/appointments/<int:id>/cancel/",
+        views.cancel_appointment,
+        name="cancel_appointment",
+    ),
     ##########################################################################
     path("register/", views.register, name="register"),
-    path("edit/", views.edit, name="edit"),
-    path("booking/", views.booking_view, name="booking"),
-    path("reschedule/<int:appointment_id>/", views.reschedule_view, name="reschedule"),
-    path("cancel/<int:appointment_id>/", views.cancel_appointment, name="cancel"),
 ]

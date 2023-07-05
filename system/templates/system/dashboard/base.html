@@ -16,18 +16,23 @@
 	<nav class="left-nav">
 		<div class="wrapper">
 		  <div class="site-logo">
-			<a href="{% url 'home' %}" class="logo">
+			<div class="logo">
 				{{user.email|gravatar:80}}
 				<div>
-					<span class="text">GEVAC</span>
-					<span class="d-block">{{user.username}}</span>
+					<a href="{% url 'home' %}" class="text">GEVAC</a>
+					<a href="{% url 'dashboard_profile' %}" class="d-block">{{user.username}}</a>
 				</div>
-			</a>
+			</div>
 		  </div>
 
 		  <a href="{% url 'dashboard' %}" class="item {% is_active 'dashboard' %}">
 			<i class="fas fa-home"></i>
 			<span class="nav-item">Dashboard</span>
+		  </a>
+
+		  <a href="{% url 'appointments' %}" class="item {% add_active 'appointments' %}">
+			<i class="fas fa-calendar-alt"></i>
+			<span class="nav-item">Appointments</span>
 		  </a>
 
 		  <a href="{% url 'dashboard_child_info' %}" class="item {% add_active 'dashboard_child_info' %}">
@@ -40,10 +45,10 @@
 			<span class="nav-item">Profile</span>
 		  </a>
 
-		  <a href="{% url 'dashboard_settings' %}" class="item {% is_active 'dashboard_settings' %}">
+		  {% comment %} <a href="{% url 'dashboard_settings' %}" class="item {% is_active 'dashboard_settings' %}">
 			<i class="fas fa-cog"></i>
 			<span class="nav-item">Settings</span>
-		  </a>
+		  </a> {% endcomment %}
 		</div>
 
 		<div class="bottom">
@@ -70,8 +75,8 @@
 			{% url 'add_child' as add_child %}
 			{% include "./card.html" with title="New Child Record" content="Join Over a Thousand Parents" btn_text="Add Record" btn_url=add_child card1=True %}
 			
-			{% url 'booking' as booking %}
-			{% include "./card.html" with title="Schedule" content="Join Over a Thousand Parents" btn_text="Schedule" btn_url=booking card2=True %}
+			{% url 'book-appointment' as book_appointment %}
+			{% include "./card.html" with title="Schedule" content="Join Over a Thousand Parents" btn_text="Schedule" btn_url=book_appointment card2=True %}
 
 			{% comment %} {% url '' as  %} {% endcomment %}
 			{% include "./card.html" with title="Manage Appointment" content="Join Over a Thousand Parents" btn_text="Manage" btn_url="#" card3=True %}

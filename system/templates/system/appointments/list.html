@@ -1,0 +1,49 @@
+{% extends "system/dashboard/base.html" %}
+{% load static %}
+
+{% block title %}All Appointments | Gevac{% endblock title %}
+
+{% block dashboard_styles %}{% endblock dashboard_styles %}
+
+{% block dashboard_content %}
+<div class="appointments">
+    <h2 style='dashboard-title'>Appointments</h2>
+
+    {% if appointments %}
+    <table>
+        <thead>
+            <tr>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Patient Name</th>
+                <th>Doctor Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td>{{ appointment.child.full_name }}</td>
+                <td>{{ appointment.doctor.full_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-muted">You haven't booked any appointment</p> 
+    {% endif %}
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary mt-3">
+            <i class="fa fa-plus"></i> Book New Appointment
+        </a>
+
+        {% if appointments %}
+        <a href="#" class="btn btn-secondary mt-3">
+            <i class="fas fa-file-export"></i> Generate Report
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock dashboard_content %}
