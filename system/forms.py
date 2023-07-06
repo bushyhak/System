@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Child, Appointment
+from .models import Profile, Child, Appointment, Vaccines
 from django.utils import timezone
 from datetime import date
 from django.forms.widgets import Select, DateInput
@@ -123,37 +123,53 @@ class HourIntervalSelectWidget(Select):
         super().__init__(attrs, choices=intervals)
 
 
-# Form for booking appointments
 class BookingForm(CustomModelForm):
-    child = forms.ModelChoiceField(queryset=Child.objects.none())
+    """Form for booking appointments"""
+
+    child = forms.ModelChoiceField(queryset=Child.objects.all())
+    vaccine = forms.ModelChoiceField(queryset=Vaccines.objects.all())
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
         self.request = kwargs.pop("request")
         super(BookingForm, self).__init__(*args, **kwargs)
         self.fields["child"].queryset = Child.objects.filter(parent=user)
+        # self.fields["vaccine"].queryset = Vaccines.objects.filter()
 
     # Validate that the selected date is not in the past
     def clean_date(self):
-        selected_date = self.cleaned_data["date"]
-        if selected_date < date.today():
+        selected_date = self.cleaned_data.get("date")
+        if selected_date < timezone.now().date():
             raise forms.ValidationError(
                 "Invalid date. Please select a date in the future"
             )
         return selected_date
 
-    def clean(self):
+    def clean_vaccine(self):
+        child = self.cleaned_data.get("child")
+        selected_vaccine = self.cleaned_data.get("vaccine")
+
+        valid_vaccines = Vaccines.objects.filter(weeks_minimum_age=child.age_in_weeks)
+        if selected_vaccine not in valid_vaccines:
+            raise forms.ValidationError(
+                "The child is not old enough to be administered this vaccine."
+            )
+        return selected_vaccine
+
+    def cleannn(self):
         cleaned_data = super().clean()
+
+        child = cleaned_data.get("child")
         selected_date = cleaned_data.get("date")
         selected_time = cleaned_data.get("time")
-        child = cleaned_data.get("child")
+        selected_vaccine = cleaned_data.get("vaccine")
+
         parent = self.request.user
-        selected_vaccine = cleaned_data.get("vaccines")  # noqa: F841
 
         # Check if the parent has already booked an appointment for the selected child
         if selected_date and selected_time and child:
             existing_appointment = Appointment.objects.filter(
-                child=child, parent=parent
+                child=child, parent=parent, vaccine=selected_vaccine
             ).first()
 
             if existing_appointment:
@@ -173,7 +189,7 @@ class BookingForm(CustomModelForm):
 
     class Meta:
         model = Appointment
-        fields = ["child", "date", "time"]
+        fields = ["child", "date", "time", "vaccine"]
         widgets = {
             "date": forms.DateInput(attrs={"type": "date"}),
             "time": HourIntervalSelectWidget(attrs={"type": "time"}),

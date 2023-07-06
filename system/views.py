@@ -13,6 +13,8 @@ from django.contrib import messages
 from .models import Child
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings as django_settings
 
 
 ##################################### Landing Site #####################################
@@ -147,6 +149,23 @@ def appointment_detail(request, id):
     return render(request, "system/appointments/detail.html", context)
 
 
+def send_booking_confirmation_email(appointment):
+    """Helper function to send an appointment booking confirmation"""
+    subject = "Appointment Booking Confirmation"
+    parent_email = appointment.child.parent.email
+    context = {"appointment": appointment}
+    html_message = render_to_string("system/appointments/confirm_booking.html", context)
+    plain_message = strip_tags(html_message)
+    from_email = django_settings.DEFAULT_FROM_EMAIL
+    send_mail(
+        subject,
+        plain_message,
+        from_email,
+        recipient_list=[parent_email],
+        html_message=html_message,
+    )
+
+
 @login_required
 def book_appointment(request):
     """Book a new appointment"""
@@ -156,19 +175,23 @@ def book_appointment(request):
             appointment = form.save(commit=False)
             # appointment.child = request.user
 
-            doctors = Doctor.objects.filter()  # get available doctors only
+            doctors = Doctor.objects.filter(available=True)  # get available doctors
 
-            if doctors.exists():  # TODO: Handle logic
-                random_doctor = choice(doctors)
-                appointment.doctor = random_doctor
-                appointment.status = "Pending"
+            if doctors.exists():
+                doctor = choice(doctors)  # choose random doctor
+                appointment.doctor = doctor
                 appointment.save()
-
-                random_doctor.appointments.add(appointment)
-                appointment.save()
+                doctor.available = False
+                doctor.save()
+                # random_doctor.appointments.add(appointment)
+                # appointment.save()
+                send_booking_confirmation_email(appointment)
+                messages.success(request, "Appointment booked successfully!")
                 return redirect("appointments")
             else:
-                messages.error("No Doctors available at the moment.")
+                messages.error(request, "No Doctors available at the moment.")
+        else:
+            messages.error(request, "Failed to book appointment!")
     else:
         form = BookingForm(user=request.user, request=request)
 
@@ -235,11 +258,3 @@ def cancel_appointment(request, id):
         "appointment": appointment,
     }
     return render(request, "system/appointments/cancel.html", context)
-
-
-def send_booking_confirmation_email(appointment):
-    parent_email = appointment.child.parent.email
-    subject = "Booking Confirmation"
-    context = {"appointment": appointment}
-    message = render_to_string("system/appointments/confirm_booking.html", context)
-    send_mail(subject, message, [parent_email])

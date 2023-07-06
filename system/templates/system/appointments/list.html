@@ -3,47 +3,88 @@
 
 {% block title %}All Appointments | Gevac{% endblock title %}
 
-{% block dashboard_styles %}{% endblock dashboard_styles %}
+{% block dashboard_styles %}
+<style>
+.custom-table-header {
+    --bs-table-bg: #0d6efd;
+    --bs-table-striped-bg: #c5d7f2;
+    --bs-table-striped-color: #000;
+    --bs-table-active-bg: #bacbe6;
+    --bs-table-active-color: #000;
+    --bs-table-hover-bg: #bfd1ec;
+    --bs-table-hover-color: #000;
+    color: #000;
+    border-color: #bacbe6;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
+{% endblock dashboard_styles %}
 
 {% block dashboard_content %}
 <div class="appointments">
     <h2 style='dashboard-title'>Appointments</h2>
 
     {% if appointments %}
-    <table>
-        <thead>
-            <tr>
-                <th>Appointment Date</th>
-                <th>Appointment Time</th>
-                <th>Patient Name</th>
-                <th>Doctor Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for appointment in appointments %}
-            <tr>
-                <td>{{ appointment.date }}</td>
-                <td>{{ appointment.time }}</td>
-                <td>{{ appointment.child.full_name }}</td>
-                <td>{{ appointment.doctor.full_name }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-light table-stripped table-hover">
+            <thead>
+                <tr class="custom-table-header text-light">
+                    <th scope="col">Appointment Date</th>
+                    <th scope="col">Appointment Time</th>
+                    <th scope="col">Child Name</th>
+                    <th scope="col">Vaccine</th>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>{{ appointment.child.full_name }}</td>
+                    <td>{{ appointment.vaccine }}</td>
+                    <td>{{ appointment.doctor.full_name }}</td>
+
+                    <td class="text-center">
+                    {{appointment.completed}}
+                    {% if appointment.completed %}
+                    <i class="fas fa-check-circle text-success"></i>
+                    {% else %}
+                    <i class="fas fa-times-circle text-danger"></i>
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
     <p class="text-muted">You haven't booked any appointment</p> 
     {% endif %}
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="{% url 'book_appointment' %}" class="btn btn-primary mt-3">
+        <a href="{% url 'book_appointment' %}" class="btn btn-outline-primary mt-3">
             <i class="fa fa-plus"></i> Book New Appointment
         </a>
 
         {% if appointments %}
-        <a href="#" class="btn btn-secondary mt-3">
+        <button onclick="generateAppointmentsReport()" class="btn btn-secondary mt-3">
             <i class="fas fa-file-export"></i> Generate Report
-        </a>
+        </button>
         {% endif %}
     </div>
 </div>
 {% endblock dashboard_content %}
+
+
+{% block scripts %}
+{{ block.super }}
+<script src={% static 'system/javascript/report.js' %}></script>
+<script>
+    function generateAppointmentsReport() {
+        generatePDF('Appointments Report', 'appointments-report.pdf')
+    }
+</script>
+{% endblock scripts %}

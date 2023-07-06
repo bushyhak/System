@@ -3,6 +3,8 @@ from system.models import Vaccines
 
 
 class Command(BaseCommand):
+    help = "Loads some initial vaccines into the database"
+
     def handle(self, *args, **kwargs):
         vaccines = [
             {
@@ -124,3 +126,6 @@ class Command(BaseCommand):
 
         for vaccine in vaccines:
             Vaccines.objects.create(**vaccine)
+        self.stdout.write(
+            self.style.SUCCESS("Successfully loaded vaccines into the database")
+        )
