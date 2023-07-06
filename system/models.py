@@ -45,6 +45,14 @@ class Child(models.Model):
     def vaccines(self):
         return self.administered_vaccines
 
+    @property
+    def age_in_weeks(self):
+        """Returns the age in weeks as an integer"""
+        today = date.today()
+        days = (today - self.date_of_birth).days
+        weeks = days // 7
+        return weeks
+
     @staticmethod
     def get_age(date_of_birth: date):
         """Returns the age in terms of days, weeks, months, and years"""
@@ -91,11 +99,13 @@ class Appointment(models.Model):
     )
     date = models.DateField()
     time = models.TimeField()
-    doctor = models.ForeignKey("Doctor", on_delete=models.SET_NULL, null=True)
+    doctor = models.ForeignKey(
+        "Doctor", related_name="appointments", on_delete=models.SET_NULL, null=True
+    )
     vaccine = models.ForeignKey(
         "Vaccines", related_name="appointments", on_delete=models.SET_NULL, null=True
     )
-    # completed = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Appointment for {self.child}"
@@ -107,14 +117,14 @@ class Vaccines(models.Model):
     weeks_maximum_age = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return "%s" % self.name
 
 
 class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     license_no = models.CharField(max_length=10)
-    # available = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
 
     def __str__(self):
         return f"Dr. {self.first_name} {self.last_name}"

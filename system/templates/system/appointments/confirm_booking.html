@@ -1,4 +1,10 @@
-<!-- booking_confirmation_email.html -->
-<p>Dear {{ appointment.parent.email }},</p>
-<p>Your booking for {{ appointment.appointment_date }} has been confirmed.</p>
+{% with appointment.child.parent as parent %}
+<p>Dear {% firstof parent.first_name parent.full_name parent.username 'Parent' %},</p>
+<p>
+    Your appointment booked for {{ appointment.child }}, to receive
+	{{appointment.vaccine}}, on {{appointment.date}} from {{appointment.time}},
+	was successful.
+</p>
+
 <p>Thank you for using our system.</p>
+{% endwith %}
