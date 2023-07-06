@@ -86,34 +86,30 @@
 		<h2 class="dashboard-title">Services</h2>
 
 		<section class="dashboard-card-container">
-			{% url 'add_child' as add_child %}
-			{% include "./card.html" with title="New Child Record" content="Join Over a Thousand Parents" btn_text="Add Record" btn_url=add_child card1=True %}
+			{% url 'add_child' as url_add_child %}
+			{% include "./card.html" with title="New Child Record" content="Add your child details to start tracking their vaccination status" btn_text="Add Child" btn_url=url_add_child card1=True %}
 			
-			{% url 'book-appointment' as book_appointment %}
-			{% include "./card.html" with title="Schedule" content="Join Over a Thousand Parents" btn_text="Schedule" btn_url=book_appointment card2=True %}
+			{% url 'book_appointment' as url_book_appointment %}
+			{% include "./card.html" with title="Schedule" content="Schedule an appointment for your child to be vaccinated" btn_text="Schedule" btn_url=url_book_appointment card2=True %}
+
+			{% url 'appointments' as url_appointments %}
+			{% include "./card.html" with title="Manage Appointments" content="View, track or reschedule your appointments" btn_text="Manage" btn_url=url_appointments card3=True %}
 
 			{% comment %} {% url '' as  %} {% endcomment %}
-			{% include "./card.html" with title="Manage Appointment" content="Join Over a Thousand Parents" btn_text="Manage" btn_url="#" card3=True %}
-
-			{% comment %} {% url '' as  %} {% endcomment %}
-			{% include "./card.html" with title="Generate Report" content="Join Over a Thousand Parents" btn_text="Generate" btn_url="#" card4=True %}
+			{% comment %} {% include "./card.html" with title="Generate Report" content="Join Over a Thousand Parents" btn_text="Generate" btn_url="#" card4=True %} {% endcomment %}
 		</section>
 
 		<section class="vaccine-schedules">
-			{% comment %} <h2 class="dashboard-title">
-				Vaccine Schedules <i class="fas fa-viruses"></i>
-			</h2> {% endcomment %}
-
 			<h2 class="dashboard-title">
 				Upcoming Appointments <i class="fas fa-calendar" style="font-size: 20px;"></i>
 			</h2>
 			
-
+			{# Appointments Table #}
 			{% if appointments %}
 			<div class="table-responsive">
 				<table class="table table-light table-stripped table-hover">
 					<thead>
-						<tr class="custom-table-header text-light">
+						<tr class="table-success">
 							<th scope="col">Appointment Date</th>
 							<th scope="col">Appointment Time</th>
 							<th scope="col">Child Name</th>
@@ -123,7 +119,7 @@
 					</thead>
 					<tbody>
 						{% for appointment in appointments %}
-						<tr>
+						<tr role="button" onclick="window.location.href='{% url 'appointment_detail' appointment.id %}'">
 							<td>{{ appointment.date }}</td>
 							<td>{{ appointment.time }}</td>
 							<td>{{ appointment.child.full_name }}</td>
@@ -134,9 +130,22 @@
 					</tbody>
 				</table>
 			</div>
+
+			<a href="{% url 'appointments' %}" class="btn btn-outline-primary mt-3">
+				<i class="fas fa-calendar-alt"></i> All Appointments
+			</a>
 			{% else %}
 			<p class="text-muted">You haven't booked any appointment</p> 
 			{% endif %}
+		</section>
+		
+		<section class="mt-4">
+			<h2 class="dashboard-title">
+				Vaccine Schedules <i class="fas fa-viruses"></i>
+			</h2>
+
+			{% comment %} The next 3 vaccines to be given to the children {% endcomment %}
+			<p class="text-muted">There are no vaccine schedules at the moment.</p> 
 		</section>
 		{% endblock dashboard_content %}
 	</section>

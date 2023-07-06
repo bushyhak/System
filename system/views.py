@@ -102,8 +102,16 @@ def add_child(request):
             return redirect("dashboard_child_info")
     else:
         form = ChildForm
-
-    return render(request, "system/dashboard/add_child.html", {"form": form})
+    breadcrumb = [
+        {"label": "Dashboard", "url": reverse("dashboard")},
+        {"label": "Child Info", "url": reverse("dashboard_child_info")},
+        {"label": "Add Child", "url": None},
+    ]
+    context = {
+        "form": form,
+        "breadcrumb": breadcrumb,
+    }
+    return render(request, "system/dashboard/add_child.html", context)
 
 
 @login_required
@@ -147,8 +155,14 @@ def appointments(request):
 def appointment_detail(request, id):
     """Get the details of a single appointment using the id"""
     appointment = Appointment.objects.get(id=id)
+
+    breadcrumb = [
+        {"label": "Appointments", "url": reverse("appointments")},
+        {"label": "Appointment Detail", "url": None},
+    ]
     context = {
         "appointment": appointment,
+        "breadcrumb": breadcrumb,
     }
     return render(request, "system/appointments/detail.html", context)
 
@@ -213,7 +227,7 @@ def book_appointment(request):
 @login_required
 def reschedule_appointment(request, id):
     """Reschedule an existing appointment"""
-    appointment = get_object_or_404(Appointment, id=id, parent=request.user)
+    appointment = get_object_or_404(Appointment, id=id)
 
     if request.method == "POST":
         form = RescheduleForm(request.POST)
@@ -235,12 +249,24 @@ def reschedule_appointment(request, id):
                 appointment.save()
 
                 messages.success(request, "Appointment rescheduled successfully.")
-
                 return redirect("appointments")
+            else:
+                print(form.non_field_errors)
+                messages.error(request, "Failed to reschedule appointment")
     else:
         form = RescheduleForm()
-
-    context = {"form": form}
+    breadcrumb = [
+        {"label": "Appointments", "url": reverse("appointments")},
+        {
+            "label": "Appointment Detail",
+            "url": reverse("appointment_detail", kwargs={"id": id}),
+        },
+        {"label": "Reschedule", "url": None},
+    ]
+    context = {
+        "form": form,
+        "breadcrumb": breadcrumb,
+    }
     return render(request, "system/appointments/reschedule.html", context)
 
 
@@ -252,13 +278,21 @@ def cancel_appointment(request, id):
     if request.method == "POST":
         form = CancelForm(request.POST, instance=appointment)
         if form.is_valid():
-            appointment.delete()
+            # appointment.delete() appointment.cancel = True, save()
             return redirect("appointments")
     else:
         form = CancelForm(instance=appointment)
-
+    breadcrumb = [
+        {"label": "Appointments", "url": reverse("appointments")},
+        {
+            "label": "Appointment Detail",
+            "url": reverse("appointment_detail", kwargs={"id": id}),
+        },
+        {"label": "Cancel", "url": None},
+    ]
     context = {
         "form": form,
         "appointment": appointment,
+        "breadcrumb": breadcrumb,
     }
     return render(request, "system/appointments/cancel.html", context)

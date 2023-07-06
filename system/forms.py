@@ -205,6 +205,25 @@ class RescheduleForm(CustomModelForm):
             "time": HourIntervalSelectWidget(attrs={"type": "time"}),
         }
 
+    def clean_date(self):
+        selected_date = self.cleaned_data.get("date")
+        if selected_date < timezone.now().date():
+            raise forms.ValidationError(
+                "Invalid date. Please select a date in the future"
+            )
+        return selected_date
+
+    def clean_time(self):
+        selected_time = self.cleaned_data.get("time")
+        selected_date = self.cleaned_data.get("date")
+        print(selected_time)
+        if selected_date == timezone.now().date():
+            if selected_time < timezone.now().time():
+                raise forms.ValidationError(
+                    "Invalid time. Please select a time in the future"
+                )
+        return selected_time
+
 
 class CancelForm(CustomModelForm):
     class Meta:

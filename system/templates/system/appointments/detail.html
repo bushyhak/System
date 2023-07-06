@@ -1,0 +1,56 @@
+{% extends "system/dashboard/base.html" %}
+
+
+{% block title %}{{ block.super }} | Appointment Detail{% endblock title %}
+
+{% block dashboard_styles %}
+<style>
+    .appointment p span {
+        font-weight: bold;
+    }
+</style>
+{% endblock dashboard_styles %}
+
+{% block dashboard_content %}
+<main class="flex-container">
+    <h2 class="dashboard-title">Appointment Detail</h2>
+
+    <div class="appointment">
+        <p class="fs-5">
+            <span class="text-muted fs-6">Child:</span> {{appointment.child.full_name}}
+        </p>
+        <p class="fs-5">
+            <span class="text-muted fs-6">Date:</span> {{appointment.date}}
+        </p>
+        <p class="fs-5">
+            <span class="text-muted fs-6">Time:</span> {{appointment.time}}
+        </p>
+        <p class="fs-5">
+            <span class="text-muted fs-6">Vaccine:</span> {{appointment.vaccine}}
+        </p>
+        <p class="fs-5">
+            <span class="text-muted fs-6">Status:</span> {% if appointment.completed %}Completed{% else %}Not Completed{% endif %}
+        </p>
+    </div>
+
+    {% if appointment.completed %}
+    <h5 class="h5 fw-bold">Appointment Feedback</h5>
+    
+    {% comment %} Feedback form {% endcomment %}
+    <p>Coming soon...</p>
+    {% comment %} {% include 'system/components/form.html' with btn_text="Add Feedback" %} {% endcomment %}
+    {% endif %}
+
+    {% if not appointment.completed %}
+    <div class="d-flex align-items-center justify-content-between" style="max-width: 480px">
+        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-outline-primary mt-3">
+            <i class="fas fa-edit"></i> Reschedule
+        </a>
+        
+        <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-outline-danger mt-3">
+            <i class="fas fa-times"></i> Cancel
+        </a>
+    </div>
+    {% endif %}
+</main>
+{% endblock dashboard_content %}

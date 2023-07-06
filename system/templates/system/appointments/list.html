@@ -40,7 +40,7 @@
             </thead>
             <tbody>
                 {% for appointment in appointments %}
-                <tr>
+                <tr role="button" onclick="window.location.href='{% url 'appointment_detail' appointment.id %}'">
                     <td>{{ appointment.date }}</td>
                     <td>{{ appointment.time }}</td>
                     <td>{{ appointment.child.full_name }}</td>
@@ -61,7 +61,7 @@
         </table>
     </div>
     {% else %}
-    <p class="text-muted">You haven't booked any appointment</p> 
+    <p class="text-muted">You don't have any upcoming appointments</p> 
     {% endif %}
 
     <div class="d-flex align-items-center justify-content-between">

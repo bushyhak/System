@@ -1,16 +1,20 @@
-{% extends "main.html" %}
-{% load static %}
+{% extends "system/dashboard/base.html" %}
 
-{% block content %}
+{% block title %}{{ block.super }} | Cancel Appointment{% endblock title %}
+
+
+{% block dashboard_content %}
 <div class="cancel">
     <h1>Cancel Appointment</h1>
 
-    <p>Cancel the appointment for {{ appointment.child }}?</p>
+    <p>Cancel <b>{{ appointment.child }}</b>'s appointment</p>
+    <p>for <b>{{ appointment.vaccine }}</b></p>
+    <p>on <b>{{ appointment.date }}</b> from <b>{{appointment.time}}</b>?</p>
 
     <form method="post" class="cancel-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cancel Appointment</button>
+        {% include 'system/components/form_fields.html' %}
+        <button type="submit" class="btn btn-outline-danger">Cancel Appointment</button>
     </form>
 </div>
-{% endblock %}
+{% endblock dashboard_content %}
