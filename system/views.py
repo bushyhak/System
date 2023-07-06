@@ -51,7 +51,11 @@ def register(request):
 ##################################### Dashboard #####################################
 @login_required
 def dashboard(request):
-    return render(request, "system/dashboard/base.html")
+    appointments = Appointment.objects.filter(child__parent=request.user)
+    context = {
+        "appointments": appointments,
+    }
+    return render(request, "system/dashboard/base.html", context)
 
 
 ##################### Profile

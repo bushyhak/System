@@ -6,7 +6,21 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'admin-lte/plugins/fontawesome-free/css/all.min.css' %}">
 <link rel="stylesheet" href="{% static 'system/css/dashboard/base.css' %}">
-{% block dashboard_styles %}{% endblock dashboard_styles %}
+{% block dashboard_styles %}
+<style>
+	.custom-table-header {
+		--bs-table-bg: #0d6efd;
+		--bs-table-striped-bg: #c5d7f2;
+		--bs-table-striped-color: #000;
+		--bs-table-active-bg: #bacbe6;
+		--bs-table-active-color: #000;
+		--bs-table-hover-bg: #bfd1ec;
+		--bs-table-hover-color: #000;
+		color: #000;
+		border-color: #bacbe6;
+	}
+</style>
+{% endblock dashboard_styles %}
 {% endblock styles %}
 
 
@@ -86,9 +100,43 @@
 		</section>
 
 		<section class="vaccine-schedules">
-			<h2 class="dashboard-title">
+			{% comment %} <h2 class="dashboard-title">
 				Vaccine Schedules <i class="fas fa-viruses"></i>
+			</h2> {% endcomment %}
+
+			<h2 class="dashboard-title">
+				Upcoming Appointments <i class="fas fa-calendar" style="font-size: 20px;"></i>
 			</h2>
+			
+
+			{% if appointments %}
+			<div class="table-responsive">
+				<table class="table table-light table-stripped table-hover">
+					<thead>
+						<tr class="custom-table-header text-light">
+							<th scope="col">Appointment Date</th>
+							<th scope="col">Appointment Time</th>
+							<th scope="col">Child Name</th>
+							<th scope="col">Vaccine</th>
+							<th scope="col">Doctor Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for appointment in appointments %}
+						<tr>
+							<td>{{ appointment.date }}</td>
+							<td>{{ appointment.time }}</td>
+							<td>{{ appointment.child.full_name }}</td>
+							<td>{{ appointment.vaccine }}</td>
+							<td>{{ appointment.doctor.full_name }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<p class="text-muted">You haven't booked any appointment</p> 
+			{% endif %}
 		</section>
 		{% endblock dashboard_content %}
 	</section>
