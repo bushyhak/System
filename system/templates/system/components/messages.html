@@ -3,13 +3,12 @@
     .messages {
         position: absolute;
         z-index: 300;
-        width: 100%;
         top: 56px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0;
     }
+    .messages .alert { margin: 1rem; }
 </style>
 <div class="messages">
     {% for message in messages %} {% if message.level_tag == "error" %}

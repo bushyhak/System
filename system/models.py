@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import date
+from datetime import date, datetime, timedelta
+
 
 VACCINE_STATUS_CHOICES = (
     ("pending", "Pending"),
@@ -81,7 +82,7 @@ class Child(models.Model):
         if days > 0:
             age_string += f"{days} day{'s' if days > 1 else ''}"
         else:
-            return "0 days"
+            age_string += "0 days"
         return age_string.strip(", ")
 
     @property
@@ -106,9 +107,33 @@ class Appointment(models.Model):
         "Vaccines", related_name="appointments", on_delete=models.SET_NULL, null=True
     )
     completed = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Appointment for {self.child}"
+
+    def set_complete(self):
+        """Set an appointment to completed and free the doctor handling it"""
+        self.completed = True
+        self.doctor.available = True
+        self.save()
+        self.doctor.save()
+
+    def check_complete(self):
+        """Check if an appointment is complete and set it to completed if so,
+        then free the doctor handling the appointment"""
+        if self.completed:
+            return True
+        else:
+            # appointment start date and time
+            start = datetime.combine(self.date, self.time)
+            # appointment stop date and time
+            stop = start + timedelta(minutes=45)
+            if stop < datetime.now():
+                self.set_complete()
+                return True
+            else:
+                return False
 
 
 class Vaccines(models.Model):

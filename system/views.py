@@ -51,7 +51,12 @@ def register(request):
 ##################################### Dashboard #####################################
 @login_required
 def dashboard(request):
-    appointments = Appointment.objects.filter(child__parent=request.user)
+    appointments = Appointment.objects.filter(
+        child__parent=request.user, cancelled=False
+    )
+    # only get appointments which are not complete and not cancelled
+    appointments = [ap for ap in appointments if not ap.check_complete()]
+
     context = {
         "appointments": appointments,
     }
@@ -101,7 +106,7 @@ def add_child(request):
             child.save()
             return redirect("dashboard_child_info")
     else:
-        form = ChildForm
+        form = ChildForm()
     breadcrumb = [
         {"label": "Dashboard", "url": reverse("dashboard")},
         {"label": "Child Info", "url": reverse("dashboard_child_info")},
@@ -144,7 +149,9 @@ def report(request):
 @login_required
 def appointments(request):
     """List all appointments"""
-    appointments = Appointment.objects.filter(child__parent=request.user)
+    appointments = Appointment.objects.filter(
+        child__parent=request.user, cancelled=False
+    )
     context = {
         "appointments": appointments,
     }
@@ -167,7 +174,7 @@ def appointment_detail(request, id):
     return render(request, "system/appointments/detail.html", context)
 
 
-def send_booking_confirmation_email(appointment):
+async def send_booking_confirmation_email(appointment):
     """Helper function to send an appointment booking confirmation"""
     subject = "Appointment Booking Confirmation"
     parent_email = appointment.child.parent.email
@@ -175,13 +182,16 @@ def send_booking_confirmation_email(appointment):
     html_message = render_to_string("system/appointments/confirm_booking.html", context)
     plain_message = strip_tags(html_message)
     from_email = django_settings.DEFAULT_FROM_EMAIL
-    send_mail(
-        subject,
-        plain_message,
-        from_email,
-        recipient_list=[parent_email],
-        html_message=html_message,
-    )
+    try:
+        send_mail(
+            subject,
+            plain_message,
+            from_email,
+            recipient_list=[parent_email],
+            html_message=html_message,
+        )
+    except Exception:
+        print("Failed to send booking confirmation email")
 
 
 @login_required
@@ -191,8 +201,6 @@ def book_appointment(request):
         form = BookingForm(request.POST, user=request.user, request=request)
         if form.is_valid():
             appointment = form.save(commit=False)
-            # appointment.child = request.user
-
             doctors = Doctor.objects.filter(available=True)  # get available doctors
 
             if doctors.exists():
@@ -201,8 +209,6 @@ def book_appointment(request):
                 appointment.save()
                 doctor.available = False
                 doctor.save()
-                # random_doctor.appointments.add(appointment)
-                # appointment.save()
                 send_booking_confirmation_email(appointment)
                 messages.success(request, "Appointment booked successfully!")
                 return redirect("appointments")
@@ -235,12 +241,8 @@ def reschedule_appointment(request, id):
             new_date = form.cleaned_data["date"]
             new_time = form.cleaned_data["time"]
 
-            if new_date < date.today():
-                form.add_error(
-                    "date", "Invalid date. Please select a date in the future"
-                )
-            elif new_date == appointment.date and new_time == appointment.time:
-                form.add_error("time", "Please select a different time")
+            if new_date == appointment.date and new_time == appointment.time:
+                form.add_error("time", "Please select a different time than before")
 
             # Update the appointment's date and time
             if not form.errors:
@@ -251,10 +253,11 @@ def reschedule_appointment(request, id):
                 messages.success(request, "Appointment rescheduled successfully.")
                 return redirect("appointments")
             else:
-                print(form.non_field_errors)
                 messages.error(request, "Failed to reschedule appointment")
+        else:
+            messages.error(request, "Failed to reschedule appointment")
     else:
-        form = RescheduleForm()
+        form = RescheduleForm(instance=appointment)
     breadcrumb = [
         {"label": "Appointments", "url": reverse("appointments")},
         {
@@ -278,8 +281,12 @@ def cancel_appointment(request, id):
     if request.method == "POST":
         form = CancelForm(request.POST, instance=appointment)
         if form.is_valid():
-            # appointment.delete() appointment.cancel = True, save()
+            appointment.cancelled = True
+            appointment.save()
+            messages.success(request, "Appointment cancelled successfully!")
             return redirect("appointments")
+        else:
+            messages.error(request, "Failed to cancel appointment")
     else:
         form = CancelForm(instance=appointment)
     breadcrumb = [
