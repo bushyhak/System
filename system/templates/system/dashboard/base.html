@@ -150,7 +150,7 @@
 				{% for child, vaccine in vaccine_schedules %}
 				<div class="card" style="width: 18rem;">
 					<div class="card-header fw-bold">
-						{{child.full_name}} ({{child.age_in_weeks}} week{{child.age_in_weeks|pluralize}} old)
+						{{child.full_name}} ({{child.age_in_weeks_or_days}})
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">Vaccine to be given:</h5>

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date, datetime, timedelta
 
+from system.helpers import get_age
+
 
 VACCINE_STATUS_CHOICES = (
     ("pending", "Pending"),
@@ -47,12 +49,40 @@ class Child(models.Model):
         return self.administered_vaccines
 
     @property
-    def age_in_weeks(self):
-        """Returns the age in weeks as an integer"""
+    def age_in_days(self):
+        """Returns the age in days as an integer"""
         today = date.today()
         days = (today - self.date_of_birth).days
-        weeks = days // 7
+        return days
+
+    @property
+    def age_in_weeks(self):
+        """Returns the age in weeks as an integer"""
+        weeks = self.age_in_days // 7
         return weeks
+
+    @property
+    def age_in_weeks_or_days(self):
+        """Returns the age as a string stating in weeks or days"""
+        weeks = self.age_in_weeks
+        if weeks > 0:
+            suffix = "s" if weeks > 1 else ""
+            return "%d week%s old" % (weeks, suffix)
+        else:
+            days = self.age_in_days
+            suffix = "s" if days > 1 else ""
+            return "%d day%s old" % (days, suffix)
+
+    @property
+    def age_in_months(self):
+        """Returns the age in months as an integer"""
+        today = date.today()
+        months = (today.year - self.date_of_birth.year) * 12 + (
+            today.month - self.date_of_birth.month
+        )
+        if today.day < self.date_of_birth.day:
+            months -= 1
+        return months
 
     @staticmethod
     def get_age(date_of_birth: date):
@@ -87,7 +117,7 @@ class Child(models.Model):
 
     @property
     def age(self):
-        return self.get_age(self.date_of_birth)
+        return get_age(self.date_of_birth)
 
     @property
     def full_name(self):

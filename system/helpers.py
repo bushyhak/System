@@ -74,3 +74,32 @@ def time_greater_than_now(time: datetime.time):
     if time > now:
         return True
     return False
+
+
+def get_age(date_of_birth: datetime.date) -> str:
+    """Returns the age in terms of days, weeks, months, and years"""
+    today = datetime.date.today()
+    age = today - date_of_birth
+    years = age.days // 365
+    months = (age.days - years * 365) // 30
+    weeks = (age.days - years * 365 - months * 30) // 7
+    days = age.days - years * 365 - months * 30 - weeks * 7
+    age_string = ""
+    if age.days == 0:
+        age_string = "0 days"
+    else:
+        if years > 0:
+            age_string += f"{years} yr{'s' if years > 1 else ''}"
+        if months > 0:
+            age_string += (
+                f"{', ' if age_string else ''}{months} month{'s' if months > 1 else ''}"
+            )
+        if weeks > 0:
+            age_string += (
+                f"{', ' if age_string else ''}{weeks} wk{'s' if weeks > 1 else ''}"
+            )
+        if days > 0:
+            age_string += (
+                f"{', ' if age_string else ''}{days} day{'s' if days > 1 else ''}"
+            )
+    return age_string
