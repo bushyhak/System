@@ -140,12 +140,31 @@
 		</section>
 		
 		<section class="mt-4">
-			<h2 class="dashboard-title">
+			<h2 class="dashboard-title" title="The next vaccines that should be administered">
 				Vaccine Schedules <i class="fas fa-viruses"></i>
 			</h2>
 
-			{% comment %} The next 3 vaccines to be given to the children {% endcomment %}
+			{% comment %} The next vaccines to be given to the children {% endcomment %}
+			{% if vaccine_schedules %}
+			<div class="d-flex flex-wrap gap-3">
+				{% for child, vaccine in vaccine_schedules %}
+				<div class="card" style="width: 18rem;">
+					<div class="card-header fw-bold">
+						{{child.full_name}} ({{child.age_in_weeks}} week{{child.age_in_weeks|pluralize}} old)
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Vaccine to be given:</h5>
+						<p class="card-text">
+							<span class="d-block">vaccine: <b>{{vaccine.name}}</b></span>
+							<span class="d-block">min. age: <b>{{vaccine.weeks_minimum_age}} week{{vaccine.weeks_minimum_age|pluralize}}</b></span>
+						</p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% else %}
 			<p class="text-muted">There are no vaccine schedules at the moment.</p> 
+			{% endif %}
 		</section>
 		{% endblock dashboard_content %}
 	</section>

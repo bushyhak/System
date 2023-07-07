@@ -1,18 +1,22 @@
 {% extends "./base.html" %}
-{% load static %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% block title %}{{ block.super }} | Add Child{% endblock title %}
 
 {% block dashboard_styles %}
-<link rel="stylesheet" href="{% static 'system/css/dashboard/add_child.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'system/css/dashboard/add_child.css' %}"> {% endcomment %}
 {% endblock dashboard_styles %}
 
 {% block dashboard_content %}
 <div class="add-child">
-    <h2 style='title-add-child'>ADD CHILD</h2>
-    <form method="POST" class="add-child-form">
+    <h2 style='title-add-child'>Add Child</h2>
+    {% comment %} <form method="POST" class="add-child-form">
         {% csrf_token %}
         {{ form.as_p }}
 
         <button type="submit" class="btn-add-child">Add Child</button>
-    </form>
+    </form> {% endcomment %}
+
+    {% include 'system/components/form.html' with btn_text="Add Child" %}
 </div>
 {% endblock dashboard_content %}

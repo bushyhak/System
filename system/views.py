@@ -48,17 +48,35 @@ def register(request):
     return render(request, "system/auth/register.html", {"user_form": user_form})
 
 
+def vaccine_in_child_appointments(vaccine, child):
+    """Check if a vaccine has been previously booked for a child"""
+    for appoinment in child.appointments.all():
+        if vaccine.pk == appoinment.vaccine.pk:
+            return True
+    return False
+
+
 ##################################### Dashboard #####################################
 @login_required
 def dashboard(request):
-    appointments = Appointment.objects.filter(
-        child__parent=request.user, cancelled=False
-    )
-    # only get appointments which are not complete and not cancelled
+    all_my_appointments = Appointment.objects.filter(child__parent=request.user)
+
+    # only get upcoming appointments [not complete & not cancelled]
+    appointments = all_my_appointments.filter(cancelled=False)
     appointments = [ap for ap in appointments if not ap.check_complete()]
+
+    vaccine_schedules = []
+    vaccines = Vaccines.objects.all()
+    children = Child.objects.filter(parent=request.user)
+    for child in children:
+        next_vaccines = vaccines.filter(weeks_minimum_age__lte=child.age_in_weeks)[:1]
+        for vaccine in next_vaccines:
+            if not vaccine_in_child_appointments(vaccine, child):
+                vaccine_schedules.append((child, vaccine))
 
     context = {
         "appointments": appointments,
+        "vaccine_schedules": vaccine_schedules,
     }
     return render(request, "system/dashboard/base.html", context)
 

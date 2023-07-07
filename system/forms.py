@@ -1,20 +1,17 @@
-from typing import Optional, Union
 from django import forms
+from django.utils import timezone
+from django.forms.widgets import Select, DateInput
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError as ValidationError
-from django.utils.encoding import force_str
-from django.utils.html import format_html
+from django.contrib.auth.forms import UserCreationForm
 
+from .models import Profile, Child, Appointment, Vaccines
 from system.helpers import (
     combine_date_time,
     date_less_than_today,
     datetime_less_than_now,
     get_local_now,
 )
-from .models import Profile, Child, Appointment, Vaccines
-from django.utils import timezone
-from django.forms.widgets import Select, DateInput
-from django.contrib.auth.forms import UserCreationForm
 
 
 class CustomModelForm(forms.ModelForm):
@@ -28,7 +25,10 @@ class CustomModelForm(forms.ModelForm):
             if field_name.lower().find("phone") >= 0:
                 field.widget.input_type = "tel"
 
-            self.add_class(field, "form-control")
+            if isinstance(field.widget, Select):
+                self.add_class(field, "form-select")
+            else:
+                self.add_class(field, "form-control")
 
             if not field.widget.attrs.get("placeholder"):
                 txt = field.label.lower() if field.label else "data"
@@ -89,13 +89,36 @@ class ProfileEditForm(CustomModelForm):
         date_of_birth = self.cleaned_data.get("date_of_birth")
 
         if date_of_birth:
-            if date_of_birth > timezone.now().date():
+            if date_of_birth > get_local_now().date():
                 raise forms.ValidationError("Date of birth cannot be in the future")
 
         return date_of_birth
 
+    def clean_phone_number(self):
+        phone_number: str = self.cleaned_data.get("phone_number")
+        if not (
+            phone_number.startswith("+254")
+            or phone_number.startswith("07")
+            or phone_number.startswith("01")
+        ):
+            raise forms.ValidationError("Phone number must start with +254, 07, or 01.")
+        if not phone_number[1:].isdigit():
+            raise forms.ValidationError(
+                "Phone number must contain only + symbol and digits"
+            )
+        if len(phone_number) != 10 and len(phone_number) != 13:
+            if phone_number.startswith("+254"):
+                raise forms.ValidationError(
+                    "Phone number must be 9 digits after '+254'"
+                )
+            if phone_number.startswith("07"):
+                raise forms.ValidationError("Phone number must be 8 digits after '07'")
+            if phone_number.startswith("01"):
+                raise forms.ValidationError("Phone number must be 8 digits after '01'")
+        return phone_number
 
-class ChildForm(forms.ModelForm):
+
+class ChildForm(CustomModelForm):
     class Meta:
         model = Child
         fields = ["first_name", "last_name", "gender", "date_of_birth"]
