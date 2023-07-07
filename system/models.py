@@ -34,6 +34,9 @@ class Child(models.Model):
         max_length=1, choices=GENDER_CHOICES, default=GENDER_CHOICES[0][0]
     )
 
+    class Meta:
+        verbose_name_plural = "Children"
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -140,7 +143,7 @@ class Appointment(models.Model):
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Appointment for {self.child}"
+        return "%d) %s -> %s" % (self.pk, self.child.full_name, self.vaccine.name)
 
     def set_complete(self):
         """Set an appointment to completed and free the doctor handling it"""
@@ -171,6 +174,9 @@ class Vaccines(models.Model):
     weeks_minimum_age = models.IntegerField(null=True, blank=True)
     weeks_maximum_age = models.IntegerField(null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Vaccines"
+
     def __str__(self):
         return "%s" % self.name
 
@@ -187,3 +193,14 @@ class Doctor(models.Model):
     @property
     def full_name(self):
         return "%s %s" % (self.first_name, self.last_name)
+
+
+class Feedback(models.Model):
+    title = models.TextField(
+        max_length=500, null=False, blank=False, verbose_name="Feedback"
+    )
+    parent = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=False)
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s" % self.title

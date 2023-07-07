@@ -1,20 +1,21 @@
-from datetime import date, time
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
-from django.urls import reverse
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from django.contrib.auth.decorators import login_required
-from .models import Doctor, Appointment, Vaccines, User
-from .forms import ChildForm, BookingForm, CancelForm
 from random import choice
-from .forms import RescheduleForm
+from django.urls import reverse
 from django.contrib import messages
-from .models import Child
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-from django.conf import settings as django_settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .helpers import send_booking_confirmation_email, vaccine_in_child_appointments
+from .models import Doctor, Appointment, Vaccines, Child, Feedback
+from .forms import (
+    FeedbackForm,
+    UserRegistrationForm,
+    UserEditForm,
+    ProfileEditForm,
+    ChildForm,
+    BookingForm,
+    CancelForm,
+    RescheduleForm,
+)
 
 
 ##################################### Landing Site #####################################
@@ -46,14 +47,6 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, "system/auth/register.html", {"user_form": user_form})
-
-
-def vaccine_in_child_appointments(vaccine, child):
-    """Check if a vaccine has been previously booked for a child"""
-    for appoinment in child.appointments.all():
-        if vaccine.pk == appoinment.vaccine.pk:
-            return True
-    return False
 
 
 ##################################### Dashboard #####################################
@@ -170,6 +163,16 @@ def appointments(request):
     appointments = Appointment.objects.filter(
         child__parent=request.user, cancelled=False
     )
+    if child := request.GET.get("child"):
+        fname, lname = child.split(" ")
+        appointments = appointments.filter(
+            child__first_name=fname, child__last_name=lname
+        )
+    if completed := request.GET.get("completed"):
+        appointments = appointments.filter(completed=completed)
+    if cancelled := request.GET.get("cancelled"):
+        appointments = appointments.filter(cancelled=cancelled)
+
     context = {
         "appointments": appointments,
     }
@@ -180,6 +183,20 @@ def appointments(request):
 def appointment_detail(request, id):
     """Get the details of a single appointment using the id"""
     appointment = Appointment.objects.get(id=id)
+    feedbacks = Feedback.objects.filter(appointment=appointment)
+
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.parent = request.user
+            feedback.appointment = appointment
+            feedback.save()
+            messages.success(request, "Feedback added successfully")
+        else:
+            messages.error(request, "Failed to add feedback")
+    else:
+        form = FeedbackForm()
 
     breadcrumb = [
         {"label": "Appointments", "url": reverse("appointments")},
@@ -188,28 +205,10 @@ def appointment_detail(request, id):
     context = {
         "appointment": appointment,
         "breadcrumb": breadcrumb,
+        "feedbacks": feedbacks,
+        "form": form,
     }
     return render(request, "system/appointments/detail.html", context)
-
-
-async def send_booking_confirmation_email(appointment):
-    """Helper function to send an appointment booking confirmation"""
-    subject = "Appointment Booking Confirmation"
-    parent_email = appointment.child.parent.email
-    context = {"appointment": appointment}
-    html_message = render_to_string("system/appointments/confirm_booking.html", context)
-    plain_message = strip_tags(html_message)
-    from_email = django_settings.DEFAULT_FROM_EMAIL
-    try:
-        send_mail(
-            subject,
-            plain_message,
-            from_email,
-            recipient_list=[parent_email],
-            html_message=html_message,
-        )
-    except Exception:
-        print("Failed to send booking confirmation email")
 
 
 @login_required

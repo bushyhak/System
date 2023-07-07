@@ -13,7 +13,13 @@
 
 {% block dashboard_content %}
 <main class="flex-container">
-    <h2 class="dashboard-title">Appointment Detail</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="dashboard-title mb-0">Appointment Detail</h2>
+
+        <button onclick="" class="btn btn-secondary">
+            <i class="fas fa-file-export"></i> Generate Report
+        </button>
+    </div>
 
     <div class="appointment">
         <p class="fs-5">
@@ -36,9 +42,17 @@
     {% if appointment.completed %}
     <h5 class="h5 fw-bold">Appointment Feedback</h5>
     
-    {% comment %} Feedback form {% endcomment %}
-    <p>Coming soon...</p>
-    {% comment %} {% include 'system/components/form.html' with btn_text="Add Feedback" %} {% endcomment %}
+    {% for feedback in feedbacks %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="card-text">{{feedback}}</p>
+        </div>
+      </div>
+    {% empty %}
+    <p class="text-muted mb-3">You haven't added any feedback yet.</p> 
+    {% endfor %}
+
+    {% include 'system/components/form.html' with btn_text="Submit Feedback" %}
     {% endif %}
 
     {% if not appointment.completed %}

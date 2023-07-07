@@ -1,11 +1,10 @@
 from django import forms
-from django.utils import timezone
+from django.contrib.auth.models import User
 from django.forms.widgets import Select, DateInput
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Profile, Child, Appointment, Vaccines
+from .models import Feedback, Profile, Child, Appointment, Vaccines
 from system.helpers import (
     combine_date_time,
     date_less_than_today,
@@ -129,10 +128,10 @@ class ChildForm(CustomModelForm):
         if not date_of_birth:  # prevents errors below if date_of_birth is None
             return date_of_birth
 
-        if date_of_birth > timezone.now().date():
+        if date_of_birth > get_local_now().date():
             raise forms.ValidationError("Child's date of birth cannot be in the future")
 
-        age_in_months = (timezone.now().date() - date_of_birth).days // 30
+        age_in_months = (get_local_now().date() - date_of_birth).days // 30
 
         if age_in_months > 18:
             raise forms.ValidationError("Child must be 18 months or below.")
@@ -275,4 +274,11 @@ class RescheduleForm(CustomModelForm):
 class CancelForm(CustomModelForm):
     class Meta:
         model = Appointment
-        fields = []  # No fields needed for canceling
+        fields = []  # No fields needed for cancelling
+
+
+class FeedbackForm(CustomModelForm):
+    class Meta:
+        model = Feedback
+        fields = ["title"]
+        widgets = {"title": forms.Textarea(attrs={"rows": 5})}

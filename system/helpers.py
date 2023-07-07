@@ -1,7 +1,11 @@
-from django.utils import timezone
 import datetime
-from datetime import datetime as dt
 import zoneinfo
+from django.utils import timezone
+from datetime import datetime as dt
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
+from django.conf import settings as django_settings
+from django.template.loader import render_to_string
 
 # The local timezone
 local_tz = zoneinfo.ZoneInfo("Africa/Nairobi")
@@ -103,3 +107,31 @@ def get_age(date_of_birth: datetime.date) -> str:
                 f"{', ' if age_string else ''}{days} day{'s' if days > 1 else ''}"
             )
     return age_string
+
+
+async def send_booking_confirmation_email(appointment):
+    """Helper function to send an appointment booking confirmation"""
+    subject = "Appointment Booking Confirmation"
+    parent_email = appointment.child.parent.email
+    context = {"appointment": appointment}
+    html_message = render_to_string("system/appointments/confirm_booking.html", context)
+    plain_message = strip_tags(html_message)
+    from_email = django_settings.DEFAULT_FROM_EMAIL
+    try:
+        send_mail(
+            subject,
+            plain_message,
+            from_email,
+            recipient_list=[parent_email],
+            html_message=html_message,
+        )
+    except Exception as e:
+        print("Failed to send booking confirmation email: ", e)
+
+
+def vaccine_in_child_appointments(vaccine, child):
+    """Check if a vaccine has been previously booked for a child"""
+    for appoinment in child.appointments.all():
+        if vaccine.pk == appoinment.vaccine.pk:
+            return True
+    return False
