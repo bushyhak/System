@@ -1,91 +1,82 @@
-<head>
-    <title>Vaccine Information</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-      body {
-        margin: 20px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>Vaccine Information</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Vaccine</th>
-          <th>Disease</th>
-          <th>Recommended Age</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>BCG</td>
-          <td>Tuberculosis</td>
-          <td>Newborns</td>
-        </tr>
-        <tr>
-          <td>Diphtheria, Tetanus, Pertussis (DTP)</td>
-          <td>Diphtheria, Tetanus, Pertussis</td>
-          <td>6, 10, and 14 weeks of age</td>
-        </tr>
-        <tr>
-          <td>Hepatitis B</td>
-          <td>Hepatitis B</td>
-          <td>Newborns</td>
-        </tr>
-        <tr>
-          <td>Haemophilus influenzae type b (Hib)</td>
-          <td>Haemophilus influenzae type b</td>
-          <td>6, 10, and 14 weeks of age</td>
-        </tr>
-        <tr>
-          <td>Rotavirus</td>
-          <td>Rotavirus</td>
-          <td>2, 4, and 6 months of age</td>
-        </tr>
-        <tr>
-          <td>Pneumococcal conjugate vaccine (PCV)</td>
-          <td>Pneumonia and Meningitis caused by Pneumococcus</td>
-          <td>2, 4, and 6 months of age</td>
-        </tr>
-        <tr>
-          <td>Influenza</td>
-          <td>Influenza</td>
-          <td>Recommended for everyone 6 months of age and older, especially those at high risk for complications from influenza</td>
-        </tr>
-        <tr>
-          <td>Measles, Mumps, Rubella (MMR)</td>
-          <td>Measles, Mumps, Rubella</td>
-          <td>12 months of age and again at 15 months of age</td>
-        </tr>
-        <tr>
-          <td>Chickenpox</td>
-          <td>Chickenpox</td>
-          <td>12 months of age</td>
-        </tr>
-        <tr>
-          <td>Shingles</td>
-          <td>Shingles</td>
-          <td>Recommended for adults 60 years of age and older</td>
-        </tr>
-        <tr>
-          <td>Meningococcal conjugate vaccine (MCV)</td>
-          <td>Meningitis caused by Meningococcus</td>
-          <td>Adolescents 11-12 years of age and adults at high risk for meningococcal disease</td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
-  
+{% extends 'main.html' %} 
+
+{% block title %}{{ block.super }} | About{% endblock title%} 
+
+{% block content %}
+<main class="container">
+	<h2 class="my-3 h2">Vaccine Information</h2>
+
+	<table class="table table-bordered d-block mb-5">
+		<thead>
+			<tr class="table-light">
+				<th>Vaccine</th>
+				<th>Disease</th>
+				<th>Recommended Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>BCG</td>
+				<td>Tuberculosis</td>
+				<td>Newborns</td>
+			</tr>
+			<tr>
+				<td>Diphtheria, Tetanus, Pertussis (DTP)</td>
+				<td>Diphtheria, Tetanus, Pertussis</td>
+				<td>6, 10, and 14 weeks of age</td>
+			</tr>
+			<tr>
+				<td>Hepatitis B</td>
+				<td>Hepatitis B</td>
+				<td>Newborns</td>
+			</tr>
+			<tr>
+				<td>Haemophilus influenzae type b (Hib)</td>
+				<td>Haemophilus influenzae type b</td>
+				<td>6, 10, and 14 weeks of age</td>
+			</tr>
+			<tr>
+				<td>Rotavirus</td>
+				<td>Rotavirus</td>
+				<td>2, 4, and 6 months of age</td>
+			</tr>
+			<tr>
+				<td>Pneumococcal conjugate vaccine (PCV)</td>
+				<td>Pneumonia and Meningitis caused by Pneumococcus</td>
+				<td>2, 4, and 6 months of age</td>
+			</tr>
+			<tr>
+				<td>Influenza</td>
+				<td>Influenza</td>
+				<td>
+					Recommended for everyone 6 months of age and older, especially
+					those at high risk for complications from influenza
+				</td>
+			</tr>
+			<tr>
+				<td>Measles, Mumps, Rubella (MMR)</td>
+				<td>Measles, Mumps, Rubella</td>
+				<td>12 months of age and again at 15 months of age</td>
+			</tr>
+			<tr>
+				<td>Chickenpox</td>
+				<td>Chickenpox</td>
+				<td>12 months of age</td>
+			</tr>
+			<tr>
+				<td>Shingles</td>
+				<td>Shingles</td>
+				<td>Recommended for adults 60 years of age and older</td>
+			</tr>
+			<tr>
+				<td>Meningococcal conjugate vaccine (MCV)</td>
+				<td>Meningitis caused by Meningococcus</td>
+				<td>
+					Adolescents 11-12 years of age and adults at high risk for
+					meningococcal disease
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</main>
+{% endblock content %}

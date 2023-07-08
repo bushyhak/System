@@ -55,10 +55,14 @@
         </div>
         <div class="navbar-links">
             <ul style="align-items: center;">
-                <li><a href="/">Home</a></li>
-                <li><a href="{% url 'book_appointment' %}">Book</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li class="{% is_active 'home' %}"><a href="{% url 'home' %}">Home</a></li>
+
+                <li class="{% is_active 'about' %}"><a href="{% url 'about' %}">About</a></li>
+                
+                <li class="{% is_active 'contact' %}"><a href="{% url 'contact' %}">Contact</a></li>
+                
+                <li class="{% is_active 'book_appointment' %}"><a href="{% url 'book_appointment' %}">Book</a></li>
+                
                 {% if user.is_authenticated %}
                 <li style="font-size: 0.875rem;">
                     <a href="{% url 'dashboard' %}" title="Dashboard">

@@ -99,6 +99,11 @@ img.gravatar-img {
     opacity: 1;
 }
 
+.navbar-links li.active a {
+    color: #d06f18;
+    font-weight: bold;
+}
+
 .navbar-links ul li.sep::after {
     content: "|";
 }
