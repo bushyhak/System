@@ -1,0 +1,29 @@
+{% extends "system/dashboard/base.html" %}
+
+{% block title %}{{ block.super }} | Delete Child{% endblock title %}
+
+{% block dashboard_styles %}
+<style>
+    .delete-child-container {
+        width: max-content;
+    }
+</style>
+{% endblock dashboard_styles %}
+
+{% block dashboard_content %}
+<div class="cancel">
+    <h1>Delete Child</h1>
+
+    <div class="delete-child-container">
+        <p class="fs-4 mb-3">
+            Are you sure you want to remove <b>{{ child.full_name }}</b>'s records?
+        </p>
+
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            {% include 'system/components/form_fields.html' %}
+            <button type="submit" class="btn btn-danger d-block mx-auto mt-5">Yes, Remove Child</button>
+        </form>
+    </div>
+</div>
+{% endblock dashboard_content %}

@@ -56,7 +56,7 @@
                 <tr role="button" onclick="window.location.href='{% url 'appointment_detail' appointment.id %}'" tabIndex="0">
                     <td>{{ appointment.date }}</td>
                     <td>{{ appointment.time }}</td>
-                    <td>{{ appointment.child.full_name }}</td>
+                    <td class="fw-bold">{{ appointment.child.full_name }}</td>
                     <td>{{ appointment.vaccine }}</td>
                     <td>{{ appointment.doctor.full_name }}</td>
 

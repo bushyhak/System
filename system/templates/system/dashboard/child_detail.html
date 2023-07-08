@@ -50,12 +50,24 @@
     <div class="card p-3 rounded-lg mb-3 max-width">
         <b>{{vaccine.name}}</b> on {{appointment.date}} - {{appointment.time}}
     </div>
-    {% endwith %} {% endfor %}
+    {% endwith %}
+    {% empty %} <p class="text-muted p-3">No administered vaccines for {{child.first_name}} so far</p>
+    {% endfor %}
 </main>
+
+<div class="max-width d-flex align-items-center justify-content-between mt-5">
+    <a href="{% url 'delete_child' child.id %}" class="btn btn-outline-danger">
+        <i class="fas fa-trash me-1"></i> Delete Child
+    </a>
+    <a href="{% url 'update_child' child.id %}" class="btn btn-outline-primary">
+        <i class="fas fa-edit me-1"></i> Edit Details
+    </a>
+</div>
 {% endblock dashboard_content %}
 
 
 {% block scripts %}
+{{ block.super }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
 <script src={% static 'system/javascript/report.js' %}></script>

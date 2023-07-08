@@ -1,5 +1,4 @@
 from random import choice
-from django.db.models import Q
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -146,6 +145,57 @@ def child_detail(request, child_id):
         "breadcrumb": breadcrumb,
     }
     return render(request, "system/dashboard/child_detail.html", context)
+
+
+@login_required
+def update_child(request, child_id):
+    """Update records of an existing child"""
+    child = get_object_or_404(Child, id=child_id, parent=request.user)
+    child_detail_url = reverse("child_detail", kwargs={"child_id": child_id})
+
+    if request.method == "POST":
+        form = ChildForm(request.POST, instance=child)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Child updated successfully.")
+            return redirect(child_detail_url, permanent=True)
+        else:
+            messages.error(request, "Failed to update child")
+    else:
+        form = ChildForm(instance=child)
+    breadcrumb = [
+        {"label": "Child Info", "url": reverse("dashboard_child_info")},
+        {"label": "Child Detail", "url": child_detail_url},
+        {"label": "Update Child", "url": None},
+    ]
+    context = {
+        "form": form,
+        "breadcrumb": breadcrumb,
+    }
+    return render(request, "system/child/update.html", context)
+
+
+@login_required
+def delete_child(request, child_id):
+    """Delete an existing child"""
+    child = get_object_or_404(Child, id=child_id, parent=request.user)
+
+    if request.method == "POST":
+        child.delete()
+        messages.success(request, "Child deleted successfully")
+        return redirect("dashboard_child_info", permanent=True)
+
+    breadcrumb = [
+        {"label": "Child Info", "url": reverse("dashboard_child_info")},
+        {
+            "label": "Child Detail",
+            "url": reverse("child_detail", kwargs={"child_id": child_id}),
+        },
+        {"label": "Delete Child", "url": None},
+    ]
+
+    context = {"breadcrumb": breadcrumb, "child": child}
+    return render(request, "system/child/delete.html", context)
 
 
 ##################### Settings
@@ -301,7 +351,7 @@ def reschedule_appointment(request, id):
                 appointment.save()
 
                 messages.success(request, "Appointment rescheduled successfully.")
-                return redirect("appointments")
+                return redirect("appointments", permanent=True)
             else:
                 messages.error(request, "Failed to reschedule appointment")
         else:
@@ -326,7 +376,7 @@ def reschedule_appointment(request, id):
 @login_required
 def cancel_appointment(request, id):
     """Cancel an existing appointment"""
-    appointment = Appointment.objects.get(id=id)
+    appointment = get_object_or_404(Appointment, id=id, child__parent=request.user)
 
     if request.method == "POST":
         form = CancelForm(request.POST, instance=appointment)
@@ -334,7 +384,7 @@ def cancel_appointment(request, id):
             appointment.cancelled = True
             appointment.save()
             messages.success(request, "Appointment cancelled successfully!")
-            return redirect("appointments")
+            return redirect("appointments", permanent=True)
         else:
             messages.error(request, "Failed to cancel appointment")
     else:

@@ -1,0 +1,12 @@
+{% extends "system/dashboard/base.html" %}
+
+{% block title %}{{ block.super }} | Update Child{% endblock title %}
+
+
+{% block dashboard_content %}
+<div class="form-container">
+    <h2>Update Child Details</h2>
+
+    {% include 'system/components/form.html' with btn_text="Update" %}
+</div>
+{% endblock dashboard_content %}

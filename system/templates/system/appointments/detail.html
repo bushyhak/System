@@ -59,12 +59,12 @@
 
     {% if not appointment.completed %}
     <div class="d-flex align-items-center justify-content-between" style="max-width: 480px">
-        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-outline-primary mt-3">
-            <i class="fas fa-edit"></i> Reschedule
-        </a>
-        
         <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-outline-danger mt-3">
-            <i class="fas fa-times"></i> Cancel
+            <i class="fas fa-times me-1"></i> Cancel
+        </a>
+
+        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-outline-primary mt-3">
+            <i class="fas fa-edit me-1"></i> Reschedule
         </a>
     </div>
     {% endif %}

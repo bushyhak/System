@@ -16,6 +16,16 @@ urlpatterns = [
         views.child_detail,
         name="child_detail",
     ),
+    path(
+        "dashboard/child-info/child/<int:child_id>/update/",
+        views.update_child,
+        name="update_child",
+    ),
+    path(
+        "dashboard/child-info/child/<int:child_id>/delete/",
+        views.delete_child,
+        name="delete_child",
+    ),
     path("dashboard/settings/", views.settings, name="dashboard_settings"),
     path("dashboard/report/", views.report, name="dashboard_report"),
     path("dashboard/appointments/", views.appointments, name="appointments"),
