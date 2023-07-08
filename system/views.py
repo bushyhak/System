@@ -1,4 +1,5 @@
 from random import choice
+from django.db.models import Q
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -62,7 +63,10 @@ def dashboard(request):
     vaccines = Vaccines.objects.all()
     children = Child.objects.filter(parent=request.user)
     for child in children:
-        next_vaccines = vaccines.filter(weeks_minimum_age__lte=child.age_in_weeks)[:1]
+        age = child.age_in_weeks
+        next_vaccines = vaccines.filter(
+            weeks_minimum_age__lte=age, weeks_maximum_age__gte=age
+        )
         for vaccine in next_vaccines:
             if not vaccine_in_child_appointments(vaccine, child):
                 vaccine_schedules.append((child, vaccine))

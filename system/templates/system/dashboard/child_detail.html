@@ -1,14 +1,44 @@
 {% extends './base.html' %}
 
 {% block dashboard_styles %}
+<style>    
+    .max-width { max-width: 480px; }
+</style>
 {% endblock dashboard_styles %}
 
 {% block dashboard_content %}
-<h1 class="dashboard-title">Child Details</h1>
+    <h1 class="dashboard-title">Child Details</h1>
 
-<p>First Name: {{ child.first_name }}</p>
-<p>Last Name: {{ child.last_name }}</p>
-<p>Gender: {{ child.gender }}</p>
-<p>Date of Birth: {{ child.date_of_birth }}</p>
-<p>Vaccine: {{child.vaccine}}</p>
+    <p class="fs-5 fw-bold">
+        <span class="text-muted fs-6 fw-normal">First Name:</span>
+        {{ child.first_name }}
+    </p>
+
+    <p class="fs-5 fw-bold">
+        <span class="text-muted fs-6 fw-normal">Last Name:</span>
+        {{ child.last_name }}
+    </p>
+
+    <p class="fs-5 fw-bold">
+        <span class="text-muted fs-6 fw-normal">Gender:</span>
+        {% if child.gender == 'M' %}Male{% elif child.gender == 'F' %}Female{% endif %}
+    </p>
+
+    <p class="fs-5 fw-bold">
+        <span class="text-muted fs-6 fw-normal">Date of Birth:</span>
+        {{ child.date_of_birth }}
+    </p>
+
+    <p class="fs-5 fw-bold">
+        <span class="text-muted fs-6 fw-normal">Age:</span>
+        {{child.age}}
+    </p>
+
+    <h2 class="mt-5">Administered Vaccines</h2>
+
+    {% for appointment in child.appointments.all %} {% with appointment.vaccine as vaccine %}
+    <div class="card p-3 rounded-lg mb-3 max-width">
+        <b>{{vaccine.name}}</b> on {{appointment.date}} - {{appointment.time}}
+    </div>
+    {% endwith %} {% endfor %}
 {% endblock dashboard_content %}

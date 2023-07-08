@@ -214,12 +214,12 @@ class BookingForm(CustomModelForm):
     def clean_vaccine(self):
         child = self.cleaned_data.get("child")
         selected_vaccine = self.cleaned_data.get("vaccine")
+        child_age = child.age_in_weeks
 
-        valid_vaccines = Vaccines.objects.filter(weeks_minimum_age=child.age_in_weeks)
-        if selected_vaccine not in valid_vaccines:
-            raise forms.ValidationError(
-                "The child is not old enough to be administered this vaccine."
-            )
+        if child_age < selected_vaccine.weeks_minimum_age:
+            raise forms.ValidationError("The child is not old enough for this vaccine")
+        if child_age > selected_vaccine.weeks_maximum_age:
+            raise forms.ValidationError("The child is too old for this vaccine")
 
         # Check if the parent has already booked an appointment for the selected child
         if child and selected_vaccine:
