@@ -191,7 +191,7 @@ class BookingForm(CustomModelForm):
 
             # Check if the selected date is fully booked
             appointment_count = Appointment.objects.filter(date=selected_date).count()
-            if appointment_count >= 50:
+            if appointment_count >= 18:  # Restrict to 18 appointments per day
                 raise forms.ValidationError(
                     "This date is fully booked. Please select another date."
                 )
@@ -250,10 +250,18 @@ class RescheduleForm(CustomModelForm):
 
     def clean_date(self):
         selected_date = self.cleaned_data.get("date")
-        if selected_date < get_local_now().date():
-            raise forms.ValidationError(
-                "Invalid date. Please select a date in the future"
-            )
+        if selected_date:
+            if selected_date < get_local_now().date():
+                raise forms.ValidationError(
+                    "Invalid date. Please select a date in the future"
+                )
+
+            # Check if the selected date is fully booked
+            appointment_count = Appointment.objects.filter(date=selected_date).count()
+            if appointment_count >= 18:  # Restrict to 18 appointments per day
+                raise forms.ValidationError(
+                    "This date is fully booked. Please select another date."
+                )
         return selected_date
 
     def clean_time(self):
