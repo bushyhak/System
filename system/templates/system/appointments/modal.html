@@ -1,6 +1,6 @@
 {% load custom_tags %}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 400px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Filter Appointments</h5>
@@ -33,7 +33,7 @@
 							<option value="False" {% if filters.completed == "False" %}selected{% endif %}>Not completed</option>
 						</select>
 					</div>
-					<div class="form-group mb-6">
+					<div class="form-group mb-3">
 						<label for="cancelled_filter">Filter by cancelled:</label>
 						<select
 							class="form-select"
@@ -45,9 +45,16 @@
 							<option value="False" {% if filters.cancelled == "False" %}selected{% endif %}>Not cancelled</option>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary ms-auto d-block mt-3">
-						Apply filters
-					</button>
+					
+					<div class="max-width d-flex align-items-center justify-content-between my-5">
+						<button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'appointments' %}'">
+							Clear filters
+						</button>
+						
+						<button type="submit" class="btn btn-primary">
+							Apply filters
+						</button>
+					</div>
 				</form>
             </div>
             {% comment %} <div class="modal-footer">

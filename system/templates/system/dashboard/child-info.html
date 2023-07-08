@@ -7,7 +7,6 @@
 <style>
 .children {
     display: block;
-    width: max-content;
 }
 .child-card {
     display: block;
@@ -18,16 +17,14 @@
     text-decoration: none;
 }
 .child-card:hover {
-    background-color: rgba(13, 110, 253, 0.01);
+    background-color: #f9f9f9;
 }
 .child-card .name {
     display: block;
 }
 .child-card .age {
     display: block;
-    font-size: 0.875rem;
 }
-.f-sm { font-size: .75rem;}
 </style>
 {% endblock dashboard_styles %}
 
@@ -35,16 +32,16 @@
 <div>
     <h2 class="dashboard-title">Child Info</h2>
 
-    <div class='children'>
+    <div class='children custom-max-width'>
         {% for child in children %}
         <a href={% url 'child_detail' child.pk %} class="child-card">
             <span class='name'>
-                <span class='text-muted f-sm'>Name:</span>
-                {{child.first_name}} {{child.last_name}}
+                <span class='text-muted fs-6'>Name:</span>
+                <span class="fw-bold fs-5">{{child.first_name}} {{child.last_name}}</span>
             </span>
             <span class='age text-muted'>
-                <span class='text-muted f-sm'>Age:</span>
-                {{child.age}}
+                <span class='text-muted fs-6'>Age:</span>
+                <span class="fw-bold fs-5">{{child.age}}</span>
             </span>
         </a>
         {% empty %}
@@ -52,8 +49,10 @@
         {% endfor %}
     </div>
 
-    <a href="{% url 'add_child' %}" class="btn btn-primary mt-3">
-        <i class="fa fa-plus"></i> Add Child
-    </a>
+    <div class="custom-max-width my-4 d-flex align-items-center justify-content-end">
+        <a href="{% url 'add_child' %}" class="btn btn-primary">
+            <i class="fa fa-plus me-1"></i> Add Child
+        </a>
+    </div>
 </div>
 {% endblock dashboard_content %}
