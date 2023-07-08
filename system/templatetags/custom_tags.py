@@ -75,3 +75,12 @@ def gravatar_tag(context, **kwargs):
         alt,
     )
     return mark_safe(img_tag)
+
+
+@register.simple_tag(takes_context=True)
+def selected(context, key, value):
+    """Check if the Filter key equals the value and return `selected` if True"""
+    filters = context["filters"]
+    if getattr(filters, key) == value:
+        return " selected"
+    return ""

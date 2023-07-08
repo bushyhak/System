@@ -160,22 +160,51 @@ def report(request):
 @login_required
 def appointments(request):
     """List all appointments"""
-    appointments = Appointment.objects.filter(
-        child__parent=request.user, cancelled=False
-    )
+
+    class Filters:
+        child = None
+        completed = None
+        cancelled = None
+
+        @property
+        def list(self):
+            items = []
+            if isinstance(self.child, str):
+                items.append(self.child)
+
+            if self.completed == "True":
+                items.append("Completed")
+            elif self.completed == "False":
+                items.append("Not Completed")
+
+            if self.cancelled == "True":
+                items.append("Cancelled")
+            elif self.cancelled == "False":
+                items.append("Not Cancelled")
+
+            return items
+
+    appointments = Appointment.objects.filter(child__parent=request.user)
+    if not request.GET:  # by default, don't show cancelled appointments
+        appointments = appointments.filter(cancelled=False)
+
+    children = Child.objects.filter(parent=request.user)
+
     if child := request.GET.get("child"):
         fname, lname = child.split(" ")
         appointments = appointments.filter(
-            child__first_name=fname, child__last_name=lname
+            child__first_name=fname.strip(),
+            child__last_name=lname.strip(),
         )
+        Filters.child = child
     if completed := request.GET.get("completed"):
         appointments = appointments.filter(completed=completed)
+        Filters.completed = completed
     if cancelled := request.GET.get("cancelled"):
         appointments = appointments.filter(cancelled=cancelled)
+        Filters.cancelled = cancelled
 
-    context = {
-        "appointments": appointments,
-    }
+    context = {"appointments": appointments, "children": children, "filters": Filters}
     return render(request, "system/appointments/list.html", context)
 
 

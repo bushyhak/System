@@ -1,0 +1,59 @@
+{% load custom_tags %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Filter Appointments</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" method="get">
+					<div class="form-group mb-3">
+						<label for="child_filter">Filter by child:</label>
+						<select
+							class="form-select"
+							name="child"
+							id="child_filter"
+						>
+							<option value="">All</option>
+							{% for child in children %}
+							<option value="{{ child.full_name }}"{% selected 'child' child.full_name %}>{{ child.full_name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="completed_filter">Filter by completed:</label>
+						<select
+							class="form-select"
+							name="completed"
+							id="completed_filter"
+						>
+							<option value="">------</option>
+							<option value="True" {% if filters.completed == "True" %}selected{% endif %}>Completed</option>
+							<option value="False" {% if filters.completed == "False" %}selected{% endif %}>Not completed</option>
+						</select>
+					</div>
+					<div class="form-group mb-6">
+						<label for="cancelled_filter">Filter by cancelled:</label>
+						<select
+							class="form-select"
+							name="cancelled"
+							id="cancelled_filter"
+						>
+							<option value="">------</option>
+							<option value="True" {% if filters.cancelled == "True" %}selected{% endif %}>Cancelled</option>
+							<option value="False" {% if filters.cancelled == "False" %}selected{% endif %}>Not cancelled</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary ms-auto d-block mt-3">
+						Apply filters
+					</button>
+				</form>
+            </div>
+            {% comment %} <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</div>

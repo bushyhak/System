@@ -1,0 +1,66 @@
+<div class="accordion" id="filter-accordion">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="filter-heading">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#filter-collapse"
+				aria-expanded="false"
+				aria-controls="filter-collapse"
+			>
+				Filters
+			</button>
+		</h2>
+		<div
+			id="filter-collapse"
+			class="accordion-collapse collapse"
+			aria-labelledby="filter-heading"
+		>
+			<div class="accordion-body">
+				<form class="form-inline" method="get">
+					<div class="form-group mb-3">
+						<label for="child_filter">Filter by child:</label>
+						<select
+							class="form-select"
+							name="child"
+							id="child_filter"
+						>
+							<option value="">All</option>
+							{% for child in children %}
+							<option value="{{ child }}" {% if filters.child == child %}selected{% endif %}>{{ child }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="completed_filter">Filter by completed:</label>
+						<select
+							class="form-select"
+							name="completed"
+							id="completed_filter"
+						>
+							<option value="" {% if filters.completed == "" %}selected{% endif %}>All</option>
+							<option value="True" {% if filters.completed == "True" %}selected{% endif %}>Completed</option>
+							<option value="False" {% if filters.completed == "False" %}selected{% endif %}>Not completed</option>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="cancelled_filter">Filter by cancelled:</label>
+						<select
+							class="form-select"
+							name="cancelled"
+							id="cancelled_filter"
+						>
+							<option value="" {% if filters.cancelled == "" %}selected{% endif %}>All</option>
+							<option value="True" {% if filters.cancelled == "True" %}selected{% endif %}>Cancelled</option>
+							<option value="False" {% if filters.cancelled == "False" %}selected{% endif %}>Not cancelled</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						Apply filters
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

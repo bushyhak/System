@@ -1,5 +1,5 @@
 {% extends "system/dashboard/base.html" %}
-{% load static %}
+{% load static tz %}
 
 {% block title %}All Appointments | Gevac{% endblock title %}
 
@@ -25,6 +25,19 @@
 <div class="appointments">
     <h2 style='dashboard-title'>Appointments</h2>
 
+    <div class="d-flex align-items-center gap-5 mb-3">
+        <button type="button" class="btn btn-secondary rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fas fa-sliders-h me-2"></i> Filters
+        </button>
+        <div class="d-flex gap-3">
+            {% for filter in filters.list %}
+            <span class="badge bg-danger rounded-pill">{{filter}}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include './modal.html' %}
+
     {% if appointments %}
     <div class="table-responsive">
         <table class="table table-light table-stripped table-hover">
@@ -40,7 +53,7 @@
             </thead>
             <tbody>
                 {% for appointment in appointments %}
-                <tr role="button" onclick="window.location.href='{% url 'appointment_detail' appointment.id %}'">
+                <tr role="button" onclick="window.location.href='{% url 'appointment_detail' appointment.id %}'" tabIndex="0">
                     <td>{{ appointment.date }}</td>
                     <td>{{ appointment.time }}</td>
                     <td>{{ appointment.child.full_name }}</td>
@@ -61,7 +74,7 @@
         </table>
     </div>
     {% else %}
-    <p class="text-muted">You don't have any upcoming appointments</p> 
+    <p class="text-muted">No appointments found</p> 
     {% endif %}
 
     <div class="d-flex align-items-center justify-content-between">
@@ -84,7 +97,15 @@
 <script src={% static 'system/javascript/report.js' %}></script>
 <script>
     function generateAppointmentsReport() {
-        generatePDF('Appointments Report', 'appointments-report.pdf')
+        //generatePDF('Appointments Report', 'appointments-report.pdf')
+        let title = "";
+        {% if filters.child %} title += "{{filters.child}} " {% endif %}
+        {% if filters.completed == "True" %} title += "Completed " {% endif %}
+        {% if filters.cancelled == "True" %} title += "Cancelled " {% endif %}
+        title += "Appointments Report";
+        {% timezone 'Africa/Nairobi' %}
+        generateTable(title.trim(), 'appointments-report_{% now "j-M-Y-H-i" %}.pdf');
+        {% endtimezone %}
     }
 </script>
 {% endblock scripts %}

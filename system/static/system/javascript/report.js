@@ -1,4 +1,7 @@
-function generatePDF(title = "Report", filename = "report.pdf") {
+function generateHeaders(
+	reportTitle = "Report",
+	companyName = "Infant Immunization Booking System"
+) {
 	const doc = new jspdf.jsPDF();
 	const pageWidth = doc.internal.pageSize.getWidth();
 
@@ -6,13 +9,13 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 	doc.setTextColor("#444444");
 	doc.setFontSize(12);
 	doc.setFont("helvetica", "bold");
-	doc.text("Infant Immunization Booking System", 10, 20);
+	doc.text(companyName, 10, 20);
 
 	// Add report title below company name
 	doc.setTextColor("#0074d9");
 	doc.setFontSize(20);
 	doc.setFont("helvetica", "bold");
-	doc.text(title, pageWidth / 2, 40, { align: "center" });
+	doc.text(reportTitle, pageWidth / 2, 40, { align: "center" });
 
 	// Add date and time of report generation at top right corner of page
 	const date = new Date().toLocaleDateString();
@@ -22,6 +25,12 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 	doc.setFont("helvetica", "regular");
 	doc.text("Report generated on:", pageWidth - 10, 20, { align: "right" });
 	doc.text(`${date}, ${time}`, pageWidth - 10, 25, { align: "right" });
+
+	return doc;
+}
+
+function generatePDF(title = "Report", filename = "report.pdf") {
+	const doc = generateHeaders(title);
 
 	const table = document.querySelector("table");
 	const tableData = [];
@@ -69,19 +78,18 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 	doc.save(filename);
 }
 
-// function getIconUrl(icon) {
-// 	const canvas = document.createElement("canvas");
-// 	canvas.width = icon.offsetWidth;
-// 	canvas.height = icon.offsetHeight;
-// 	const context = canvas.getContext("2d");
-// 	const svgString = new XMLSerializer().serializeToString(icon);
-// 	const svg = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
-// 	const url = URL.createObjectURL(svg);
-// 	const img = new Image();
-// 	img.onload = function () {
-// 		context.drawImage(img, 0, 0);
-// 		URL.revokeObjectURL(url);
-// 	};
-// 	img.src = url;
-// 	return canvas.toDataURL("image/png");
-// }
+function generateTable(title = "Report", filename = "report.pdf") {
+	const doc = generateHeaders(title);
+
+	doc.autoTable({
+		html: "table",
+		theme: "striped", // 'striped'|'grid'|'plain'
+		startX: 10,
+		startY: 50,
+		headerStyles: {
+			fillColor: [13, 110, 253],
+			textColor: [255, 255, 255],
+		},
+	});
+	doc.save(filename);
+}
