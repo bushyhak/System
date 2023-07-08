@@ -1,4 +1,7 @@
 {% extends './base.html' %}
+{% load static %}
+
+{% block title %}{{ block.super }} | Child Info{% endblock title %}
 
 {% block dashboard_styles %}
 <style>

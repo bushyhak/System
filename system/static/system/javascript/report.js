@@ -22,7 +22,7 @@ function generateHeaders(
 	const time = new Date().toLocaleTimeString();
 	doc.setFontSize(12);
 	doc.setTextColor("#444444");
-	doc.setFont("helvetica", "regular");
+	doc.setFont("helvetica", "normal");
 	doc.text("Report generated on:", pageWidth - 10, 20, { align: "right" });
 	doc.text(`${date}, ${time}`, pageWidth - 10, 25, { align: "right" });
 

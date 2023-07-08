@@ -1,4 +1,7 @@
 {% extends './base.html' %}
+{% load static %}
+
+{% block title %}{{ block.super }} | Child Details{% endblock title %}
 
 {% block dashboard_styles %}
 <style>    
@@ -7,8 +10,15 @@
 {% endblock dashboard_styles %}
 
 {% block dashboard_content %}
-    <h1 class="dashboard-title">Child Details</h1>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="dashboard-title mb-0">Child Details</h1>
 
+    <button onclick="generateReport()" class="btn btn-secondary">
+        <i class="fas fa-file-export"></i> Generate Report
+    </button>
+</div>
+
+<main id="main-content">
     <p class="fs-5 fw-bold">
         <span class="text-muted fs-6 fw-normal">First Name:</span>
         {{ child.first_name }}
@@ -41,4 +51,29 @@
         <b>{{vaccine.name}}</b> on {{appointment.date}} - {{appointment.time}}
     </div>
     {% endwith %} {% endfor %}
+</main>
 {% endblock dashboard_content %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
+<script src={% static 'system/javascript/report.js' %}></script>
+<script src={% static 'system/javascript/html2canvas.min.js' %}></script>
+<script>
+    function generateReport() {
+        const doc = generateHeaders('Child Details Report')
+        const content = document.querySelector("#main-content")
+        const options = {
+            allowTaint: true,
+            //scale: 1,
+        }
+        html2canvas(content, options).then(function(canvas) {
+            const img = canvas.toDataURL("image/png");
+            const pageWidth = doc.internal.pageSize.getWidth();
+            doc.addImage(img, "PNG", 10, 50, pageWidth - 20, 90);
+            doc.save("child-details.pdf")
+        });
+    }
+</script>
+{% endblock scripts %}

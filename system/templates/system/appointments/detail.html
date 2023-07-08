@@ -1,5 +1,5 @@
 {% extends "system/dashboard/base.html" %}
-
+{% load static %}
 
 {% block title %}{{ block.super }} | Appointment Detail{% endblock title %}
 
@@ -16,11 +16,12 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="dashboard-title mb-0">Appointment Detail</h2>
 
-        <button onclick="" class="btn btn-secondary">
+        <button onclick="generateAppointmentReport()" class="btn btn-secondary">
             <i class="fas fa-file-export"></i> Generate Report
         </button>
     </div>
 
+    <div id="main-content">
     <div class="appointment">
         <p class="fs-5">
             <span class="text-muted fs-6">Child:</span> {{appointment.child.full_name}}
@@ -51,6 +52,7 @@
     {% empty %}
     <p class="text-muted mb-3">You haven't added any feedback yet.</p> 
     {% endfor %}
+    </div>
 
     {% include 'system/components/form.html' with btn_text="Submit Feedback" %}
     {% endif %}
@@ -68,3 +70,27 @@
     {% endif %}
 </main>
 {% endblock dashboard_content %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
+<script src={% static 'system/javascript/report.js' %}></script>
+<script src={% static 'system/javascript/html2canvas.min.js' %}></script>
+<script>
+    function generateAppointmentReport() {
+        const doc = generateHeaders('Appointment Details Report')
+        const content = document.querySelector("#main-content")
+        const options = {
+            allowTaint: true,
+            //scale: 1,
+        }
+        html2canvas(content, options).then(function(canvas) {
+            const img = canvas.toDataURL("image/png");
+            const pageWidth = doc.internal.pageSize.getWidth();
+            doc.addImage(img, "PNG", 10, 50, pageWidth - 20, 90);
+            doc.save("appointment-detail.pdf")
+        });
+    }
+</script>
+{% endblock scripts %}
