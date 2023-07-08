@@ -78,11 +78,15 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 	doc.save(filename);
 }
 
-function generateTable(title = "Report", filename = "report.pdf") {
+function generateTable(
+	title = "Report",
+	filename = "report.pdf",
+	html = "table"
+) {
 	const doc = generateHeaders(title);
 
 	doc.autoTable({
-		html: "table",
+		html: html,
 		theme: "striped", // 'striped'|'grid'|'plain'
 		startX: 10,
 		startY: 50,
