@@ -1,38 +1,38 @@
 .intro {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 70vh;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	min-height: 70vh;
 }
 
 .statement,
 .pic {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #fff;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #fff;
 }
 
 .statement {
-    color: #001855;
+	color: #001855;
 
-    /* color: rgb(15, 15,20);*/
-    padding-left: 68px;
+	/* color: rgb(15, 15,20);*/
+	padding-left: 68px;
 }
 
 .sentiment {
-    font-size: 2.5em;
-    line-height: 145%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 30%;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    width: 100%;
-    font-weight: 900;
-    font-style: normal;
-    padding-left: 0;
+	font-size: 2.5em;
+	line-height: 145%;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30%;
+	flex-wrap: wrap;
+	white-space: nowrap;
+	width: 100%;
+	font-weight: 900;
+	font-style: normal;
+	padding-left: 0;
 
 }
 
@@ -42,167 +42,167 @@
   } */
 
 .pic {
-    background-image: url('../images/withparents2-transformed.jpeg');
-    background-size: cover;
-    outline: none;
-    object-fit: contain;
+	background-image: url('../images/withparents2-transformed.jpeg');
+	background-size: cover;
+	outline: none;
+	object-fit: contain;
 }
 
 .short {
-    font-style: none;
-    font-weight: 200;
-    font-size: 22px;
-    line-height: 36px;
-    color: #757575;
+	font-style: none;
+	font-weight: 200;
+	font-size: 22px;
+	line-height: 36px;
+	color: #757575;
 }
 
 .ourmission h1 {
-    font-weight: 500;
-    font-size: 30px;
+	font-weight: 500;
+	font-size: 30px;
 }
 
 .praise p {
-    font-style: none;
-    font-weight: 200;
-    font-size: 22px;
-    line-height: 40px;
-    color: #757575;
+	font-style: none;
+	font-weight: 200;
+	font-size: 22px;
+	line-height: 40px;
+	color: #757575;
 }
 
 
 
 @media (max-width: 767px) {
-    .intro {
-        all: unset;
-        background-image: url('../images/withparents2-transformed.jpeg');
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        display: block;
-        /* display: flex;
+	.intro {
+		all: unset;
+		background-image: url('../images/withparents2-transformed.jpeg');
+		background-size: cover;
+		background-position: center;
+		height: 100vh;
+		display: block;
+		/* display: flex;
         align-items: center; */
-    }
+	}
 
-    .statement,
-    .pic {
-        all: unset;
-    }
+	.statement,
+	.pic {
+		all: unset;
+	}
 
-    .sentiment {
-        margin-top: 0;
-        padding-top: 20px;
+	.sentiment {
+		margin-top: 0;
+		padding-top: 20px;
 
-    }
+	}
 
-    .sentiment p {
-        text-shadow: 2px 2px 6px red;
-        margin-left: 20px;
-    }
+	.sentiment p {
+		text-shadow: 2px 2px 6px red;
+		margin-left: 20px;
+	}
 
-    .pic {
-        display: none;
-    }
+	.pic {
+		display: none;
+	}
 }
 
 
 .our-thing {
-    /* display: flex; */
-    /* flex-direction: row; */
-    width: 100%;
-    /* min-height: 300vh; */
-    background-color: #fff;
-    padding: 20px;
+	/* display: flex; */
+	/* flex-direction: row; */
+	width: 100%;
+	/* min-height: 300vh; */
+	background-color: #fff;
+	padding: 20px;
 }
 
 .purpose {
-    border-color: blue;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    /* width:50%; */
-    /* padding-left: 55px; */
-    color: #151520;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    margin-top: 0;
-    background-color: #fff;
+	border-color: blue;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	/* width:50%; */
+	/* padding-left: 55px; */
+	color: #151520;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	margin-top: 0;
+	background-color: #fff;
 }
 
 .our-thing .purpose .wrapper {
-    display: grid;
-    box-sizing: border-box;
-    grid-template-columns: 1fr 1fr;
-    grid-template: "one  txt1"
-        "img1 .   "
-        "img1 img2"
-        ".    img2"
-        ".    txt2"
-        "img3 img4";
-    gap: 8px;
+	display: grid;
+	box-sizing: border-box;
+	grid-template-columns: 1fr 1fr;
+	grid-template: "one  txt1"
+		"img1 .   "
+		"img1 img2"
+		".    img2"
+		".    txt2"
+		"img3 img4";
+	gap: 8px;
 }
 
 .our-thing .purpose .wrapper .one-thing {
-    grid-area: one;
-    padding: 0;
-    padding-left: 24px;
-    /* --pl: 128px;
+	grid-area: one;
+	padding: 0;
+	padding-left: 24px;
+	/* --pl: 128px;
     padding-left: calc(var(--pl) - 20px); */
 }
 
 .our-thing .purpose .wrapper .img1 {
-    grid-area: img1;
-    display: block;
-    width: 100%;
+	grid-area: img1;
+	display: block;
+	width: 100%;
 }
 
 .our-thing .purpose .wrapper .short {
-    grid-area: txt1;
-    margin-bottom: 100px;
-    line-height: 2;
+	grid-area: txt1;
+	margin-bottom: 100px;
+	line-height: 2;
 }
 
 .our-thing .purpose .wrapper .praise {
-    grid-area: txt2;
-    line-height: 2;
-    padding-bottom: 15px;
+	grid-area: txt2;
+	line-height: 2;
+	padding-bottom: 15px;
 }
 
 .our-thing .purpose .wrapper .img2 {
-    grid-area: img2;
-    width: 100%;
+	grid-area: img2;
+	width: 100%;
 }
 
 .our-thing .purpose .wrapper .img3 {
-    grid-area: img3;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+	grid-area: img3;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .our-thing .purpose .wrapper .img4 {
-    grid-area: img4;
-    width: 100%;
+	grid-area: img4;
+	width: 100%;
 }
 
 @media (max-width: 767px) {
-    .our-thing .purpose .wrapper {
-        grid-template: "one"
-            "txt1"
-            "img1"
-            "img2"
-            "txt2"
-            "img3"
-            "img4";
-    }
+	.our-thing .purpose .wrapper {
+		grid-template: "one"
+			"txt1"
+			"img1"
+			"img2"
+			"txt2"
+			"img3"
+			"img4";
+	}
 
-    .our-thing .purpose .wrapper .short {
-        margin-bottom: 0;
-    }
+	.our-thing .purpose .wrapper .short {
+		margin-bottom: 0;
+	}
 
-    .our-thing .purpose .wrapper .one-thing {
-        padding-left: 0;
-    }
+	.our-thing .purpose .wrapper .one-thing {
+		padding-left: 0;
+	}
 
 
 }
