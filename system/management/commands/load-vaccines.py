@@ -10,22 +10,12 @@ class Command(BaseCommand):
             {
                 "name": "BCG",
                 "weeks_minimum_age": 0,
-                "weeks_maximum_age": 1,
-            },
-            {
-                "name": "Hepatitis B Birth Dose",
-                "weeks_minimum_age": 0,
-                "weeks_maximum_age": 1,
+                "weeks_maximum_age": 2,
             },
             {
                 "name": "Polio Birth Dose",
                 "weeks_minimum_age": 0,
-                "weeks_maximum_age": 1,
-            },
-            {
-                "name": "DPT Birth Dose",
-                "weeks_minimum_age": 0,
-                "weeks_maximum_age": 1,
+                "weeks_maximum_age": 2,
             },
             {
                 "name": "Hib 6 Weeks Dose",
@@ -108,6 +98,11 @@ class Command(BaseCommand):
                 "weeks_maximum_age": 15,
             },
             {
+                "name": "Flu 28 Weeks Dose",
+                "weeks_minimum_age": 28,
+                "weeks_maximum_age": 29,
+            },
+            {
                 "name": "MMR 9 Months Dose",
                 "weeks_minimum_age": 36,
                 "weeks_maximum_age": 37,
@@ -116,6 +111,21 @@ class Command(BaseCommand):
                 "name": "Chickenpox 12 Months Dose",
                 "weeks_minimum_age": 48,
                 "weeks_maximum_age": 49,
+            },
+            {
+                "name": "MMR 18 Months Dose",
+                "weeks_minimum_age": 72,
+                "weeks_maximum_age": 73,
+            },
+            {
+                "name": "HPV 10 Years Dose",
+                "weeks_minimum_age": 480,
+                "weeks_maximum_age": 481,
+            },
+            {
+                "name": "HPV 10 Years 6 Months Dose",
+                "weeks_minimum_age": 504,
+                "weeks_maximum_age": 505,
             },
         ]
 

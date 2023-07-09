@@ -133,8 +133,8 @@ class ChildForm(CustomModelForm):
 
         age_in_months = (get_local_now().date() - date_of_birth).days // 30
 
-        if age_in_months > 18:
-            raise forms.ValidationError("Child must be 18 months or below.")
+        if age_in_months > 126:
+            raise forms.ValidationError("Child must be 10 Years 6 months or below.")
 
         return date_of_birth
 
