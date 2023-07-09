@@ -1,6 +1,7 @@
+import random
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
 
 from system.helpers import get_age
 
@@ -193,6 +194,23 @@ class Doctor(models.Model):
     @property
     def full_name(self):
         return "%s %s" % (self.first_name, self.last_name)
+
+    def is_available_on(self, date: date, time: time):
+        """Check if, at the given date and time, the Doctor has an appointment"""
+        if self.appointments.filter(date=date, time=time).exists():
+            return False  # not available
+        return True
+
+    @staticmethod
+    def get_available_doctor(date: date, time: time):
+        """From the Doctors in the system, select one who is free
+        on the given date and time
+        """
+        doctors = Doctor.objects.filter()  # TODO: Maybe add available=True filter later
+        doctors = [doctor for doctor in doctors if doctor.is_available_on(date, time)]
+        if len(doctors) > 0:
+            return random.choice(doctors)
+        return None
 
 
 class Feedback(models.Model):
