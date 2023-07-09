@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.forms.widgets import Select, DateInput
 from django.core.exceptions import ValidationError
@@ -209,6 +210,14 @@ class BookingForm(CustomModelForm):
                 raise forms.ValidationError(
                     "Invalid time. Please select a time in the future"
                 )
+            child = self.cleaned_data.get("child")
+            if child.has_appointment_on(selected_date, selected_time):
+                messages.error(
+                    self.request,
+                    "%s has another appointment booked on the selected date and time"
+                    % child.full_name,
+                )
+                raise forms.ValidationError("Please select a different time")
         return selected_time
 
     def clean_vaccine(self):

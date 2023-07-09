@@ -41,6 +41,12 @@ class Child(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def has_appointment_on(self, date: date, time: time):
+        """Check if a child has an appointment on the given date and time"""
+        if self.appointments.filter(date=date, time=time).exists():
+            return True
+        return False
+
     @property
     def administered_vaccines(self):
         vaccines = []
@@ -144,7 +150,7 @@ class Appointment(models.Model):
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.child:
+        if self.child and self.vaccine:
             return "%d) %s -> %s" % (self.pk, self.child.full_name, self.vaccine.name)
         return "%d" % (self.pk)
 

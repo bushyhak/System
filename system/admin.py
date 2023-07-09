@@ -1,5 +1,33 @@
+from datetime import datetime
 from django.contrib import admin
+from django.utils.html import format_html
+from django.contrib.auth.models import User
+from django.templatetags.static import static
+from django.contrib.auth.admin import UserAdmin
 from .models import Feedback, Profile, Child, Appointment, Vaccines, Doctor
+
+
+def boolean_display(field_value: bool, options=("True", "False")):
+    """Return HTML code with a True/False text and
+    success/error icon based a boolean field value"""
+    if field_value:
+        icon_url = static("admin/img/icon-yes.svg")
+        return format_html(f'{options[0]} <img src="{icon_url}" alt="{options[0]}">')
+    else:
+        icon_url = static("admin/img/icon-no.svg")
+        return format_html(f'{options[1]} <img src="{icon_url}" alt="{options[1]}">')
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class MyUserAdmin(UserAdmin):
+    list_display = ("username", "email", "first_name", "last_name", "is_staff_display")
+
+    @admin.display(description="Staff status")
+    def is_staff_display(self, obj):
+        return boolean_display(obj.is_staff, ("Staff", "Not Staff"))
 
 
 @admin.register(Profile)
@@ -18,15 +46,29 @@ class ChildAdmin(admin.ModelAdmin):
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "date",
-        "time",
+        "date_and_time",
         "child",
         "doctor",
         "vaccine",
-        "completed",
-        "cancelled",
+        "completed_display",
+        "cancelled_display",
     )
-    list_display_links = ("id", "date", "time")
+    list_display_links = ("id", "date_and_time")
+
+    def date_and_time_ordering(self, obj):
+        return datetime.combine(obj.date, obj.time)
+
+    @admin.display(description="Date and Time", ordering=date_and_time_ordering)
+    def date_and_time(self, obj):
+        return datetime.combine(obj.date, obj.time).strftime("%d-%b-%Y, %I:%M %p")
+
+    @admin.display(description="Completed")
+    def completed_display(self, obj):
+        return boolean_display(obj.completed)
+
+    @admin.display(description="Cancelled")
+    def cancelled_display(self, obj):
+        return boolean_display(obj.cancelled)
 
 
 @admin.register(Vaccines)
