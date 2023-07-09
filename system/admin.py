@@ -16,8 +16,8 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ("child", "date", "time", "doctor", "vaccine")
-    raw_id_fields = ["child"]
+    list_display = ("id", "date", "time", "child", "doctor", "vaccine")
+    list_display_links = ("id", "date", "time")
 
 
 @admin.register(Vaccines)
@@ -28,6 +28,10 @@ class VaccinesAdmin(admin.ModelAdmin):
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "license_no")
+    list_display_links = ("first_name", "last_name")
 
 
-admin.site.register(Feedback)
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ("id", "title", "parent", "appointment")
+    list_display_links = ("id", "title")

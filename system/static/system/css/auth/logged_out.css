@@ -1,30 +1,30 @@
 body {
-  background-color: rgb(41, 51, 82);
+	background-color: rgb(41, 51, 82);
 }
 
 .logout-container {
-  color: white;
-  text-align: center;
-  margin: 4rem auto 0;
-  max-width: 500px;
-  padding: 1rem;
+	color: white;
+	text-align: center;
+	margin: 4rem auto 0;
+	max-width: 500px;
+	padding: 1rem;
 }
 
 .gevac {
-  font-weight: 900;
-  font-size: 3rem;
-  margin-bottom: 2rem;
+	font-weight: 900;
+	font-size: 3rem;
+	margin-bottom: 2rem;
 }
 
 .subtitle {
-  margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 
 .logout_message {
-  display: block;
-  font-size: 20px;
+	display: block;
+	font-size: 20px;
 }
 
 .logout_message a {
-  color: #49c1a2
+	color: #49c1a2
 }
