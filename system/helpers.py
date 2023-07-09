@@ -109,11 +109,19 @@ def get_age(date_of_birth: datetime.date) -> str:
     return age_string
 
 
-async def send_booking_confirmation_email(appointment):
+def send_booking_confirmation_email(appointment):
     """Helper function to send an appointment booking confirmation"""
     subject = "Appointment Booking Confirmation"
-    parent_email = appointment.child.parent.email
-    context = {"appointment": appointment}
+    child = appointment.child
+    parent = child.parent
+    vaccine = appointment.vaccine
+    context = {
+        "parent_name": parent.first_name or parent.last_name or parent.username,
+        "child_name": child.full_name,
+        "vaccine_name": vaccine and vaccine.name,
+        "date": appointment.date,
+        "time": appointment.time,
+    }
     html_message = render_to_string("system/appointments/confirm_booking.html", context)
     plain_message = strip_tags(html_message)
     from_email = django_settings.DEFAULT_FROM_EMAIL
@@ -122,7 +130,7 @@ async def send_booking_confirmation_email(appointment):
             subject,
             plain_message,
             from_email,
-            recipient_list=[parent_email],
+            recipient_list=[parent.email],
             html_message=html_message,
         )
     except Exception as e:
@@ -131,7 +139,7 @@ async def send_booking_confirmation_email(appointment):
 
 def vaccine_in_child_appointments(vaccine, child):
     """Check if a vaccine has been previously booked for a child"""
-    for appoinment in child.appointments.all():
+    for appoinment in child.appointments.filter(cancelled=False):
         if vaccine.pk == appoinment.vaccine.pk:
             return True
     return False

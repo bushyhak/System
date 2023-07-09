@@ -233,7 +233,7 @@ class BookingForm(CustomModelForm):
         # Check if the parent has already booked an appointment for the selected child
         if child and selected_vaccine:
             existing_appointment = Appointment.objects.filter(
-                child=child, vaccine=selected_vaccine
+                child=child, vaccine=selected_vaccine, cancelled=False
             ).first()
 
             if existing_appointment:

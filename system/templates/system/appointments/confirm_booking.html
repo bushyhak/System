@@ -1,10 +1,8 @@
-{% with appointment.child.parent as parent %}
-<p>Dear {% firstof parent.first_name parent.full_name parent.username 'Parent' %},</p>
+<p>Dear {{ parent_name }},</p>
 <p>
-    Your appointment booked for {{ appointment.child }}, to receive
-	{{appointment.vaccine}}, on {{appointment.date}} from {{appointment.time}},
+    Your appointment booked for {{ child_name }}, to receive
+	{{ vaccine_name }}, on {{ date }} from {{ time }},
 	was successful.
 </p>
 
 <p>Thank you for using our system.</p>
-{% endwith %}

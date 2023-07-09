@@ -16,7 +16,8 @@
 			"comments": true,
 			"strings": true
 		},
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": false
 	},
 	"python.formatting.provider": "none",
 	"workbench.tree.indent": 16,
