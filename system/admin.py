@@ -16,13 +16,22 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ("id", "date", "time", "child", "doctor", "vaccine")
+    list_display = (
+        "id",
+        "date",
+        "time",
+        "child",
+        "doctor",
+        "vaccine",
+        "completed",
+        "cancelled",
+    )
     list_display_links = ("id", "date", "time")
 
 
 @admin.register(Vaccines)
 class VaccinesAdmin(admin.ModelAdmin):
-    list_display = ("name", "weeks_maximum_age", "weeks_minimum_age")
+    list_display = ("name", "weeks_minimum_age", "weeks_maximum_age")
 
 
 @admin.register(Doctor)

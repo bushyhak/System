@@ -144,7 +144,9 @@ class Appointment(models.Model):
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%d) %s -> %s" % (self.pk, self.child.full_name, self.vaccine.name)
+        if self.child:
+            return "%d) %s -> %s" % (self.pk, self.child.full_name, self.vaccine.name)
+        return "%d" % (self.pk)
 
     def set_complete(self):
         """Set an appointment to completed and free the doctor handling it"""
