@@ -16,8 +16,6 @@
 
 .statement {
 	color: #001855;
-
-	/* color: rgb(15, 15,20);*/
 	padding-left: 68px;
 }
 
@@ -33,19 +31,17 @@
 	font-weight: 900;
 	font-style: normal;
 	padding-left: 0;
-
 }
 
-/* .wrapper {
-    font-weight: 500;
-    font-family: 'TT Wellingtons Trial DemiBold';
-  } */
-
 .pic {
-	background-image: url('../images/withparents2-transformed.jpeg');
+	background-image: url("../images/withparents2-transformed.jpeg");
 	background-size: cover;
 	outline: none;
 	object-fit: contain;
+}
+
+.one-thing {
+	font-weight: 800;
 }
 
 .short {
@@ -57,7 +53,7 @@
 }
 
 .ourmission h1 {
-	font-weight: 500;
+	font-weight: 800;
 	font-size: 30px;
 }
 
@@ -69,18 +65,14 @@
 	color: #757575;
 }
 
-
-
 @media (max-width: 767px) {
 	.intro {
 		all: unset;
-		background-image: url('../images/withparents2-transformed.jpeg');
+		background-image: url("../images/withparents2-transformed.jpeg");
 		background-size: cover;
 		background-position: center;
 		height: 100vh;
 		display: block;
-		/* display: flex;
-        align-items: center; */
 	}
 
 	.statement,
@@ -91,7 +83,6 @@
 	.sentiment {
 		margin-top: 0;
 		padding-top: 20px;
-
 	}
 
 	.sentiment p {
@@ -104,12 +95,8 @@
 	}
 }
 
-
 .our-thing {
-	/* display: flex; */
-	/* flex-direction: row; */
 	width: 100%;
-	/* min-height: 300vh; */
 	background-color: #fff;
 	padding: 20px;
 }
@@ -119,8 +106,6 @@
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	/* width:50%; */
-	/* padding-left: 55px; */
 	color: #151520;
 	font-style: normal;
 	font-weight: 500;
@@ -133,7 +118,8 @@
 	display: grid;
 	box-sizing: border-box;
 	grid-template-columns: 1fr 1fr;
-	grid-template: "one  txt1"
+	grid-template:
+		"one  txt1"
 		"img1 .   "
 		"img1 img2"
 		".    img2"
@@ -146,8 +132,6 @@
 	grid-area: one;
 	padding: 0;
 	padding-left: 24px;
-	/* --pl: 128px;
-    padding-left: calc(var(--pl) - 20px); */
 }
 
 .our-thing .purpose .wrapper .img1 {
@@ -187,7 +171,8 @@
 
 @media (max-width: 767px) {
 	.our-thing .purpose .wrapper {
-		grid-template: "one"
+		grid-template:
+			"one"
 			"txt1"
 			"img1"
 			"img2"
@@ -203,95 +188,4 @@
 	.our-thing .purpose .wrapper .one-thing {
 		padding-left: 0;
 	}
-
-
 }
-
-
-/* .container-1{
-    width: 50%;
-    font-style: normal;
-    font-size:22px;
-    font-weight: 400;
-    color: #757575;
-    padding-left: 0;
-    margin-top: 3%;
-    line-height: 33px;
-    background-color: #fff;   
-}
-
-.vaccine{
-    margin-top: 50%;
-    background-image: url('../images/hepatitis_a-transformed.jpeg');
-    background-size: cover;
-    width: 99%;
-    height:17%;
-    
-}
-.vaccine2{
-    margin-top:47%;
-    background-image:url('../images/measles-transformed.jpeg') ;
-    background-size: cover;
-    width: 99%;
-    height: 20%;
-
-}
-.ourmission{
-    color: black;
-    font-weight: bolder;
-    font-size: 1.2em;
-    line-height: 1.5;
-    background-color: #fff;
-
-}
-.happy{
-    margin-top: 101.5%;
-    background-image: url('../images/withparents-transformed.jpeg');
-    background-size: cover;
-    width: 99%;
-    height:19%;
-}
-.happier{
-    width: 99%;
-    background-image: url('../images/child1-transformed.jpeg');
-    height:19.37%;
-    background-size: cover;
-    margin-top: 14.7%;
-}
-.divider{
-    background-color: #fff;   
-} */
-
-/* @media (max-width: 767px) {
-    .our-thing{
-        all: unset;
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 20px;
-        background: #fff;
-    }
-    .purpose {
-        width: 100%;
-        height: auto;
-        padding: 0;
-    }
-    .img1, .img2, .img3, .img4 {
-        width: 100%;
-    }
-    .capture {
-        margin-top: 0;
-        height: auto;
-    }
-    .container-1{
-        width: 100%;
-        font-style: normal;
-        font-size: 22px;
-        font-weight: 400;
-        color: #757575;
-        padding: 0;
-        margin: 0;
-        line-height: 33px;
-        background-color: #fff;
-    }
-} */
