@@ -91,7 +91,7 @@
                             {% endif %}
                     {% endblock %}
 
-                    {% if has_add_permission %}
+                    {% if has_add_permission and cl.queryset.count > 0 %}
                     <button onclick="generateReport()" class="btn btn-sm btn-secondary">
                         <i class="fas fa-download"></i> 
                         {{cl.opts.verbose_name_plural|capfirst}} Report
