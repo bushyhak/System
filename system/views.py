@@ -1,4 +1,3 @@
-from random import choice
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -301,14 +300,12 @@ def book_appointment(request):
         form = BookingForm(request.POST, user=request.user, request=request)
         if form.is_valid():
             appointment = form.save(commit=False)
-            doctors = Doctor.objects.filter(available=True)  # get available doctors
+            doctor = Doctor.get_available_doctor(appointment.date, appointment.time)
 
-            if doctors.exists():
-                doctor = choice(doctors)  # choose random doctor
+            if doctor:
                 appointment.doctor = doctor
                 appointment.save()
-                doctor.available = False
-                doctor.save()
+
                 send_booking_confirmation_email(appointment)
                 messages.success(request, "Appointment booked successfully!")
                 return redirect("appointments")
