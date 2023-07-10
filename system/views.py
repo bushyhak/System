@@ -117,7 +117,10 @@ def add_child(request):
             child = form.save(commit=False)
             child.parent = request.user
             child.save()
+            messages.success(request, "Child added successfully")
             return redirect("dashboard_child_info")
+        else:
+            messages.error(request, "Failed to add child")
     else:
         form = ChildForm()
     breadcrumb = [

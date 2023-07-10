@@ -63,9 +63,11 @@
                     <td class="text-center">
                     {{appointment.completed}}
                     {% if appointment.completed %}
-                    <i class="fas fa-check-circle text-success"></i>
+                    {% comment %} <i class="fas fa-check-circle text-success"></i> {% endcomment %}
+                    <img src="{% static 'admin/img/icon-yes.svg' %}" alt="{{appointment.completed}}" />
                     {% else %}
-                    <i class="fas fa-times-circle text-danger"></i>
+                    {% comment %} <i class="fas fa-times-circle text-danger"></i> {% endcomment %}
+                    <img src="{% static 'admin/img/icon-no.svg' %}" alt="{{appointment.completed}}" />
                     {% endif %}
                     </td>
                 </tr>

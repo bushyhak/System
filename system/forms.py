@@ -11,6 +11,7 @@ from system.helpers import (
     date_less_than_today,
     datetime_less_than_now,
     get_local_now,
+    is_numbers,
 )
 
 
@@ -123,6 +124,18 @@ class ChildForm(CustomModelForm):
         model = Child
         fields = ["first_name", "last_name", "gender", "date_of_birth"]
         widgets = {"date_of_birth": DateInput(attrs={"type": "date"})}
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get("first_name")
+        if is_numbers(first_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get("last_name")
+        if is_numbers(last_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return last_name
 
     def clean_date_of_birth(self):
         date_of_birth = self.cleaned_data.get("date_of_birth")
@@ -299,3 +312,12 @@ class FeedbackForm(CustomModelForm):
         model = Feedback
         fields = ["title"]
         widgets = {"title": forms.Textarea(attrs={"rows": 5})}
+
+    def clean_title(self):
+        title: str = self.cleaned_data.get("title")
+        if title:
+            if title.replace(" ", "").isdigit():
+                raise forms.ValidationError("The feedback cannot be only numbers")
+        else:
+            raise forms.ValidationError("The feedback cannot be blank")
+        return title

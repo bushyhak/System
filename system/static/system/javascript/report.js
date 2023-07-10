@@ -90,10 +90,42 @@ function generateTable(
 		theme: "striped", // 'striped'|'grid'|'plain'
 		startX: 10,
 		startY: 50,
-		headerStyles: {
+		headStyles: {
 			fillColor: [13, 110, 253],
 			textColor: [255, 255, 255],
 		},
+		didDrawCell: async function (data) {
+			if (data.cell.section === "body") {
+				const td = data.cell.raw;
+				const img = td.querySelector("img");
+				if (img) {
+					const cell = data.cell;
+					const dataURL = await imgToDataURL(img);
+					console.log(dataURL, cell.x, cell.y);
+					doc.addImage(dataURL, "PNG", cell.x, cell.y, 13, 13);
+				}
+			}
+		},
 	});
 	doc.save(filename);
+}
+
+function imgToDataURL(img) {
+	return new Promise((resolve, reject) => {
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+		const image = new Image();
+		image.crossOrigin = "anonymous";
+		image.onload = function () {
+			canvas.width = this.naturalWidth;
+			canvas.height = this.naturalHeight;
+			ctx.drawImage(this, 0, 0);
+			const dataURL = canvas.toDataURL();
+			resolve(dataURL);
+		};
+		image.onerror = function () {
+			reject(new Error("Failed to load image"));
+		};
+		image.src = img.src;
+	});
 }

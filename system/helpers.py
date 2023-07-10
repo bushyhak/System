@@ -143,3 +143,13 @@ def vaccine_in_child_appointments(vaccine, child):
         if vaccine.pk == appoinment.vaccine.pk:
             return True
     return False
+
+
+def is_numbers(text: str):
+    """Check if the given text string is numbers only
+
+    @example is_numbers("10") returns True
+    @example is_numbers("10 20") returns True
+    @example is_numbers("hi") returns False
+    """
+    return text.replace(" ", "").isdigit()
