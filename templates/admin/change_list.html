@@ -24,6 +24,16 @@
             font-size: 16px;
             padding: 1.75em;
         }
+        #changelist-filter {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        #changelist-filter li.selected {
+            border-left: 5px solid #343A40;
+            color: #343A40;
+            padding-left: 10px;
+            margin-left: -15px;
+        }
     </style>
 {% endblock %}
 
@@ -68,7 +78,7 @@
             {% block search %}{% search_form cl %}{% endblock %}
             <!--  -->
             {% block object-tools %}
-            <div class="col-md-{% if cl.has_filters %}4{% else %}4{% endif %}">
+            <div class="col-md-{% if cl.has_filters %}12{% else %}4{% endif %}">
                     {% if cl.has_filters %}
                     <span class="float-sm-right">
                             <a href="#"

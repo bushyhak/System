@@ -17,8 +17,6 @@
     border-color: #bacbe6;
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
 {% endblock dashboard_styles %}
 
 {% block dashboard_content %}
@@ -96,6 +94,8 @@
 
 {% block scripts %}
 {{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
 <script src={% static 'system/javascript/report.js' %}></script>
 <script>
     function generateAppointmentsReport() {
