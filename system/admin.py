@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.contrib.auth.models import User
 from django.templatetags.static import static
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.admin.filters import BooleanFieldListFilter, DateFieldListFilter
+from django.contrib.admin.filters import BooleanFieldListFilter
 from .models import Feedback, Profile, Child, Appointment, Vaccines, Doctor
 
 
@@ -56,7 +56,6 @@ class AppointmentAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id", "date_and_time")
     list_filter = (
-        "child",
         ("completed", BooleanFieldListFilter),
         ("cancelled", BooleanFieldListFilter),
         "date",

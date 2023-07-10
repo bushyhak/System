@@ -56,6 +56,24 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ["username", "first_name", "last_name", "email"]
 
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if is_numbers(username):
+            raise forms.ValidationError("The username can't be numbers only")
+        return username
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get("first_name")
+        if is_numbers(first_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get("last_name")
+        if is_numbers(last_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return last_name
+
     def clean_email(self):
         data = self.cleaned_data["email"]
         if User.objects.filter(email=data).exists():
@@ -72,6 +90,18 @@ class UserEditForm(CustomModelForm):
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email"]
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get("first_name")
+        if is_numbers(first_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get("last_name")
+        if is_numbers(last_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return last_name
 
     def clean_email(self):
         data = self.cleaned_data["email"]
