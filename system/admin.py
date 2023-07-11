@@ -7,6 +7,9 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.filters import BooleanFieldListFilter
 from .models import Feedback, Profile, Child, Appointment, Vaccines, Doctor
 
+# from django.utils.translation import gettext_lazy as _
+# from django.contrib.admin.filters import DateFieldListFilter
+
 
 def boolean_display(field_value: bool, options=("True", "False")):
     """Return HTML code with a True/False text and
@@ -41,6 +44,40 @@ class ProfileAdmin(admin.ModelAdmin):
 class ChildAdmin(admin.ModelAdmin):
     list_display = ["first_name", "last_name", "date_of_birth", "parent", "gender"]
     raw_id_fields = ["parent"]
+
+
+# @admin.register(Appointment)
+# class AppointmentAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "date_and_time",
+#         "child",
+#         "doctor",
+#         "vaccine",
+#         "completed_display",
+#         "cancelled_display",
+#     )
+#     list_display_links = ("id", "date_and_time")
+#     list_filter = (
+#         ("completed", BooleanFieldListFilter),
+#         ("cancelled", BooleanFieldListFilter),
+#         ("date_and_time", DateFieldListFilter),
+#     )
+
+#     def date_and_time_ordering(self, obj):
+#         return datetime.combine(obj.date, obj.time)
+
+#     @admin.display(description="Date and Time", ordering=date_and_time_ordering)
+#     def date_and_time(self, obj):
+#         return datetime.combine(obj.date, obj.time).strftime("%d-%b-%Y, %I:%M %p")
+
+#     @admin.display(description="Completed")
+#     def completed_display(self, obj):
+#         return boolean_display(obj.completed)
+
+#     @admin.display(description="Cancelled")
+#     def cancelled_display(self, obj):
+#         return boolean_display(obj.cancelled)
 
 
 @admin.register(Appointment)
