@@ -84,7 +84,7 @@
             const img = canvas.toDataURL("image/png");
             const pageWidth = doc.internal.pageSize.getWidth();
             doc.addImage(img, "PNG", 10, 50, pageWidth - 20, 90);
-            doc.save("child-details.pdf")
+            doc.save("child-details-report_{{child.first_name|lower}}-{{child.last_name|lower}}.pdf")
         });
     }
 </script>

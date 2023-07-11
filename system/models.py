@@ -43,14 +43,14 @@ class Child(models.Model):
 
     def has_appointment_on(self, date: date, time: time):
         """Check if a child has an appointment on the given date and time"""
-        if self.appointments.filter(date=date, time=time).exists():
+        if self.appointments.filter(date=date, time=time, cancelled=False).exists():
             return True
         return False
 
     @property
     def administered_vaccines(self):
         vaccines = []
-        for appointment in Appointment.objects.filter(child=self):
+        for appointment in Appointment.objects.filter(child=self, cancelled=False):
             vaccines.append(appointment.vaccine)
         return vaccines
 

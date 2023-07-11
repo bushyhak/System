@@ -23,7 +23,7 @@
   </form>
 </div>
 
-<p class="para-2">
+<p class="para-2 pb-4">
   Already have an account? <a href="{% url 'login' %}">Login here</a>
 </p> 
 {% endblock content %}
@@ -32,3 +32,23 @@
 {% block footer %}{% endblock footer %}
 {% comment %} {% block bootstrap %}{% endblock bootstrap %} {% endcomment %}
 {% block gfonts %}{% endblock gfonts %}
+
+
+{% block scripts %}
+{{ block.super }}
+<script>
+  const username = document.querySelector("#id_username");
+  const first_name = document.querySelector("#id_first_name");
+  const last_name = document.querySelector("#id_last_name");
+  const email = document.querySelector("#id_email");
+  const password1 = document.querySelector("#id_password1");
+  const password2 = document.querySelector("#id_password2");
+
+  if (username) username.placeholder = "Enter username..."
+  if (first_name) first_name.placeholder = "Enter first name..." 
+  if (last_name) last_name.placeholder = "Enter last name..." 
+  if (email) email.placeholder = "Enter email..." 
+  if (password1) password1.placeholder = "Enter password..."
+  if (password2) password2.placeholder = "Confirm password..." 
+</script>
+{% endblock scripts %}

@@ -36,3 +36,15 @@
 {% block navigation %}{% endblock navigation %}
 {% block footer %}{% endblock footer %}
 {% block gfonts %}{% endblock gfonts %}
+
+
+{% block scripts %}
+{{ block.super }}
+<script>
+  const username = document.querySelector("#id_username");
+  if (username) username.placeholder = "Enter username..." 
+
+  const password = document.querySelector("#id_password");
+  if (password) password.placeholder = "Enter password..." 
+</script>
+{% endblock scripts %}

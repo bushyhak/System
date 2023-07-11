@@ -29,10 +29,14 @@ function generateHeaders(
 	return doc;
 }
 
-function generatePDF(title = "Report", filename = "report.pdf") {
+async function generatePDF(
+	title = "Report",
+	filename = "report.pdf",
+	html = "table"
+) {
 	const doc = generateHeaders(title);
 
-	const table = document.querySelector("table");
+	const table = document.querySelector(html);
 	const tableData = [];
 	const headers = [];
 	const rows = table.rows;
@@ -45,12 +49,12 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 			if (i === 0) {
 				headers.push(cell.textContent);
 			} else {
-				const icon = cell.querySelector("i");
+				const icon = cell.querySelector("img");
 				if (icon) {
-					// const iconUrl = getIconUrl(icon);
+					const iconUrl = await imgToDataURL(icon);
 					rowData.push({
 						content: cell.textContent.trim(),
-						// image: iconUrl,
+						image: iconUrl,
 						// styles: { font: "FontAwesome" },
 					});
 				} else {
@@ -69,7 +73,7 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 		body: tableData,
 		startY: 50,
 		startX: 10,
-		headerStyles: {
+		headStyles: {
 			fillColor: [13, 110, 253],
 			textColor: [255, 255, 255],
 		},
@@ -78,12 +82,13 @@ function generatePDF(title = "Report", filename = "report.pdf") {
 	doc.save(filename);
 }
 
-function generateTable(
+async function generateTable(
 	title = "Report",
 	filename = "report.pdf",
 	html = "table"
 ) {
 	const doc = generateHeaders(title);
+	const images = [];
 
 	doc.autoTable({
 		html: html,
@@ -101,12 +106,35 @@ function generateTable(
 				if (img) {
 					const cell = data.cell;
 					const dataURL = await imgToDataURL(img);
-					console.log(dataURL, cell.x, cell.y);
-					doc.addImage(dataURL, "PNG", cell.x, cell.y, 13, 13);
+					var textPos = data.cell.getTextPos();
+					console.log(textPos.x + 15);
+					images.push({
+						url: dataURL,
+						x: textPos.x + 15,
+						y: textPos.y,
+					});
+					console.log(images);
+					// data.doc.addImage(
+					// 	dataURL,
+					// 	"PNG",
+					// 	textPos.x + 15,
+					// 	textPos.y,
+					// 	20,
+					// 	20
+					// );
 				}
 			}
 		},
 	});
+
+	// images.forEach(({ url, x, y }) => {
+	// 	doc.addImage(url, "PNG", x, y, 13, 13);
+	// });
+
+	// console.log(images[0]);
+	// const { url, x, y } = images[0];
+	// doc.addImage(url, "PNG", x, y, 15, 15);
+
 	doc.save(filename);
 }
 
@@ -120,7 +148,7 @@ function imgToDataURL(img) {
 			canvas.width = this.naturalWidth;
 			canvas.height = this.naturalHeight;
 			ctx.drawImage(this, 0, 0);
-			const dataURL = canvas.toDataURL();
+			const dataURL = canvas.toDataURL("image/png");
 			resolve(dataURL);
 		};
 		image.onerror = function () {
