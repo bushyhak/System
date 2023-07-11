@@ -1,5 +1,5 @@
 {% extends "system/dashboard/base.html" %}
-{% load static %}
+{% load static tz %}
 
 {% block title %}{{ block.super }} | Appointment Detail{% endblock title %}
 
@@ -46,7 +46,8 @@
     {% for feedback in feedbacks %}
     <div class="card mb-3">
         <div class="card-body">
-            <p class="card-text">{{feedback}}</p>
+            <p class="card-text fw-bolder">{{feedback}}</p>
+            <p class="mb-0 text-muted fs-6">Added on: {{ feedback.created|timezone:"Africa/Nairobi" }}</p>
         </div>
       </div>
     {% empty %}
@@ -73,10 +74,8 @@
 
 
 {% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
-<script src={% static 'system/javascript/report.js' %}></script>
-<script src={% static 'system/javascript/html2canvas.min.js' %}></script>
+{{ block.super }}
+{% include 'system/includes/_report_scripts.html' %}
 <script>
     function generateAppointmentReport() {
         const doc = generateHeaders('Appointment Details Report')

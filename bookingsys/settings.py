@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 INSTALLED_APPS = [
     "system",
+    "rangefilter",
     ################################
     "adminlte3",
     "adminlte3_theme",
