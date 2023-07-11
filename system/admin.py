@@ -39,8 +39,19 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "date_of_birth", "parent", "gender"]
+    list_display = [
+        "first_name",
+        "last_name",
+        "date_of_birth",
+        "parent__id",
+        "parent",
+        "gender",
+    ]
     raw_id_fields = ["parent"]
+
+    @admin.display(description="Parent ID")
+    def parent__id(self, obj):
+        return obj.parent.pk
 
 
 @admin.register(Appointment)
@@ -51,8 +62,9 @@ class AppointmentAdmin(admin.ModelAdmin):
         "child",
         "doctor",
         "vaccine",
-        "completed_display",
-        "cancelled_display",
+        # "completed_display",
+        # "cancelled_display",
+        "status_display",
     )
     list_display_links = ("id", "date_and_time")
     list_filter = (
@@ -75,6 +87,17 @@ class AppointmentAdmin(admin.ModelAdmin):
     @admin.display(description="Cancelled")
     def cancelled_display(self, obj):
         return boolean_display(obj.cancelled)
+
+    @admin.display(description="Status")
+    def status_display(self, obj):
+        completed = obj.completed
+        cancelled = obj.cancelled
+
+        if cancelled:
+            return "Cancelled"
+        if completed:
+            return "Complete"
+        return "Pending"
 
 
 @admin.register(Vaccines)

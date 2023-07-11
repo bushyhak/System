@@ -186,6 +186,17 @@ class Appointment(models.Model):
             else:
                 return False
 
+    def has_passed(self):
+        """Check if an appointment's stop date and time has passed"""
+        # appointment start date and time
+        start = datetime.combine(self.date, self.time)
+        # appointment stop date and time
+        stop = start + timedelta(minutes=45)
+        if stop < datetime.now():
+            return True
+        else:
+            return False
+
 
 class Vaccines(models.Model):
     name = models.CharField(max_length=50)
@@ -214,7 +225,7 @@ class Doctor(models.Model):
 
     def is_available_on(self, date: date, time: time):
         """Check if, at the given date and time, the Doctor has an appointment"""
-        if self.appointments.filter(date=date, time=time).exists():
+        if self.appointments.filter(date=date, time=time, cancelled=False).exists():
             return False  # not available
         return True
 
@@ -223,7 +234,7 @@ class Doctor(models.Model):
         """From the Doctors in the system, select one who is free
         on the given date and time
         """
-        doctors = Doctor.objects.filter()  # TODO: Maybe add available=True filter later
+        doctors = Doctor.objects.filter(available=True)
         doctors = [doctor for doctor in doctors if doctor.is_available_on(date, time)]
         if len(doctors) > 0:
             return random.choice(doctors)

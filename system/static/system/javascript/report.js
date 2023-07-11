@@ -113,14 +113,22 @@ function generateTable(
 		didDrawCell: function (data) {
 			const cell = data.cell;
 			if (cell.section === "body") {
-				const img = cell.raw.querySelector("img"); // cell.raw => td element
+				const td = cell.raw;
+				const img = td.querySelector("img"); // cell.raw => td element
 				if (img) {
 					const dataURL = imgToDataURL(img);
 					var textPos = cell.getTextPos();
 					const x = textPos.x + 9;
 					const y = textPos.y;
 					const size = scale(13);
-					data.doc.addImage(dataURL, "PNG", x, y, size, size);
+					//////////////////////////////////////////////////
+					// const text = td.innerText.trim();
+					// const fontWidth = parseInt(getComputedStyle(td.children[0]).width);
+					// const imgX = textPos.x + cell.padding("left") + cell.lineWidth + textPos.w + size/2;
+
+					const imgX = textPos.x + cell.minReadableWidth + 1 - size;
+					//////////////////////////////////////////////////
+					data.doc.addImage(dataURL, "PNG", imgX, y, size, size);
 				}
 			}
 		},

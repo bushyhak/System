@@ -206,9 +206,10 @@ $(function () {
                     if (img) {
                         const dataURL = imgToDataURL(img);
                         var textPos = cell.getTextPos();
-                        const x = textPos.x + 9;
+                        // const x = textPos.x + 9;
                         const y = textPos.y;
-                        data.doc.addImage(dataURL, "PNG", x, y, 4, 4);
+                        const imgX = textPos.x + cell.minReadableWidth + 1 - size;
+                        data.doc.addImage(dataURL, "PNG", imgX, y, 4, 4);
                     }
                 }
             },

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .helpers import send_booking_confirmation_email, vaccine_in_child_appointments
 from .models import Doctor, Appointment, Vaccines, Child, Feedback
 from .forms import (
+    ChildUpdateForm,
     FeedbackForm,
     UserRegistrationForm,
     UserEditForm,
@@ -53,9 +54,9 @@ def register(request):
 def dashboard(request):
     all_my_appointments = Appointment.objects.filter(child__parent=request.user)
 
-    # only get upcoming appointments [not complete & not cancelled]
-    appointments = all_my_appointments.filter(cancelled=False)
-    appointments = [ap for ap in appointments if not ap.check_complete()]
+    # only get upcoming appointments [in the future & not cancelled]
+    appointments = all_my_appointments.filter(cancelled=False)  # completed=False
+    appointments = [ap for ap in appointments if not ap.has_passed()]
 
     vaccine_schedules = []
     vaccines = Vaccines.objects.all()
@@ -156,7 +157,7 @@ def update_child(request, child_id):
     child_detail_url = reverse("child_detail", kwargs={"child_id": child_id})
 
     if request.method == "POST":
-        form = ChildForm(request.POST, instance=child)
+        form = ChildUpdateForm(request.POST, instance=child)
         if form.is_valid():
             form.save()
             messages.success(request, "Child updated successfully.")
@@ -164,7 +165,7 @@ def update_child(request, child_id):
         else:
             messages.error(request, "Failed to update child")
     else:
-        form = ChildForm(instance=child)
+        form = ChildUpdateForm(instance=child)
     breadcrumb = [
         {"label": "Child Info", "url": reverse("dashboard_child_info")},
         {"label": "Child Detail", "url": child_detail_url},
@@ -219,8 +220,7 @@ def appointments(request):
 
     class Filters:
         child = None
-        completed = None
-        cancelled = None
+        status = None
 
         @property
         def list(self):
@@ -228,15 +228,8 @@ def appointments(request):
             if isinstance(self.child, str):
                 items.append(self.child)
 
-            if self.completed == "True":
-                items.append("Completed")
-            elif self.completed == "False":
-                items.append("Not Completed")
-
-            if self.cancelled == "True":
-                items.append("Cancelled")
-            elif self.cancelled == "False":
-                items.append("Not Cancelled")
+            if self.status and isinstance(self.status, str):
+                items.append(self.status)
 
             return items
 
@@ -253,12 +246,23 @@ def appointments(request):
             child__last_name=lname.strip(),
         )
         Filters.child = child
-    if completed := request.GET.get("completed"):
-        appointments = appointments.filter(completed=completed)
-        Filters.completed = completed
-    if cancelled := request.GET.get("cancelled"):
-        appointments = appointments.filter(cancelled=cancelled)
-        Filters.cancelled = cancelled
+    if status := request.GET.get("status"):
+        if status == "Cancelled":
+            appointments = appointments.filter(cancelled=True)
+            Filters.status = status
+        elif status == "Complete":
+            appointments = appointments.filter(completed=True, cancelled=False)
+            Filters.status = status
+        elif status == "Pending":
+            appointments = appointments.filter(completed=False, cancelled=False)
+            Filters.status = status
+
+    # if completed := request.GET.get("completed"):
+    #     appointments = appointments.filter(completed=completed)
+    #     Filters.completed = completed
+    # if cancelled := request.GET.get("cancelled"):
+    #     appointments = appointments.filter(cancelled=cancelled)
+    #     Filters.cancelled = cancelled
 
     context = {"appointments": appointments, "children": children, "filters": Filters}
     return render(request, "system/appointments/list.html", context)
