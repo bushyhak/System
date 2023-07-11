@@ -50,7 +50,10 @@ class Child(models.Model):
     @property
     def administered_vaccines(self):
         vaccines = []
-        for appointment in Appointment.objects.filter(child=self, cancelled=False):
+        appointments = Appointment.objects.filter(
+            child=self, cancelled=False, completed=True
+        )
+        for appointment in appointments:
             vaccine = appointment.vaccine
             setattr(
                 vaccine,
