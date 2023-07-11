@@ -51,7 +51,13 @@ class Child(models.Model):
     def administered_vaccines(self):
         vaccines = []
         for appointment in Appointment.objects.filter(child=self, cancelled=False):
-            vaccines.append(appointment.vaccine)
+            vaccine = appointment.vaccine
+            setattr(
+                vaccine,
+                "datetime",
+                datetime.combine(appointment.date, appointment.time),
+            )
+            vaccines.append(vaccine)
         return vaccines
 
     @property

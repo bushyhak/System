@@ -46,11 +46,10 @@
 
     <h2 class="mt-5">Administered Vaccines</h2>
 
-    {% for appointment in child.appointments.all %} {% with appointment.vaccine as vaccine %}
+    {% for vaccine in child.administered_vaccines %}
     <div class="card p-3 rounded-lg mb-3 max-width">
-        <b>{{vaccine.name}}</b> on {{appointment.date}} - {{appointment.time}}
+        <b>{{vaccine.name}}</b> on {{vaccine.datetime}}
     </div>
-    {% endwith %}
     {% empty %} <p class="text-muted p-3">No administered vaccines for {{child.first_name}} so far</p>
     {% endfor %}
 </main>
