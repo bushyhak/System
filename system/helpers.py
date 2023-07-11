@@ -111,7 +111,7 @@ def get_age(date_of_birth: datetime.date) -> str:
 
 def send_booking_confirmation_email(appointment):
     """Helper function to send an appointment booking confirmation"""
-    subject = "Appointment Booking Confirmation"
+    subject = "Appointment Booking Notification"
     child = appointment.child
     parent = child.parent
     vaccine = appointment.vaccine

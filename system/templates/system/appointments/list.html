@@ -46,7 +46,7 @@
                     <th scope="col">Child Name</th>
                     <th scope="col">Vaccine</th>
                     <th scope="col">Doctor Name</th>
-                    <th scope="col">Complete</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,14 +58,17 @@
                     <td>{{ appointment.vaccine }}</td>
                     <td>{{ appointment.doctor.full_name }}</td>
 
-                    <td class="text-center">
-                    {{appointment.completed}}
-                    {% if appointment.completed %}
+                    <td class="">
+                    {% if appointment.cancelled %}
+                    Cancelled
+                    {% elif appointment.completed %}
+                    Complete
                     {% comment %} <i class="fas fa-check-circle text-success"></i> {% endcomment %}
                     <img src="{% static 'admin/img/icon-yes.svg' %}" alt="{{appointment.completed}}" />
                     {% else %}
+                    Pending
                     {% comment %} <i class="fas fa-times-circle text-danger"></i> {% endcomment %}
-                    <img src="{% static 'admin/img/icon-no.svg' %}" alt="{{appointment.completed}}" />
+                    {% comment %} <img src="{% static 'admin/img/icon-no.svg' %}" alt="{{appointment.completed}}" /> {% endcomment %}
                     {% endif %}
                     </td>
                 </tr>
@@ -94,20 +97,16 @@
 
 {% block scripts %}
 {{ block.super }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
-<script src={% static 'system/javascript/report.js' %}></script>
+{% include 'system/includes/_report_scripts.html' %}
 <script>
     function generateAppointmentsReport() {
-        //generatePDF('Appointments Report', 'appointments-report.pdf')
         let title = "";
         {% if filters.child %} title += "{{filters.child}} " {% endif %}
-        {% if filters.completed == "True" %} title += "Completed " {% endif %}
-        {% if filters.cancelled == "True" %} title += "Cancelled " {% endif %}
+        {% if filters.status %} title += "{{filters.status}} " {% endif %}
         title += "Appointments Report";
-        {% timezone 'Africa/Nairobi' %}
-        generateTable(title.trim(), 'appointments-report_{% now "j-M-Y-H-i" %}.pdf');
-        {% endtimezone %}
+
+        const date_time = moment().format('YYYY-MMM-DD_hh-mmA');
+        generateTable(title, `appointments-report_${date_time}.pdf`);
     }
 </script>
 {% endblock scripts %}

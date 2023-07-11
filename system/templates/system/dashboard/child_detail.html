@@ -54,10 +54,10 @@
     {% endfor %}
 </main>
 
-<div class="max-width d-flex align-items-center justify-content-between my-5">
-    <a href="{% url 'delete_child' child.id %}" class="btn btn-outline-danger">
+<div class="max-width d-flex align-items-center justify-content-end my-5">
+    {% comment %} <a href="{% url 'delete_child' child.id %}" class="btn btn-outline-danger">
         <i class="fas fa-trash me-1"></i> Delete Child
-    </a>
+    </a> {% endcomment %}
     <a href="{% url 'update_child' child.id %}" class="btn btn-outline-primary">
         <i class="fas fa-edit me-1"></i> Edit Details
     </a>

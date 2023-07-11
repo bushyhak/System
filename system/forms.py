@@ -183,6 +183,25 @@ class ChildForm(CustomModelForm):
         return date_of_birth
 
 
+class ChildUpdateForm(CustomModelForm):
+    class Meta:
+        model = Child
+        fields = ["first_name", "last_name"]
+        widgets = {"date_of_birth": DateInput(attrs={"type": "date"})}
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get("first_name")
+        if is_numbers(first_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get("last_name")
+        if is_numbers(last_name):
+            raise forms.ValidationError("The name can't be numbers only")
+        return last_name
+
+
 # Custom widget to display hour intervals for time field
 class HourIntervalSelectWidget(Select):
     intervals = [

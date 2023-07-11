@@ -1,25 +1,13 @@
 from datetime import datetime
 from django.contrib import admin
-from django.utils.html import format_html
 from django.contrib.auth.models import User
-from django.templatetags.static import static
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.admin.filters import BooleanFieldListFilter
+from rangefilter.filters import DateRangeFilterBuilder
+from .filters import StatusFilter, boolean_display
 from .models import Feedback, Profile, Child, Appointment, Vaccines, Doctor
 
 # from django.utils.translation import gettext_lazy as _
 # from django.contrib.admin.filters import DateFieldListFilter
-
-
-def boolean_display(field_value: bool, options=("True", "False")):
-    """Return HTML code with a True/False text and
-    success/error icon based a boolean field value"""
-    if field_value:
-        icon_url = static("admin/img/icon-yes.svg")
-        return format_html(f'{options[0]} <img src="{icon_url}" alt="{options[0]}">')
-    else:
-        icon_url = static("admin/img/icon-no.svg")
-        return format_html(f'{options[1]} <img src="{icon_url}" alt="{options[1]}">')
 
 
 admin.site.unregister(User)
@@ -42,8 +30,19 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "date_of_birth", "parent", "gender"]
+    list_display = [
+        "first_name",
+        "last_name",
+        "date_of_birth",
+        "parent__id",
+        "parent",
+        "gender",
+    ]
     raw_id_fields = ["parent"]
+
+    @admin.display(description="Parent ID")
+    def parent__id(self, obj):
+        return obj.parent.pk
 
 
 # @admin.register(Appointment)
@@ -88,14 +87,12 @@ class AppointmentAdmin(admin.ModelAdmin):
         "child",
         "doctor",
         "vaccine",
-        "completed_display",
-        "cancelled_display",
+        "status_display",
     )
     list_display_links = ("id", "date_and_time")
     list_filter = (
-        ("completed", BooleanFieldListFilter),
-        ("cancelled", BooleanFieldListFilter),
-        "date",
+        StatusFilter,
+        ("date", DateRangeFilterBuilder(title="By Date")),
     )
 
     def date_and_time_ordering(self, obj):
@@ -105,13 +102,16 @@ class AppointmentAdmin(admin.ModelAdmin):
     def date_and_time(self, obj):
         return datetime.combine(obj.date, obj.time).strftime("%d-%b-%Y, %I:%M %p")
 
-    @admin.display(description="Completed")
-    def completed_display(self, obj):
-        return boolean_display(obj.completed)
+    @admin.display(description="Status")
+    def status_display(self, obj):
+        completed = obj.completed
+        cancelled = obj.cancelled
 
-    @admin.display(description="Cancelled")
-    def cancelled_display(self, obj):
-        return boolean_display(obj.cancelled)
+        if cancelled:
+            return "Cancelled"
+        if completed:
+            return "Complete"
+        return "Pending"
 
 
 @admin.register(Vaccines)
