@@ -94,20 +94,17 @@
 
 {% block scripts %}
 {{ block.super }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
-<script src={% static 'system/javascript/report.js' %}></script>
+{% include 'system/includes/_report_scripts.html' %}
 <script>
     function generateAppointmentsReport() {
-        //generatePDF('Appointments Report', 'appointments-report.pdf')
         let title = "";
         {% if filters.child %} title += "{{filters.child}} " {% endif %}
         {% if filters.completed == "True" %} title += "Completed " {% endif %}
         {% if filters.cancelled == "True" %} title += "Cancelled " {% endif %}
         title += "Appointments Report";
-        {% timezone 'Africa/Nairobi' %}
-        generateTable(title.trim(), 'appointments-report_{% now "j-M-Y-H-i" %}.pdf');
-        {% endtimezone %}
+
+        const date_time = moment().format('YYYY-MMM-DD_hh-mmA');
+        generateTable(title, `appointments-report_${date_time}.pdf`);
     }
 </script>
 {% endblock scripts %}

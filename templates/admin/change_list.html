@@ -188,7 +188,7 @@ $(function () {
 <script>
     function generateReport() {
         const title = "Admin {{cl.opts.verbose_name_plural|capfirst}} Report";
-        const doc = generateHeaders(title, 'Infant Immunization Booking System [Admin]');
+        const doc = generateHeaders(title, 'Infant Immunization Booking System [Admin]', favicon.two);
 
         doc.autoTable({
             html: "table#result_list",
@@ -199,9 +199,22 @@ $(function () {
                 fillColor: [255, 232, 161],
                 textColor: [1, 1, 1],
             },
+            didDrawCell: function (data) {
+                const cell = data.cell;
+                if (cell.section === "body") {
+                    const img = cell.raw.querySelector("img"); // cell.raw => td element
+                    if (img) {
+                        const dataURL = imgToDataURL(img);
+                        var textPos = cell.getTextPos();
+                        const x = textPos.x + 9;
+                        const y = textPos.y;
+                        data.doc.addImage(dataURL, "PNG", x, y, 4, 4);
+                    }
+                }
+            },
         });
-
-        doc.save('admin-{{cl.opts.verbose_name_plural|lower}}-report.pdf');
+        const date_time = moment().format('YYYY-MMM-DD_hh-mmA');
+        doc.save(`admin-{{cl.opts.verbose_name_plural|lower}}-report_${date_time}.pdf`);
     }
 </script>
 {% endblock %}
