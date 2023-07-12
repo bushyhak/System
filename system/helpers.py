@@ -145,11 +145,23 @@ def vaccine_in_child_appointments(vaccine, child):
     return False
 
 
-def is_numbers(text: str):
+def is_numbers(text: str) -> bool:
     """Check if the given text string is numbers only
 
     @example is_numbers("10") returns True
     @example is_numbers("10 20") returns True
     @example is_numbers("hi") returns False
+    @example is_numbers("hi2") returns False
     """
     return text.replace(" ", "").isdigit()
+
+
+def has_numbers(text: str) -> bool:
+    """Check if the given text contains any numbers
+
+    @example has_numbers("10") returns True
+    @example has_numbers("10 20") returns True
+    @example has_numbers("hi") returns False
+    @example has_numbers("Bob123") returns True
+    """
+    return any(char.isdigit() for char in text)

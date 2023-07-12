@@ -12,6 +12,7 @@ from system.helpers import (
     datetime_less_than_now,
     get_local_now,
     is_numbers,
+    has_numbers,
 )
 
 
@@ -64,14 +65,14 @@ class UserRegistrationForm(UserCreationForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if is_numbers(first_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(first_name):
+            raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if is_numbers(last_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(last_name):
+            raise forms.ValidationError("The name can't have numbers")
         return last_name
 
     def clean_email(self):
@@ -93,14 +94,14 @@ class UserEditForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if is_numbers(first_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(first_name):
+            raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if is_numbers(last_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(last_name):
+            raise forms.ValidationError("The name can't have numbers")
         return last_name
 
     def clean_email(self):
@@ -157,14 +158,14 @@ class ChildForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if is_numbers(first_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(first_name):
+            raise forms.ValidationError("The name can't be have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if is_numbers(last_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(last_name):
+            raise forms.ValidationError("The name can't be have numbers")
         return last_name
 
     def clean_date_of_birth(self):
@@ -191,14 +192,14 @@ class ChildUpdateForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if is_numbers(first_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(first_name):
+            raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if is_numbers(last_name):
-            raise forms.ValidationError("The name can't be numbers only")
+        if has_numbers(last_name):
+            raise forms.ValidationError("The name can't have numbers")
         return last_name
 
 
