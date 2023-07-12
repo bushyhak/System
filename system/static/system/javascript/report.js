@@ -5,7 +5,7 @@ const favicon = {
 
 function generateHeaders(
 	reportTitle = "Report",
-	companyName = "Infant Immunization Booking System",
+	systemName = "Infant Immunization Booking System",
 	logo = favicon.one
 ) {
 	const doc = new jspdf.jsPDF();
@@ -19,7 +19,8 @@ function generateHeaders(
 	doc.setFontSize(12);
 	doc.setFont("helvetica", "bold");
 	doc.text("Gevac", 12 + scale(32), 7 + scale(32));
-	doc.text(companyName, 10, 25);
+
+	doc.text(systemName, 10, 25);
 
 	// Add report title below company name
 	doc.setTextColor("#0074d9");

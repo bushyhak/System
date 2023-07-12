@@ -45,40 +45,6 @@ class ChildAdmin(admin.ModelAdmin):
         return obj.parent.pk
 
 
-# @admin.register(Appointment)
-# class AppointmentAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "id",
-#         "date_and_time",
-#         "child",
-#         "doctor",
-#         "vaccine",
-#         "completed_display",
-#         "cancelled_display",
-#     )
-#     list_display_links = ("id", "date_and_time")
-#     list_filter = (
-#         ("completed", BooleanFieldListFilter),
-#         ("cancelled", BooleanFieldListFilter),
-#         ("date_and_time", DateFieldListFilter),
-#     )
-
-#     def date_and_time_ordering(self, obj):
-#         return datetime.combine(obj.date, obj.time)
-
-#     @admin.display(description="Date and Time", ordering=date_and_time_ordering)
-#     def date_and_time(self, obj):
-#         return datetime.combine(obj.date, obj.time).strftime("%d-%b-%Y, %I:%M %p")
-
-#     @admin.display(description="Completed")
-#     def completed_display(self, obj):
-#         return boolean_display(obj.completed)
-
-#     @admin.display(description="Cancelled")
-#     def cancelled_display(self, obj):
-#         return boolean_display(obj.cancelled)
-
-
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = (

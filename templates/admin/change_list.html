@@ -186,16 +186,38 @@ $(function () {
 
 {% include 'system/includes/_report_scripts.html' %}
 <script>
+    function toTitleCase(text) {
+        const char1 = text.charAt(0);
+        return text.replace(char1, char1.toUpperCase()).trim();
+    }
     function generateReport() {
-        const title = "Admin {{cl.opts.verbose_name_plural|capfirst}} Report";
+        const query_params = new URLSearchParams(window.location.search);
+        const status = query_params.get('status')
+        const from_date = query_params.get('date__range__gte')
+        const to_date = query_params.get('date__range__lte')
+
+        let title = "Admin "
+        if (status) title += `${toTitleCase(status)} `;
+        title += "{{cl.opts.verbose_name_plural|capfirst}} Report";
+
         const doc = generateHeaders(title, 'Infant Immunization Booking System [Admin]', favicon.two);
+
+        if (from_date || to_date) {
+            let range = `from ${from_date||'-'} to ${to_date||'-'}`;
+
+            const pageWidth = doc.internal.pageSize.getWidth();
+            doc.setTextColor("#0074d9");
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.text(range, pageWidth / 2, 49, { align: "center" });
+        } 
 
         doc.autoTable({
             html: "table#result_list",
             theme: "striped", // 'striped'|'grid'|'plain'
             startX: 10,
-            startY: 50,
-            headerStyles: {
+            startY: 55,
+            headStyles: {
                 fillColor: [255, 232, 161],
                 textColor: [1, 1, 1],
             },
