@@ -59,25 +59,31 @@ class UserRegistrationForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        if is_numbers(username):
-            raise forms.ValidationError("The username can't be numbers only")
+        if username:
+            if is_numbers(username):
+                raise forms.ValidationError("The username can't be numbers only")
+        else:
+            raise forms.ValidationError("The username cannot be blank")
         return username
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if has_numbers(first_name):
-            raise forms.ValidationError("The name can't have numbers")
+        if first_name:
+            if has_numbers(first_name):
+                raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if has_numbers(last_name):
+        if last_name and has_numbers(last_name):
             raise forms.ValidationError("The name can't have numbers")
         return last_name
 
     def clean_email(self):
         data = self.cleaned_data["email"]
-        if User.objects.filter(email=data).exists():
+        if not data:
+            raise forms.ValidationError("The email cannot be blank")
+        if data and User.objects.filter(email=data).exists():
             raise forms.ValidationError("Email already in use.")
         return data
 
@@ -94,18 +100,20 @@ class UserEditForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if has_numbers(first_name):
+        if first_name and has_numbers(first_name):
             raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if has_numbers(last_name):
+        if last_name and has_numbers(last_name):
             raise forms.ValidationError("The name can't have numbers")
         return last_name
 
     def clean_email(self):
         data = self.cleaned_data["email"]
+        if not data:
+            return data
         qs = User.objects.exclude(id=self.instance.id).filter(email=data)
         if qs.exists():
             raise forms.ValidationError("Email already in use")
@@ -128,6 +136,8 @@ class ProfileEditForm(CustomModelForm):
 
     def clean_phone_number(self):
         phone_number: str = self.cleaned_data.get("phone_number")
+        if not phone_number:
+            return phone_number
         if not (
             phone_number.startswith("+254")
             or phone_number.startswith("07")
@@ -158,13 +168,13 @@ class ChildForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if has_numbers(first_name):
+        if first_name and has_numbers(first_name):
             raise forms.ValidationError("The name can't be have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if has_numbers(last_name):
+        if last_name and has_numbers(last_name):
             raise forms.ValidationError("The name can't be have numbers")
         return last_name
 
@@ -192,13 +202,13 @@ class ChildUpdateForm(CustomModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if has_numbers(first_name):
+        if first_name and has_numbers(first_name):
             raise forms.ValidationError("The name can't have numbers")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if has_numbers(last_name):
+        if last_name and has_numbers(last_name):
             raise forms.ValidationError("The name can't have numbers")
         return last_name
 
