@@ -67,10 +67,7 @@
 
 {% block scripts %}
 {{ block.super }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src={% static 'system/javascript/jspdf.plugin.autotable.js' %}></script>
-<script src={% static 'system/javascript/report.js' %}></script>
-<script src={% static 'system/javascript/html2canvas.min.js' %}></script>
+{% include 'system/includes/_report_scripts.html' %}
 <script>
     function generateReport() {
         const doc = generateHeaders('Child Details Report')
