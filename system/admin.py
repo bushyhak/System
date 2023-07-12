@@ -93,5 +93,5 @@ class DoctorAdmin(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "parent", "appointment")
+    list_display = ("id", "title", "parent", "appointment", "created")
     list_display_links = ("id", "title")
